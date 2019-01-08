@@ -19,7 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
+        "src/styles.scss", 
         "../node_modules/bootstrap/dist/css/bootstrap.min.css"
       ],
       "scripts": [],
@@ -30,7 +30,8 @@
       },
       "stylePreprocessorOptions":{
         "includePaths":[
-          "./styles"
+        
+        "src/styles"
         ]
       }
     }
@@ -60,7 +61,8 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "component": {}
   }
+  
 }
