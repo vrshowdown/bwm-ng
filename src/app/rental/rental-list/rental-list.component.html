@@ -1,0 +1,17 @@
+<!--Rental-list-component.html is the template to display Rental content "The current rental page"
+This currently is the only thing displayed in rental.component.html as a tag
+Rental-list-Component is now used  for to forloop out rental list items on the page , based on their object id,  in the  rental list array that is located in  rental-service.ts -->
+<section id="rentalListing">
+    <h1 class="title">Your Home All Around the World</h1>
+    <div class="row">
+      
+     <!--*ngFor forloops  each item of the rentals array-->
+	<div class='col-md-3 col-xs-6' *ngFor="let rental of rentals">     <!---- rental =  single item   rentals =array-->    
+  
+    <bwm-rental-list-item [rental]="rental"> </bwm-rental-list-item>  <!--[rental] is the object interface "rental" is the current object to be processed-->
+         
+    </div>
+
+    
+    </div>
+  </section>
