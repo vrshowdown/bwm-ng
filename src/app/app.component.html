@@ -1,77 +1,10 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<!--<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>-->
-<!--Example of a new custom header component-->
+<!-- app.component.html acts as the main template for the root component that is attached to index.html
+It is now used  for to display routed peices of content under a header menu By Jibreel-->
 
+<!--Example of a new custom header component, a menu -->
 <bwm-header></bwm-header>
 
 <div class="container">
-  <section id="rentalListing">
-    <h1 class="title">Your Home All Around the World</h1>
-    <div class="row">
-      <div class='col-md-3 col-xs-6'>
-        <div class="card bwm-card">
-          <img class="card-img-top" src="http://via.placeholder.com/350x250" alt="">
-          <div class="card-block">
-            <h6 class="card-subtitle">Whole Apartment &#183; New York</h6>
-            <h4 class="card-title">Some nice apartment</h4>
-            <p class="card-text">$240 per Night &#183; Free Cancelation</p>
-            <a href="#" class="card-link">More Info</a>
-          </div>
-        </div>
-      </div>
-
-      <div class='col-md-3 col-xs-6'>
-        <div class="card bwm-card">
-          <img class="card-img-top" src="http://via.placeholder.com/350x250" alt="">
-          <div class="card-block">
-            <h6 class="card-subtitle">Whole Apartment &#183; New York</h6>
-            <h4 class="card-title">Some nice apartment</h4>
-            <p class="card-text">$240 per Night &#183; Free Cancelation</p>
-            <a href="#" class="card-link">More Info</a>
-          </div>
-        </div>
-      </div>
- 
-      <div class='col-md-3 col-xs-6'>
-        <div class="card bwm-card">
-          <img class="card-img-top" src="http://via.placeholder.com/350x250" alt="">
-          <div class="card-block">
-            <h6 class="card-subtitle">Whole Apartment &#183; New York</h6>
-            <h4 class="card-title">Some nice apartment</h4>
-            <p class="card-text">$240 per Night &#183; Free Cancelation</p>
-            <a href="#" class="card-link">More Info</a>
-          </div>
-        </div>
-      </div>
-
-      <div class='col-md-3 col-xs-6'>
-        <div class="card bwm-card">
-          <img class="card-img-top" src="http://via.placeholder.com/350x250" alt="">
-          <div class="card-block">
-            <h6 class="card-subtitle">Whole Apartment &#183; New York</h6>
-            <h4 class="card-title">Some nice apartment</h4>
-            <p class="card-text">$240 per Night &#183; Free Cancelation</p>
-            <a href="#" class="card-link">More Info</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!--Displays webpage content based on routing to componants. Displays rental  page and  Temp in in app.module.ts -->
+  <router-outlet></router-outlet>
 </div>

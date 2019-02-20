@@ -1,0 +1,12 @@
+<!-- changed from rental-detail works! {{currentId}}    displays  current page id-->
+<!--if statement :Fixes id error and doesn't display extra characters until all the data is present  By Jibreel-->
+<div *ngIf="rental"> 
+  <p>{{rental.id}}</p>
+  <p>{{rental.title}}</p>
+  <p>{{rental.city}}</p>
+  <p>{{rental.street}}</p>
+  <p>{{rental.category}}</p>
+  <p>{{rental.description}}</p>
+  <p>$ {{rental.dailyRate}}</p>
+</div>
+

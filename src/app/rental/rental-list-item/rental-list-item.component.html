@@ -1,0 +1,15 @@
+<!--Rental list item Component.html is a template to display an individual item with its attributes on the website
+The rental list item component is processed through a forloop , each displaying different content based on  current item processed 
+in the array  JIBREEL UTLEY-->
+<a routerLink="/rentals/{{rental.id}}"><!--linked to  display individual page of item when clicked-->
+  <div class="card bwm-card">
+      <img class="card-img-top" src="http://via.placeholder.com/350x250" alt="">
+      <div class="card-block">
+        <!-- Displays current object and attributes based on current id in the array being processed -->
+        <h6 class="card-subtitle">Whole {{rental.category}} &#183; {{rental.city}}</h6>
+        <h4 class="card-title">{{rental.title}}</h4>
+        <p class="card-text">${{rental.dailyRate}} per Night &#183; Free Cancelation</p>
+        <!--<a href="#" class="card-link">More Info</a>-->
+      </div>
+  </div>
+</a>
