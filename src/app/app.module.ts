@@ -13,6 +13,7 @@ import { RentalComponent } from './rental/rental.component'; // declaired but it
 //Imports Sub module For Rental Feature
 import {RentalModule} from './rental/rental.module';
 
+
 // adds what content that needs to be routed
 const routes: Routes =[
   //Changed from  {path: '', component: RentalComponent} for  to redirect to rental main page
@@ -22,7 +23,8 @@ const routes: Routes =[
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,  
+    HeaderComponent
+  
   ],
   imports: [
     //enables router module import

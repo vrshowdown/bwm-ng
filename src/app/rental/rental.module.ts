@@ -11,7 +11,7 @@
  import {RentalDetailComponent} from './rental-detail/rental-detail.component';  //for detail rental view
  import {HttpClientModule} from '@angular/common/http';   //register module
  import { UppercasePipe } from '../common/pipes/uppercase.pipe';
-
+ import { MapModule } from '../common/map/map.module';
 // For rental detail view
  const routes: Routes =[
 
@@ -41,7 +41,8 @@
     CommonModule,
     RouterModule.forChild(routes), //for detail rental view
     HttpClientModule,
-    NgPipesModule
+    NgPipesModule,
+    MapModule
     ],
     providers: [RentalService]
 })

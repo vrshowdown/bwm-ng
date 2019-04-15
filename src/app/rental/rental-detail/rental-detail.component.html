@@ -1,7 +1,4 @@
 <!-- changed from rental-detail works! {{currentId}}    displays  current page id-->
-<!-- changed  ngIf="rental" div of information to  html template-->
-<!--if statement :Fixes id error and doesn't display extra characters until all the data is present  By Jibreel-->
-
 <section id="rentalDetails" *ngIf="rental">
   <div class="upper-section">
     <div class="row">
@@ -10,7 +7,7 @@
       </div>
       <div class="col-md-6">
         <!-- Will be replaced with map !!!! -->
-        <img src="{{rental.image}}" alt="">
+        <bwm-map [location]="rental.city +', '+ rental.street"></bwm-map>
       </div>
     </div>
   </div>
