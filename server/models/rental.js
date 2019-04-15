@@ -1,5 +1,6 @@
 
-
+// Rental.js is used as a data stuct similar to rental.model.ts
+//extra rules are set up  for serverside transfer
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
