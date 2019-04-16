@@ -17,7 +17,7 @@ import { MapService } from './map.service';
     MapComponent
     ],
     imports: [
-        AgmCoreModule.forRoot({ apiKey: 'AIzaSyCxFVx5KlCDE577ijGlV5F2_rHGbqpXFWw' }),
+        AgmCoreModule.forRoot({ apiKey: 'jmu3dGoogleApiKeyHasBeenRemoved' }),
         CommonModule 
     ],
   providers: [
