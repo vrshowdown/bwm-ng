@@ -2,6 +2,13 @@
 const express = require ('express'); // nodejs framework
 const Rental = require('../models/rental');//data type structure and schema rules
 const router = express.Router(); //using routing method
+const UserCtrl = require('../controllers/user');
+
+router.get('/secret', UserCtrl.authMiddleware, function(req, res){
+    res.json({"secret": true});
+});
+
+
 
 router.get('', function(req,res){  
    //Changed from res.json({'ok': true}); //responds with empty path
@@ -10,8 +17,6 @@ router.get('', function(req,res){
 
     });
 });
-
-
 
 router.get('/:id', function(req, res){      // responds with id path    
     const rentalId = req.params.id;                                  //assigns reantalid to routing id  
