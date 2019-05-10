@@ -12,8 +12,6 @@ import {HttpClient} from '@angular/common/http';
  @Injectable()
  export class RentalService{
 //the array of object data  for Rental Service
-// changed from private rentals: any[] =[{  
-// removed private rentals: Rental[] = [{ all data }];
 constructor(private http: HttpClient){}
 //Make observable function for data ids,    will look up id and compare it to the id in the array
 public getRentalById(rentalId: string): Observable<any>{
@@ -22,12 +20,9 @@ public getRentalById(rentalId: string): Observable<any>{
 }
 
 
-// changed from getRentals(): any{
+
     public  getRentals(): Observable<any>{
 //while recieving rental data  asynchronously, rentalObservable  Manages  stream of data  before displaying data
-     //1. changed from const rentalObservable = new Observable((observer)=>{ 
-     //2. Changed from const rentalObservable: Observable<Rental[]>= new Observable((observer)=>{ 
-     //3. changed from  return new Observable<Rental[]>((observer)=>{all of the functions});
      return   this.http.get('/api/v1/rentals');
     }
 
