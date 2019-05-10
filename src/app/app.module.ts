@@ -12,6 +12,7 @@ import { RentalComponent } from './rental/rental.component'; // declaired but it
 
 //Imports Sub module For Rental Feature
 import {RentalModule} from './rental/rental.module';
+import { AuthModule } from './auth/auth.module';
 
 
 // adds what content that needs to be routed
@@ -24,14 +25,15 @@ const routes: Routes =[
   declarations: [
     AppComponent,
     HeaderComponent
-  
-  ],
+   ],
+
   imports: [
     //enables router module import
     RouterModule.forRoot(routes),
     BrowserModule,
     //Imports Sub module For Rental Feature
-    RentalModule
+    RentalModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
