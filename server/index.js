@@ -6,28 +6,23 @@
  const Rental =  require('./models/rental'); // Rental model for database
  const FakeDb = require('./fake-db');  //adds file to push data
  
- const rentalRoutes = require('./routes/rentals'),userRoutes = require('./routes/users');
+ const rentalRoutes = require('./routes/rentals'),
+       userRoutes = require('./routes/users'),
+       bookingRoutes = require('./routes/bookings');
+// username and password entered into the URI
 
  mongoose.connect(config.DB_URI,{ useNewUrlParser: true }).then(() =>{
    const fakeDb = new FakeDb();
-   fakeDb.seedDb(); 
+   //fakeDb.seedDb(); 
 });
 
-// username and password entered into the URI
- //.then(() => console.log('DB Connected!'))
- // .catch(err => console.log(err));
+
  const app = express(); // assigning app variable all the functions  required to run  server side application
  app.use(bodyParser.json());
 
-
- /* Changed from
- app.get('/rentals', function(req, res){ 
-    res.json({'success': true });
- });
- */
  app.use('/api/v1/rentals', rentalRoutes); //Express Middleware to manage  to retrieve route  from rental.js
  app.use('/api/v1/users', userRoutes);
-
+ app.use('/api/v1/bookings', bookingRoutes);
 // at localhost:3001 OR a assigned environment PORT is available,    function is be called when  application is running
 const PORT = process.env.PORT || 3001;
 

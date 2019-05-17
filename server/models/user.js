@@ -26,7 +26,8 @@ const userSchema = new Schema({
         max: [32, 'Too long, max is 32 characters'],
         required: 'Password is required'
         },
-        rentals: [{type: Schema.Types.ObjectId, ref: 'Rental'}] // reference rental ids for user
+        rentals: [{type: Schema.Types.ObjectId, ref: 'Rental'}], // reference rental array ids for user
+        bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking'}] // reference booking array ids for user
 	
 });
 //Compare Encrypted passwords
