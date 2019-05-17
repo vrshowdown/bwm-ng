@@ -11,20 +11,26 @@ router.get('/secret', UserCtrl.authMiddleware, function(req, res){
 
 
 router.get('', function(req,res){  
-   //Changed from res.json({'ok': true}); //responds with empty path
-    Rental.find({}, function(err, foundRentals){ 
+    Rental.find({})
+    .select('-bookings')
+    .exec(function(err, foundRentals){
         res.json(foundRentals); // shows list of data on empty path
-
     });
 });
 
+
+
 router.get('/:id', function(req, res){      // responds with id path    
     const rentalId = req.params.id;                                  //assigns reantalid to routing id  
-    Rental.findById(rentalId, function(err, foundRental){     // if it finds rental id  
-        if (err){ // if not finnd rental id
-            res.status(422).send({errors:[{title: 'Rental Error!', detail: 'Could not find Rental!'}]});   // Respond to unrecognized id
+
+    Rental.findById(rentalId)
+    .populate('user', 'username-_id')
+    .populate('bookings', 'startAt endAt -_id')
+    .exec(function(err, foundRental){
+     if (err){
+           return res.status(422).send({errors:[{title: 'Rental Error!', detail: 'Could not find Rental!'}]});   
         }
-        res.json(foundRental);                                      // route with that id  to  single rental information
+        return res.json(foundRental);  
     });
 
 });
