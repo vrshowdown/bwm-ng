@@ -1,6 +1,5 @@
 
-// Rental Service is  the main area for  rental data to be shared for multiple purposes. This  file will store data, or will retrieve data from the database
-// the array/code does not have to be repeated  for each component, it is injectected in the destined component
+// Rental Service is  the main area for  rental data to be accessed and shared for multiple purposes.
 //BY JIBREEL UTLEY
 import {Injectable} from '@angular/core'; // declares Injectable function from angular to inject data to other components 
 
@@ -13,7 +12,7 @@ import {HttpClient} from '@angular/common/http';
  export class RentalService{
 //the array of object data  for Rental Service
 constructor(private http: HttpClient){}
-//Make observable function for data ids,    will look up id and compare it to the id in the array
+//Make observable function for data ids,    will look up id  in the array
 public getRentalById(rentalId: string): Observable<any>{
   // changed observer function to this
   return   this.http.get('/api/v1/rentals/' + rentalId);     
@@ -22,7 +21,7 @@ public getRentalById(rentalId: string): Observable<any>{
 
 
     public  getRentals(): Observable<any>{
-//while recieving rental data  asynchronously, rentalObservable  Manages  stream of data  before displaying data
+//while recieving rental data  asynchronously, rentalObservable  gets  stream of data 
      return   this.http.get('/api/v1/rentals');
     }
 
