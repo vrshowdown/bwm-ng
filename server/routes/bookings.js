@@ -1,3 +1,4 @@
+//Back End Booking Route
 const express = require ('express'); // nodejs framework
 const router = express.Router(); //using routing method
 const UserCtrl = require('../controllers/user');

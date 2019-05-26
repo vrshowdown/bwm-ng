@@ -30,7 +30,7 @@ exports.auth = function(req, res){
             //send error
             return res.status(422).send({errors: [{title: 'Wrong Data!', detail: 'Wrong email or password'}] });
         }
-        //user.isSamePassword();
+       
     });
 }
 // registration System

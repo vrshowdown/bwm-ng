@@ -1,4 +1,4 @@
-//data structure for a rental
+//Back End Booking Model
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
