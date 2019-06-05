@@ -1,0 +1,14 @@
+
+
+.form-group{
+
+    &:nth-child(9){
+        width: 40px;
+    }
+    &:nth-child(5){
+        input{
+            padding: 3px;  
+        }
+    }
+}
+

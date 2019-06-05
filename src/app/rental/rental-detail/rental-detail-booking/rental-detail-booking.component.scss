@@ -21,14 +21,23 @@
   .should-login {
     text-align: center;
     margin-bottom: 10px;
-
-    .btn-bwm {
-      padding: 15px;
-
-      &:focus, &:hover {
-        color: white;
+    background-color: rgb(252, 106, 111);
+    font-size: 17px;
+    font-weight: 700;
+    padding: 13px;
+    border-radius: 4px;
+   
+      a{
+        color: white!important;
+        text-decoration: none!important;
       }
-    }
+
+      &:focus, &:hover{
+       
+     background-color: rgb(255, 40, 47);
+      }
+      
+    
   }
 
   .btn-confirm {

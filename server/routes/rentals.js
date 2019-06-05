@@ -44,23 +44,19 @@ router.post('', UserCtrl.authMiddleware, function(req,res){
 
 
 router.get('', function(req,res){  
-const city = req.query.city;
-const query = city ?  {city: city.toLowerCase()} : {};
-Rental.find(query)
-.select('-bookings')
-.exec(function(err, foundRentals){
-
-if (err){
-return res.status(422).send({errors: normalizeErrors(err.errors)});
-}
-if(city && foundRentals.length === 0 ){
- return res.status(422).send({errors:[{title: 'No Rentals Found!', detail: `There are no rentals for the city ${city}`}]});   
-}
-
-return res.json(foundRentals); // shows list of data on empty path
-});
-
-  
+    const city = req.query.city;
+    const query = city ?  {city: city.toLowerCase()} : {};
+    Rental.find(query)
+    .select('-bookings')
+    .exec(function(err, foundRentals){
+        if (err){
+            return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+        if(city && foundRentals.length === 0 ){
+            return res.status(422).send({errors:[{title: 'No Rentals Found!', detail: `There are no rentals for the city ${city}`}]});   
+        }
+        return res.json(foundRentals); // shows list of data 
+    });
 });
 
 module.exports = router; //to export file
