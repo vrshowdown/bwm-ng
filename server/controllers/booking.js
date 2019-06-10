@@ -3,6 +3,8 @@ const Booking = require('../models/booking');
 const User = require('../models/user');
 const { normalizeErrors } = require('../helpers/mongoose');
 const moment = require('moment');
+
+
 exports.createBooking = function(req, res) {
     // for creating booking localy
     const { startAt, endAt, totalPrice, guests, days, rental } = req.body;
@@ -46,7 +48,19 @@ exports.createBooking = function(req, res) {
 } // end exports.createbooking
 
 
-
+// to manage user bookings
+exports.getUserBookings = function(req, res){
+    const user = res.locals.user;
+    Booking
+    .where({user})
+    .populate('rental')
+    .exec(function(err, foundBookings){
+        if (err){
+            return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+        return res.json(foundBookings);
+    });
+}
 
 function isValidBooking(proposedBooking, rental){
     let isValid = true;
