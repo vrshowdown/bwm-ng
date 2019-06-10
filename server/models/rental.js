@@ -1,6 +1,6 @@
 
 // Rental.js is used as a data stuct similar to rental.model.ts
-//extra rules are set up  for serverside transfer
+//extra rules are set up  for serverside transfer This creates the data stucture for a nosql database
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
