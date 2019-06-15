@@ -26,6 +26,7 @@ constructor(private mapService: MapService, private ref:ChangeDetectorRef) { }
         this.ref.detectChanges();//hotfix
       }, () =>{ //0 cordinates  = true for error
         this.isPositionError = true;
+        this.ref.detectChanges();//hotfix
         });
     }
 }
