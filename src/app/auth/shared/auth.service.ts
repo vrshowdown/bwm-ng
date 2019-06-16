@@ -2,11 +2,15 @@ import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
+
+// import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelper } from 'angular2-jwt';
+
 import * as moment from 'moment';
 import 'rxjs/Rx';
 
-const jwt = new JwtHelperService();
+// const jwt = new JwtHelperService();
+const jwt = new JwtHelper();
 
 class DecodedToken {
   exp: number = 0;
