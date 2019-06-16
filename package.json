@@ -1,3 +1,4 @@
+
 {
   "name": "angular-starter",
   "version": "0.0.0",
@@ -5,7 +6,7 @@
   "engines": {
     "node": "10.15.1",
     "npm": "6.4.1"
-    },
+  },
   "scripts": {
     "ng": "ng",
     "start": "npm run start --prefix server",
@@ -28,9 +29,10 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
-    "@auth0/angular-jwt": "^2.1.0",
+    
     "@ng-bootstrap/ng-bootstrap": "^2.0.0",
     "@types/jquery": "^3.2.12",
+    "angular2-jwt": "^0.2.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.2.1",
@@ -45,6 +47,7 @@
     "ngx-pipes": "^2.3.10",
     "node-sass": "^4.11.0",
     "rxjs": "^5.5.6",
+    "rxjs-compat": "^6.5.2",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
