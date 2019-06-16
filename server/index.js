@@ -30,11 +30,11 @@ app.use('/api/v1/bookings', bookingRoutes);
 if (process.env.NODE_ENV === 'production') {
    const appPath = path.join(__dirname, '..', 'dist');
    app.use(express.static(appPath));
-
-   app.get('*', function(req, res){
-      res.sendFile(path.resolve(appPath, 'index.html'));
+ 
+   app.get('*', function(req, res) {
+     res.sendFile(path.resolve(appPath, 'index.html'));
    });
-}
+ }
 // at localhost:3001 OR a assigned environment PORT is available,    function is be called when  application is running
 const PORT = process.env.PORT || 3001;
 

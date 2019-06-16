@@ -8,7 +8,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "npm run start --prefix server",
+    "start": "npm start --prefix server",
     "start-dev": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --prod",
     "heroku-postbuild": "npm run build",
