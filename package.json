@@ -28,7 +28,6 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
-    "@auth0/angular-jwt": "^2.1.0",
     "@ng-bootstrap/ng-bootstrap": "^2.0.0",
     "@types/jquery": "^3.2.12",
     "angular2-jwt": "^0.2.3",
