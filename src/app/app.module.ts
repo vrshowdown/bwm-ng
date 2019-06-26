@@ -1,4 +1,4 @@
-//This is the main module that handles all Main componants and sub modules of this webpage -Jibreel
+//This is the main module that handles all Main componants and sub modules of this web application -Jibreel
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -10,12 +10,13 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import{HeaderComponent} from './common/header/header.component';
-import { RentalComponent } from './rental/rental.component'; // declaired but its value isn't read
+
 
 
 import {RentalModule} from './rental/rental.module';
 import { AuthModule } from './auth/auth.module';
 import { ManageModule } from './manage/manage.module';
+
 
 // adds what content that needs to be routed
 const routes: Routes =[
@@ -28,7 +29,6 @@ const routes: Routes =[
     AppComponent,
     HeaderComponent
    ],
-
   imports: [
     //enables router module import
     RouterModule.forRoot(routes),
