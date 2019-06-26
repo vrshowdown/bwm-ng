@@ -15,18 +15,16 @@ import { Rental } from '../shared/rental.model';    //imported type array
 })
 export class RentalDetailComponent implements OnInit {
   
-  //Changed from  currentId: string; string variable for current page ID
+  
   rental: Rental;   // assign rental to a variable for individual item in array
  
 
-  //1.changed from constructor() { }
-  //2.changeed from  constructor(private route: ActivatedRoute) { }
+  
   constructor(private route: ActivatedRoute, private rentalService: RentalService) { }// inject service into the constructor
 
   ngOnInit() {
     this.route.params.subscribe(
       (params) => {
-        // changed from this.currentId = params['rentalId']; // params adds rentalId to the current id
         this.getRental(params['rentalId']); // Function call method for  rental object to be retrieved by router number
       })
   }

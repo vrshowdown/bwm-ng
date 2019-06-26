@@ -22,6 +22,22 @@ router.get('/manage', UserCtrl.authMiddleware, function(req, res){
     });
 });
 
+router.get('/:id/verify-user', UserCtrl.authMiddleware, function(req, res){
+const user = res.locals.user;
+    Rental
+    .findById(req.params.id)
+    .populate('user')
+    .exec(function(err, foundRental){
+        if (err){
+            return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+        if(foundRental.user.id !== user.id){
+            return res.status(422).send({errors:[{title: 'Invalid User!', detail: 'You are not rental owner!'}]});
+        }
+        return res.json({status: 'verified'});
+    });
+});
+
 //to get rental detail by id
 router.get('/:id', function(req, res){    
     const rentalId = req.params.id;                                    
@@ -38,34 +54,65 @@ router.get('/:id', function(req, res){
 
 });
 
+// Rental Update Endpoint
+router.patch('/:id', UserCtrl.authMiddleware,function(req, res){
+    const rentalData = req.body;
+    const user = res.locals.user;
+    Rental
+    .findById(req.params.id)
+    .populate('user')
+    .exec(function(err, foundRental){
+
+        if (err){
+            return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+
+        if (foundRental.user.id !== user.id){
+            return res.status(422).send({errors:[{title: 'Invalid User!', detail: 'You are not rental owner!'}]});
+        }
+        foundRental.set(rentalData);
+
+        foundRental.save(function(err){
+            if (err){
+                return res.status(422).send({errors: normalizeErrors(err.errors)});
+            }
+            return res.status(200).send(foundRental);
+        });
+
+    });
+});
+
+
 // to delete rental
 router.delete('/:id', UserCtrl.authMiddleware, function(req, res){
-    const user = res.locals.user;
-    Rental.findById(req.params.id)
-          .populate('user', '_id')
-          .populate({
-               path: 'bookings',
-               select: 'startAt',
-               match: { startAt:{ $gt: new Date()}}
-          })
-         .exec(function(err, foundRental){
-                  if (err){
-             return res.status(422).send({errors: normalizeErrors(err.errors)});
-                    }
-                if (user.id !== foundRental.user.id){
-                  return res.status(422).send({errors:[{title: 'Invalid User!', detail: 'You are not rental owner!'}]});
-                }
-                if (foundRental.bookings.length > 0){
-                   return res.status(422).send({errors:[{title: 'No active bookings!', detail: 'Cannot delete rental with active bookings!'}]});
-                }
-                foundRental.remove(function(err){
-                    if(err){
-                      return res.status(422).send({errors: normalizeErrors(err.errors)});
-                    }
-                    return res.json({'status': 'deleted'});
-               });
 
+    const user = res.locals.user;
+
+    Rental
+    .findById(req.params.id)
+    .populate('user', '_id')
+    .populate({
+        path: 'bookings',
+        select: 'startAt',
+        match: { startAt:{ $gt: new Date()}}
     })
+    .exec(function(err, foundRental){
+            if (err){
+        return res.status(422).send({errors: normalizeErrors(err.errors)});
+            }
+        if (user.id !== foundRental.user.id){
+            return res.status(422).send({errors:[{title: 'Invalid User!', detail: 'You are not rental owner!'}]});
+        }
+        if (foundRental.bookings.length > 0){
+            return res.status(422).send({errors:[{title: 'No active bookings!', detail: 'Cannot delete rental with active bookings!'}]});
+        }
+        foundRental.remove(function(err){
+            if(err){
+                return res.status(422).send({errors: normalizeErrors(err.errors)});
+            }
+            return res.json({'status': 'deleted'});
+        });
+    });
 });
 
 
