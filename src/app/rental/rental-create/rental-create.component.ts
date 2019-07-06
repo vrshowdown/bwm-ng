@@ -3,6 +3,7 @@ import { Rental } from '../shared/rental.model';
 import { RentalService } from '../shared/rental.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+
 @Component({
 selector: 'bwm-rental-create',
 templateUrl: './rental-create.component.html',
@@ -14,7 +15,7 @@ export class RentalCreateComponent implements OnInit{
   newRental: Rental;
   rentalCategories = Rental.CATEGORIES;
   errors: any[] = [];
-  constructor(private rentalService: RentalService, 
+  constructor(private rentalService: RentalService,
               private router: Router){}
   handleImageChange(){
     this.newRental.image = "https://booksync-jerga-prod.s3.amazonaws.com/uploads/rental/image/13/image.jpeg";
@@ -23,6 +24,12 @@ export class RentalCreateComponent implements OnInit{
     this.newRental = new Rental();
     this.newRental.shared = false;
   }
+handleImageUpload(imageUrl: string){
+this.newRental.image = imageUrl;
+}
+handleImageError(){
+this.newRental.image = '';
+}
   createRental(){
     this.rentalService.createRental(this.newRental).subscribe(
     (rental: Rental)=>{
