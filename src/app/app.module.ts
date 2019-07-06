@@ -28,6 +28,7 @@ const routes: Routes =[
   declarations: [
     AppComponent,
     HeaderComponent
+  
    ],
   imports: [
     //enables router module import
