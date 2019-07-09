@@ -1,5 +1,7 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';//angular 8
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 
@@ -9,7 +11,7 @@ export class ImageUploadService {
     public uploadImage(image: File): Observable<string | any>{
         const formData = new FormData();
         formData.append('image', image);
-        return this.http.post('/api/v1/image-upload', formData).map(((json: any) => json.imageUrl));
+        return this.http.post('/api/v1/image-upload', formData).pipe(map(((json: any) => json.imageUrl)));
 
     }
 }
