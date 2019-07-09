@@ -5,8 +5,8 @@ import { NgModule } from '@angular/core';
 
 
 import {Routes, RouterModule} from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import{HeaderComponent} from './common/header/header.component';
@@ -37,8 +37,8 @@ const routes: Routes =[
     //Imports Sub module For Rental Feature
     RentalModule,
     AuthModule,
-    NgbModule.forRoot(),
-    ToastModule.forRoot(),
+    NgbModule,//.forRoot removed for angular 8
+    ToastrModule.forRoot(),
     BrowserAnimationsModule,
     ManageModule
   ],

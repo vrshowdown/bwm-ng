@@ -1,7 +1,8 @@
 
+import {of as observableOf,  Observable } from 'rxjs';
+
 // this is were the map functions are located
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import{ CamelizePipe } from 'ngx-pipes';
 
 @Injectable()
@@ -55,7 +56,7 @@ export class MapService {
        //uses method to checks to see if there is that location in cache
             if (this.isLocationCached(location)){
                 //Gets geocode location from cache
-                return Observable.of(this.locationCache[this.camelize(location)]);
+                return observableOf(this.locationCache[this.camelize(location)]);
             }else{
                 // Gets Geocode location from server
                 return this.geocodeLocation(location);

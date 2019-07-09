@@ -28,7 +28,7 @@ color: main-text-color;
    color: $main-color!important;
    border: 1px solid $main-color !important;
    font-size:12px !important;
-
+   margin: 3px;
    &:hover, &:focus {
       background-color: transparent !important;
       color: $main-color !important;

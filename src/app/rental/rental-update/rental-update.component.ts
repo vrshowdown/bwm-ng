@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewContainerRef } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RentalService } from '../shared/rental.service';     
 import { Rental } from '../shared/rental.model'; 
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';  
+import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http'; 
 import{ UcWordsPipe } from 'ngx-pipes';
 
@@ -21,14 +21,13 @@ rental: Rental;
 rentalCategories: string[] = Rental.CATEGORIES;
 locationSubject: Subject<any> = new Subject();
 
-  constructor ( private route: ActivatedRoute, 
-                private rentalService: RentalService, 
-                private toastr: ToastsManager,
-                private vcr: ViewContainerRef ,
-                private upperPipe: UcWordsPipe) { 
-      this.transformLocation = this.transformLocation.bind(this);
-      this.toastr.setRootViewContainerRef(vcr);
-  }
+constructor ( private route: ActivatedRoute,
+  private rentalService: RentalService,
+  private toastr: ToastrService,
+  private upperPipe: UcWordsPipe) {
+this.transformLocation = this.transformLocation.bind(this);
+
+}
 
   ngOnInit() {
     this.route.params.subscribe(
