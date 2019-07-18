@@ -10,6 +10,7 @@ const path = require('path');
 const rentalRoutes = require('./routes/rentals'),
        userRoutes = require('./routes/users'),
        bookingRoutes = require('./routes/bookings'),
+       paymentRoutes = require('./routes/payments'),
        imageUploadRoutes = require('./routes/image-upload');
 // username and password entered into the URI
 
@@ -24,9 +25,10 @@ mongoose.connect(config.DB_URI,{ useNewUrlParser: true }).then(() =>{
 const app = express(); // assigning app variable all the functions  required to run  server side application
 app.use(bodyParser.json());
 
-app.use('/api/v1/rentals', rentalRoutes); 
+app.use('/api/v1/rentals', rentalRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/bookings', bookingRoutes);
+app.use('/api/v1/payments', paymentRoutes);
 app.use('/api/v1', imageUploadRoutes);
 
 if (process.env.NODE_ENV === 'production') {
@@ -42,5 +44,5 @@ const PORT = process.env.PORT || 3001;
 //used to allow server-side code listen to front end functions
 // at localhost:3001  is available,    function is be called when  application is running
 app.listen(PORT, function(){
-console.log('I am running!');
+   console.log('I am running!');
 });

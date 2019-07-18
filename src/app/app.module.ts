@@ -2,20 +2,22 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-
+import { UserModule } from './user/user.module';
+import {RentalModule} from './rental/rental.module';
+import { AuthModule } from './auth/auth.module';
+import { ManageModule } from './manage/manage.module';
 import {Routes, RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppComponent } from './app.component';
 import{HeaderComponent} from './common/header/header.component';
 
 
 
-import {RentalModule} from './rental/rental.module';
-import { AuthModule } from './auth/auth.module';
-import { ManageModule } from './manage/manage.module';
+
+
 
 
 // adds what content that needs to be routed
@@ -27,8 +29,8 @@ const routes: Routes =[
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
-  
+    HeaderComponent,
+    
    ],
   imports: [
     //enables router module import
@@ -40,7 +42,8 @@ const routes: Routes =[
     NgbModule,//.forRoot removed for angular 8
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
-    ManageModule
+    ManageModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]
