@@ -26,9 +26,11 @@ const userSchema = new Schema({
         max: [32, 'Too long, max is 32 characters'],
         required: 'Password is required'
         },
+        stripeCustomerId: String,
+        revenue: Number,
         rentals: [{type: Schema.Types.ObjectId, ref: 'Rental'}], // reference rental array ids for user
         bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking'}] // reference booking array ids for user
-	
+    
 });
 //Compare Encrypted passwords
 userSchema.methods.hasSamePassword = function(requestedPassword){   
@@ -47,4 +49,3 @@ userSchema.pre('save', function(next){
 });
 
 module.exports = mongoose.model('User', userSchema);
-

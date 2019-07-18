@@ -1,8 +1,33 @@
-// will contain all route handlers
+// will contain all route handlers for user
 const User = require('../models/user');
 const { normalizeErrors } = require('../helpers/mongoose');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+
+exports.getUser = function(req,res){
+    const requestedUserId = req.params.id;
+    const user = res.locals.user;
+    if(requestedUserId === user.id){
+        User.findById(requestedUserId,function(err,foundUser){
+            if(err){
+            return res.status(422).send({errors: normalizeErrors(err.errors)});
+            }
+           
+            return res.json(foundUser);
+        })           
+    }else{
+      
+        User.findById(requestedUserId)
+        .select('-revenue -stripeCustomerId -password')
+        .exec(function(err, foundUser){
+            if(err){
+            return res.status(422).send({errors: normalizeErrors(err.errors)});
+            }
+            return res.json(foundUser);
+        })
+    }
+}
+
 // function for login authentication
 exports.auth = function(req, res){
     const { email, password} = req.body;// gets e mail and password variable
@@ -21,7 +46,7 @@ exports.auth = function(req, res){
         if (user.hasSamePassword(password)) {//if user and  password is the same
                 //Return JWT Token
                 const token =  jwt.sign({
-                    userId: user.id, 
+                    userId: user.id,
                     username: user.username
                 }, config.SECRET, {expiresIn: '1h'});
                 return res.json(token);
@@ -49,7 +74,7 @@ exports.register = function(req, res){
         //find user on database by e mail ()
         User.findOne( {email}, function(err, existingUser){
             if (err){// if other errors happen
-                //return mongoose error: return executes response only once  , to keep it from continuing 
+                //return mongoose error
                 return res.status(422).send({errors: normalizeErrors(err.errors)});
             }
             if (existingUser){ //if user exist on database
@@ -63,7 +88,7 @@ exports.register = function(req, res){
                 password
             });
             //saves user data to database (checks for errors first)
-            user.save(function(err){ 
+            user.save(function(err){
                 if(err){// if there is an error
                     return res.status(422).send({errors: normalizeErrors(err.errors)});// return mongoose error
                 }

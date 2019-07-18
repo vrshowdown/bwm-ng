@@ -8,6 +8,7 @@ export class Booking {
     totalPrice: number;
     guests: number;
     days: number;
+    paymentToken: any;
     createdAt: string;
     rental: Rental;
 }

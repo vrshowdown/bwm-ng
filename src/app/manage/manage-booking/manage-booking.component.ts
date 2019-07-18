@@ -1,5 +1,6 @@
 import{ Component, OnInit } from '@angular/core';
 import { BookingService } from '../../booking/shared/booking.service';
+import { PaymentService } from '../../payment/shared/payment.service';
 import { Booking } from '../../booking/shared/booking.model';
 
 
@@ -12,15 +13,40 @@ styleUrls: ['./manage-booking.component.scss']
 export class ManageBookingComponent implements OnInit {
   debugger;
   bookings: Booking[];
-  constructor(private bookingService: BookingService){}
+  payments: any[];
+  constructor(private bookingService: BookingService, 
+                     private paymentService: PaymentService){}
   
   ngOnInit(){
     this.bookingService.getUserBookings().subscribe(
-    (bookings: Booking[]) => { 
+    (bookings: Booking[]) => {
       this.bookings = bookings;
     },
-    () => {
+    () => {})
 
-    })
+this.getPendingPayments();
   }
+
+getPendingPayments() {
+this.paymentService.getPendingPayments().subscribe(
+(payments: any)=>{
+this.payments = payments;
+},
+()=>{})
+}
+acceptPayment(payment){
+this.paymentService.acceptPayment(payment).subscribe(
+(json)=>{
+payment.status =  'paid';
+},
+(err)=>{})
+}
+
+declinePayment(payment){
+this.paymentService.declinePayment(payment).subscribe(
+(json)=>{
+payment.status =  'declined';
+},
+(err)=>{})
+}
 }

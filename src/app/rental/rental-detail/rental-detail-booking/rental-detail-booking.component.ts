@@ -82,6 +82,10 @@ export class RentalDetailBookingComponent implements OnInit {
     this.resetDatePicker();
   }
 
+  onPaymentConfirmed(paymentToken: any) {
+    this.newBooking.paymentToken = paymentToken;
+  }
+
   createBooking(){
     this.newBooking.rental = this.rental;
     this.bookingService.createBooking(this.newBooking).subscribe(
