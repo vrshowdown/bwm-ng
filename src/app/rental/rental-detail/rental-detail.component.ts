@@ -6,8 +6,8 @@ import { ActivatedRoute } from '@angular/router'; // to link detail
 //to get rental data from service 
 import { RentalService } from '../shared/rental.service';      //imported database from service
 import { Rental } from '../shared/rental.model';    //imported type array
-
-
+import {UserP} from '../../user/shared/user-detail.model';
+import {UserService} from '../../user/shared/user.service';
 @Component({
   selector: 'bwm-rental-detail',
   templateUrl: './rental-detail.component.html',
@@ -20,7 +20,9 @@ export class RentalDetailComponent implements OnInit {
  
 
   
-  constructor(private route: ActivatedRoute, private rentalService: RentalService) { }// inject service into the constructor
+  constructor(private route: ActivatedRoute, 
+              private rentalService: RentalService
+             ) { }// inject service into the constructor
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -32,13 +34,13 @@ export class RentalDetailComponent implements OnInit {
 //This function to  gets rental data by router id 
 
   getRental(rentalId: string){
+
     this.rentalService.getRentalById(rentalId).subscribe(
     (rental: Rental)=>{ //by rental object and type
       this.rental = rental;  //current  number in rentals array  is assigned to the current individual  item in rental  service  
     });
   }
-  
-
+ 
 
 
 } // end export class RentalDetailComponent

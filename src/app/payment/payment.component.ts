@@ -68,6 +68,7 @@ export class PaymentComponent implements OnInit {
     if (error){
       console.error(error);
     }else{
+   
       this.token = token;
       this.paymentConfirmed.next(token);
     }
@@ -78,6 +79,10 @@ export class PaymentComponent implements OnInit {
   }
   
 }
+
+
+
+
 
 const style = {
   base: {

@@ -1,13 +1,20 @@
 const express = require ('express');
 const Rental = require('../models/rental');//data type structure and schema rules
 const User = require('../models/user');
+const UserP = require('../models/userp');
 const { normalizeErrors } = require('../helpers/mongoose');
 const router = express.Router(); //using routing method
 const UserCtrl = require('../controllers/user');
+const UserpCtrl= require('../controllers/userp');
 
 router.get('/secret', UserCtrl.authMiddleware, function(req, res){
     res.json({"secret": true});
 });
+
+
+
+
+
 //manage rentals
 router.get('/manage', UserCtrl.authMiddleware, function(req, res){
     const user = res.locals.user;
@@ -43,8 +50,9 @@ router.get('/:id', function(req, res){
     const rentalId = req.params.id;                                    
 
     Rental.findById(rentalId)
-    .populate('user', 'username-_id')
+    .populate('user', 'username-_id image-_id')
     .populate('bookings', 'startAt endAt -_id')
+    .populate('userp', '_id')
     .exec(function(err, foundRental){
      if (err){
            return res.status(422).send({errors:[{title: 'Rental Error!', detail: 'Could not find Rental!'}]});   
@@ -71,7 +79,6 @@ router.patch('/:id', UserCtrl.authMiddleware,function(req, res){
             return res.status(422).send({errors:[{title: 'Invalid User!', detail: 'You are not rental owner!'}]});
         }
         foundRental.set(rentalData);
-
         foundRental.save(function(err){
             if (err){
                 return res.status(422).send({errors: normalizeErrors(err.errors)});
@@ -81,6 +88,7 @@ router.patch('/:id', UserCtrl.authMiddleware,function(req, res){
 
     });
 });
+
 
 
 // to delete rental
@@ -117,19 +125,39 @@ router.delete('/:id', UserCtrl.authMiddleware, function(req, res){
 
 
 // to post  new rental
-router.post('', UserCtrl.authMiddleware, function(req,res){
-    const{ title, city, street, category, image, shared, bedrooms, description, dailyRate } = req.body;
+router.post('', UserCtrl.authMiddleware,VarifyAccount, function(req,res){
+    const{ title, city, street, category, image, shared, bedrooms, description, dailyRate} = req.body;
     const user = res.locals.user;
     const rental = new Rental({title, city, street, category, image, shared, bedrooms, description, dailyRate});
-   rental.user = user;
-    Rental.create(rental, function(err, newRental){
-        if(err){
+    rental.user = user;//assigning userid to this new rental
+    UserP.findOne({user}, function(err, foundUserPId){
+        if (err){
             return res.status(422).send({errors: normalizeErrors(err.errors)});
         }
-        User.update({_id: user.id}, { $push: {rentals: newRental}}, function(){});
-        return res.json(newRental);
+       // assign public id to new rental
+       rental.userp = foundUserPId;
+        Rental.create(rental, function(err, newRental,){
+            if(err){
+                return res.status(422).send({errors: normalizeErrors(err.errors)});
+            }
+            User.update({_id: user.id}, { $push: {rentals: newRental}}, function(){});
+        
+            return res.json(newRental);  
+        });
     });
 });
+
+function VarifyAccount(req,res,next){
+    const user = res.locals.user;
+    if(user.stripeAccountId){
+        next();
+    }else{
+        return res.status(422).send({errors:[{title: 'Access Denied', detail: 'You need to create a rental owner account before creating a rental. Go to Owner Section > Profile > Owner Settings to sign up'}]});
+    }
+}
+
+
+
 
 // to get rentals by search
 router.get('', function(req,res){  

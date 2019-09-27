@@ -13,7 +13,8 @@ export class LoginComponent implements OnInit{
   errors: any[] = [];
   notifyMessage: string = '';
 
-  constructor(private fb: FormBuilder, 
+  constructor(
+  private fb: FormBuilder, 
   private auth: AuthService, 
   private router: Router,
   private route: ActivatedRoute){}
@@ -40,15 +41,18 @@ export class LoginComponent implements OnInit{
     (this.loginForm.controls[fieldName].dirty || this.loginForm.controls[fieldName].touched)
   }
   isRequired(fieldName): boolean{
-    return this.loginForm.controls[fieldName].errors.required
+    return this.loginForm.controls[fieldName].errors.required;
   }
-  login(){
+
+  
+  login(userp){
     this.auth.login(this.loginForm.value).subscribe(
     (token)=>{
+     
       this.router.navigate(['/rentals']);
     },
     (errorResponse)=>{
-      this.errors = errorResponse.error.errors
+      this.errors = errorResponse.error.errors;
     })
   }
 }

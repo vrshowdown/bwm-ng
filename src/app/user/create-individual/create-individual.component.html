@@ -1,0 +1,244 @@
+<form #AccForm="ngForm"  [ngClass]= "isValidatingAccount ? 'loading' : ''  ">
+
+
+    <div class="row">
+        <div class="borders col-sm-6">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input [(ngModel)]="formDatax.firstName"
+                        #name="ngModel" 
+                        name ="firstname" 
+                        type="text" 
+                        class="form-control inp-individual-first-name formsize" 
+                        id="firstame"
+                        required>
+            
+            </div>
+        </div>
+       
+        <div class="borders col-sm-6">
+            <div class="form-group">
+                
+                    <label for="lastName">Last Name</label>
+                    <input [(ngModel)]="formDatax.lastName"
+    
+                              
+                                name ="lastname" 
+                                type="text" 
+                                class="form-control inp-individual-last-name " 
+                                id="lastame"
+                                required>
+            
+                </div>
+            </div>
+    
+    
+    
+        </div>
+        <div class="row">
+    
+    
+    
+            <div class="borders col-sm-6">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input [(ngModel)]="formDatax.email"
+    
+                        
+                        name ="email" 
+                        type="email" 
+                        class="form-control inp-individual-last-name " 
+                        id="email"
+                        required>
+            
+                </div>
+            </div>
+            <div class="borders col-sm-6">
+                <div class="form-group">
+                    
+                <label for="phone">Phone Number</label>
+                <input [(ngModel)]="formDatax.phone"
+    
+                            
+                            name ="phone" 
+                            type="text" 
+                            class="form-control inp-individual-phone" 
+                            id="phone"
+                            required>
+                
+                </div>
+            </div>
+    
+            
+        </div>
+
+
+        <div class="row">
+                <div class="borders col-sm-12">
+                <div class="form-group">
+                    
+                    <label for="address">Street Address</label>
+                    <input [(ngModel)]="formDatax.address"
+    
+                            
+                            name ="address" 
+                            type="text" 
+                            class="form-control inp-individual-address" 
+                            id="address"
+                            required>
+                
+                </div>
+                </div>
+        </div>
+        <div class="row">
+                <div class="borders col-sm-4">
+                        <div class="form-group">
+                    
+                            <label for="city">City</label>
+                            <input [(ngModel)]="formDatax.city"
+
+                                name ="city" 
+                                type="text" 
+                                class="form-control inp-individual-city" 
+                                id="city"
+                                required>
+                            
+                        </div>
+                </div>
+                <div class="borders col-sm-4">
+                        <div class="form-group">
+                    
+                                <label for="state">State</label>
+                              
+                                <select [(ngModel)]="formDatax.state"
+                
+                                        
+                                        name ="state" 
+                                        type="text" 
+                                        class="form-control inp-individual-state " 
+                                        id="state"
+                                        required>
+                                        <option *ngFor="let state of states" [ngValue]="state">{{state.name}}</option>
+                                    </select>
+                            
+                        </div>
+                </div>
+                <div class="borders col-sm-4">
+                        <div class="form-group">
+                    
+                                <label for="zipCode">Postal Code</label>
+                                <input [(ngModel)]="formDatax.zipCode"
+                
+                                        
+                                        name ="zipCode" 
+                                        type="text" 
+                                        class="form-control inp-individual-last-name " 
+                                        id="zipCode"
+                                        required>
+                            
+                            </div>
+                </div>
+        </div>
+
+        <div class="row">
+               
+                <div class="borders col-sm-4">
+                        <div class="form-group">
+                    
+                                <label for="birthdate">Date of Birth</label>
+                                <input [(ngModel)]="formDatax.birthDate"
+                                        max="9999"
+                                        min="0"
+                                        style="width:180px;"
+                                        name ="birthDate" 
+                                        type="date" 
+                                        class="form-control inp-individual-birth" 
+                                        id="birthDate"
+                                        required>
+                            
+                            </div>
+                </div>
+                <div class="borders col-sm-4">
+                        <div class="form-group">
+                    
+                                <label for="ssLast4">Last 4 Digits of SS Number</label>
+                                <input [(ngModel)]="formDatax.ssLast4"
+                                        style="width:180px;"
+                                        maxlength="4"
+                                        name ="ssLast4" 
+                                        type="password" 
+                                        class="form-control inp-individual-ssLast4" 
+                                        id="ssLast4"
+                                      
+                                        required>
+                            
+                            </div>
+                </div>
+                <div class="borders col-sm-4">
+                        <div class="form-group">
+                                <label for="file">Goverment ID</label>
+                                <div (change)="uploadFile($event)">
+                                        <input [(ngModel)]="formDatax.file"
+                                        type="file" 
+                                        id="id-file" 
+                                        name="id-file" 
+                                        accept=".jpeg,.jpg,.png" required>
+                                </div>
+                        </div>
+                </div>   
+        </div>
+      
+        <div class='row'>
+                      
+                                
+                        <div class="col-sm-12">
+                                <div style="background: #3e4040;
+                                padding: 31px;
+                                border-radius: 10px;
+                                margin-top: 28px;
+                                color: white;">
+                Payment processing services for [account holder term, e.g. drivers or sellers] on [www.jmu3d.com] are provided by Stripe and are subject to the <a href="https://stripe.com/connect-account/legal">Stripe Connected Account Agreement</a>, 
+                which includes the <a href="https://stripe.com/connect-account/legal">Stripe Terms of Service</a> (collectively, the “Stripe Services Agreement”). 
+                By agreeing to [this agreement / these terms / etc.] or continuing to operate as a [account holder term] on [platform name], 
+                you agree to be bound by the Stripe Services Agreement, as the same may be modified by Stripe from time to time. 
+                As a condition of [platform name] enabling payment processing services through Stripe, you agree to provide [platform name] accurate and complete information about you and your business, 
+                and you authorize [platform name] to share it and transaction information related to your use of the payment processing services provided by Stripe.
+                                </div>
+
+                               
+                    </div> 
+        </div>
+        <div class="row" style="margin-top:30px;">
+                <div style="float:right; display:block;">
+                                
+                        <input [(ngModel)]="formDatax.tos"
+                        style="width:78px;margin-left:15px"
+                        name ="tos" 
+                        type="checkbox" 
+                        class="form-control inp-individual-tos" 
+                        id="tos"
+                        required>
+                </div>
+                <div style="width:80%">
+                <p>By registering your account, you agree to our Services Agreement and the Stripe Connected Account Agreement.</p>
+                </div>
+        </div>
+       
+
+
+
+        <button [disabled]="!AccForm.valid" type="submit" class="btn btn-bwm" (click)="submitforToken()">Submit</button> 
+
+
+        <div *ngIf="isValidatingAccount" class='img-loading-overlay'>
+                        <div class='img-spinning-circle'></div>
+        </div>
+
+
+    </form> 
+    <div *ngIf="errors.length > 0" class="alert alert-danger">
+                <p *ngFor="let error of errors">
+                    {{error.detail}}
+                </p>
+              
+</div>

@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(['/login', {registered: 'success'}]);
     },
     (errorResponse)=>{
-      this.errors = errorResponse.error.errors
+      this.errors = errorResponse.error.errors;
     })
   }
 }

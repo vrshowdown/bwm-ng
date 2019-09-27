@@ -50,7 +50,7 @@
       </ng-container>
 
             <p class="card-text booking-days"> {{payment.booking.startAt | formatDate}} - {{payment.booking.endAt | formatDate}} | {{payment.booking.days}} days</p>
-            <p class="card-text"><span>Revenue: </span> <span class="booking-price-value">${{payment.amount / 100}}</span></p>
+            <p class="card-text"><span>Revenue: </span> <span class="booking-price-value">${{(payment.amount -30 )/ 100}}</span></p>
             <p class="card-text"><span>Status: </span> <span class="booking-price-value">{{payment.status}}</span></p>
 
             <a *ngIf="payment.booking.rental" class="btn btn-bwm" routerLink="/rentals/{{payment.booking.rental._id}}">Go to Rental</a>

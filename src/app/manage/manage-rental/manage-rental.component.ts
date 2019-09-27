@@ -13,7 +13,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ManageRentalComponent implements OnInit {
 
   rentals: Rental[];
-  debugger;
   rentalDeleteIndex: number;
   constructor(private rentalService: RentalService,  
     private toastr: ToastrService){

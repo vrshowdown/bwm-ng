@@ -1,0 +1,107 @@
+.avatar{
+    border-radius: 50%;
+    }
+    
+    .text-center{
+    margin-bottom: 20px;
+    }
+.profileBody{
+  padding-top: 19px;
+}
+.row{
+  margin: 0 auto !important;
+}
+
+ /*JIBREEL UTLEY**/
+ @import 'variables';
+
+    a {
+        &:hover, &:focus{
+            text-decoration: none; 
+        }
+   }
+
+  .col-sm-3{
+    padding: 0%;
+    max-width: 228px;
+    margin:0 auto;
+  }
+  .col-md-3{
+    padding: 0%;
+  }
+.v-borders{
+  border: 1px solid rgba(0,0,0,.125);
+border-radius: 6px;
+  table{
+    border: 1px solid rgba(0,0,0,.125);
+    border-spacing: 0;
+    border-collapse: collapse;
+    border-style: hidden;
+    width:100%;
+    td{
+      border: 1px solid rgba(0,0,0,.125);
+      width:100%;
+      padding:8px;
+    }
+  }
+}
+
+   .text-right {
+    text-align: left!important;
+}
+   .col-md-4{
+       margin:0 auto;
+       display: inline-block;
+       text-align: center;
+       margin:0 auto;
+   /* SINGLE CARD STYLES*/
+    .bwm-card {
+        text-align: left;
+        border: none;
+        margin-bottom: 25px;
+        display:inline-block;
+        .card-block {
+          padding-top: 8px;
+     
+    
+          .card-subtitle {
+            margin: 0;
+            font-weight: 500;
+            font-size: 12px;
+            text-transform: uppercase;
+            /*color: #16861a;*/
+          }
+    
+    
+    
+    
+          .card-title {
+            font-size: 19px;
+            margin: 3px 0;
+            color: $main-text-color;
+          }
+    
+    
+          .card-text {
+            font-size: 14px;
+            font-weight: 300;
+            color: #7e7e7e;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  
+    @media screen and (max-width:768px){
+      .col-md-3{
+        padding: 3px;
+        max-width: 310px;
+        margin:0 auto;
+        margin-bottom: 38px;
+      }
+      .col-sm-9{
+
+        margin:0 auto;
+      }
+
+    }

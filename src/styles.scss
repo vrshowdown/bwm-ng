@@ -3,7 +3,10 @@
 html, body, p{
 color: main-text-color;
 }
-
+.avatar{
+   border-radius: 50%;
+   }
+   
 .apartment{
     color: #a72da3;
    }
@@ -21,8 +24,18 @@ color: main-text-color;
       font-weight: 700;
       margin-bottom: 20px;
     }
-  
-
+  .imageContainer{
+     margin-bottom: 50px;
+     img{
+        width:100%;
+     }
+  }
+.slogan{
+   position: absolute;
+    margin: 253px 57px 0px;
+    font-size: 66px;
+    
+}
 .btn-ghost{
    background-color: transparent;
    color: $main-color!important;

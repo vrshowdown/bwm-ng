@@ -2,13 +2,18 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ImageUploadService } from './image-upload.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 
 class FileSnippet {
   static readonly IMAGE_SIZE = {width: 950, height: 720};
+  static readonly IMAGE_SIZE2 = {width: 540, height: 540};
   pending: boolean = false;
   status: string = 'INIT';
+ 
 
-  constructor(public src: string, public file: File){}
+  constructor(public src: string, 
+              public file: File){}
 }
 
 @Component({
@@ -26,10 +31,11 @@ export class ImageUploadComponent {
 
   selectedFile: FileSnippet;
   imageChangedEvent: any;
-
+  url:String;
+  pro:boolean;
   constructor(private toastr: ToastrService,
-    private imageService: ImageUploadService){
-    }
+              private imageService: ImageUploadService,
+              private router: Router){}
 
   private onSuccess(imageUrl: string){
     this.selectedFile.pending = false;
@@ -65,7 +71,10 @@ export class ImageUploadComponent {
   processFile(event: any){
     this.selectedFile =  undefined;
 
+    
+    const url = this.router.url;
     const URL = window.URL;
+   
     let file, img;
     if ((file = event.target.files[0]) && (file.type === 'image/png' || file.type === 'image/jpeg')){
 
@@ -73,11 +82,30 @@ export class ImageUploadComponent {
       const self = this;
 
       img.onload = function (){
-        if (this.width > FileSnippet.IMAGE_SIZE.width && this.height > FileSnippet.IMAGE_SIZE.height){
-          self.imageChangedEvent = event;
+
+        if(url !== '/users/profile' ){
+          if ( this.width > FileSnippet.IMAGE_SIZE.width && this.height > FileSnippet.IMAGE_SIZE.height){
+           self.pro = false;
+           
+            self.imageChangedEvent = event;
+
+          }else{
+
+            self.toastr.error(`Minimum width is ${FileSnippet.IMAGE_SIZE.width} and minimum height is ${FileSnippet.IMAGE_SIZE.height}`, 'Error!');
+          }
+
         }else{
-          self.toastr.error(`Minimum width is ${FileSnippet.IMAGE_SIZE.width} and minimum height is ${FileSnippet.IMAGE_SIZE.height}`, 'Error!');
+
+          if ( this.width > FileSnippet.IMAGE_SIZE2.width && this.height > FileSnippet.IMAGE_SIZE2.height){
+            self.pro = true;
+            self.imageChangedEvent = event;
+
+          }else{
+
+            self.toastr.error(`Minimum width is ${FileSnippet.IMAGE_SIZE2.width} and minimum height is ${FileSnippet.IMAGE_SIZE2.height}`, 'Error!');
+          }
         }
+
       }
       img.src = URL.createObjectURL(file);
     }else{

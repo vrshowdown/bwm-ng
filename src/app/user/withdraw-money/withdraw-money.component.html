@@ -1,0 +1,48 @@
+
+
+<form  #WithdawForm="ngForm">
+    
+        <br>
+        <div class='row'>
+            <div class="col-sm-6">
+               <h2>Withdraw Money</h2>
+            </div>
+        </div>
+           
+          <div class='row'>
+
+            <div class="col-sm-6">
+                
+              <label for="amount">Amount to Withdraw</label>
+              <input [(ngModel)]="formDataz.amount" 
+             
+              name ="amount" 
+              type="number" 
+              class="form-control" 
+              id="amount"
+             
+              required>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="password">User's Password</label>
+              <input [(ngModel)]="formDataz.password" 
+              name ="password" 
+              type="password" 
+              class="form-control" 
+              id="password"
+              required>
+            </div>
+
+          </div>
+
+          <br>
+          <button  (click)="onSubmitToPay($event)" type="button" class="btn btn-bwm">Withdraw {{formDataz.amount}}$</button>
+
+      </form>
+      <div *ngIf="errors.length > 0" class="alert alert-danger">
+          <p *ngFor="let error of errors">
+              {{error.detail}}
+          </p>
+        
+</div>
