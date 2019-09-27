@@ -363,10 +363,10 @@ exports.forgotPassword = function(req, res){
     //newToken(token, userId, username, password);
     const msg ={
       from: 'jibreelutley@jmu3d.com',
-      to: existingUser.email,
-      subject: 'Localhost Password request',
-      text: 'Hello'+ existingUser.name+', You recently requested reset password. click this link '+'http://localhost:4200/users/resetpassword/form/'+ token,
-      html: 'Hello'+ existingUser.name+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+'http://localhost:4200/users/resetpassword/form/'+token+'">Reset Password</a>'
+      to: existingUser.email,                   // http://localhost:4200/users
+      subject: 'Localhost Password request',    // https://jmu-bwm-ng.herokuapp.com/users/
+      text: 'Hello'+ existingUser.name+', You recently requested reset password. click this link '+' https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/'+ token,
+      html: 'Hello'+ existingUser.name+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+' https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/'+token+'">Reset Password</a>'
     }
     sgMail
         .send(msg)
