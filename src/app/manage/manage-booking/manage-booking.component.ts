@@ -11,7 +11,7 @@ styleUrls: ['./manage-booking.component.scss']
 })
 
 export class ManageBookingComponent implements OnInit {
-  debugger;
+ 
   bookings: Booking[];
   payments: any[];
   constructor(private bookingService: BookingService, 

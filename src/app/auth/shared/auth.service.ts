@@ -22,7 +22,6 @@ export class AuthService {
   private decodedToken;
 
   constructor(private http: HttpClient) {
-
     this.decodedToken = JSON.parse(localStorage.getItem('bwm_meta')) || new DecodedToken();
   }
 
@@ -31,7 +30,7 @@ export class AuthService {
 
     localStorage.setItem('bwm_auth', token);
     localStorage.setItem('bwm_meta', JSON.stringify(this.decodedToken));
-
+    
     return token;
   }
 

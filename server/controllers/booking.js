@@ -7,7 +7,15 @@ const moment = require('moment');
 
 const config = require('../config');
 const stripe = require('stripe')(config.STRIPE_SK);
-const CUSTOMER_SHARE = 0.8;
+const CUSTOMER_SHARE = 0.051;
+const STRIPE_FEE = 0.029;
+
+
+
+
+
+
+
 
 exports.createBooking = function(req, res) {
     // for creating booking localy
@@ -26,6 +34,7 @@ exports.createBooking = function(req, res) {
         if(foundRental.user.id === user.id){
             return res.status(422).send({errors: [{title: 'Invalid Booking', detail: 'Cannot create a booking on your rental!'}] });
         }
+        
 
         if(isValidBooking(booking, foundRental)){
             booking.user = user;
@@ -70,6 +79,10 @@ exports.getUserBookings = function(req, res){
     });
 }
 
+
+
+
+
 function isValidBooking(proposedBooking, rental){
     let isValid = true;
     if(rental.bookings && rental.bookings.length >0){
@@ -85,14 +98,26 @@ function isValidBooking(proposedBooking, rental){
     return isValid;
 }// end  isValidBooking
 
+
+
+
+
+
+
 //Create Payment to owner
 async function createPayment(booking, toUser, token){
 const { user } =  booking; 
 
+const PLATFORM_FEE = booking.totalPrice * (CUSTOMER_SHARE + STRIPE_FEE);
     const customer = await stripe.customers.create({
     source: token.id,
     email: user.email
-    });
+    },{
+        
+            stripe_account: toUser.stripeAccountId,
+           
+    }); 
+  
 
     if (customer){
         User.update({_id: user.id}, { $set: {stripeCustomerId: customer.id}}, () =>{});
@@ -102,7 +127,7 @@ const { user } =  booking;
             fromStripeCustomerId: customer.id,
             booking,
             tokenId: token.id,
-            amount: booking.totalPrice * 100 * CUSTOMER_SHARE
+            amount: (booking.totalPrice - PLATFORM_FEE) * 100,
         });
 
         try{

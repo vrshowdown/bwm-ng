@@ -1,6 +1,7 @@
 
 const Rental =require('./models/rental');  // adds model
 const User =require('./models/user');
+const UserP =require('./models/userp');
 const Booking = require('./models/booking');
 
 const fakeDbData = require('./data.json');
@@ -9,6 +10,7 @@ class FakeDb{
     constructor(){
         this.rentals = fakeDbData.rentals;
         this.users = fakeDbData.users ;
+        this.userp = fakeDbData.userps;
     }
 
     
@@ -16,6 +18,7 @@ async cleanDb(){    // removes all rentals
     await Rental.deleteMany({});
     await User.deleteMany({});  //make sure  remove is executed first before  anything else starts
     await Booking.deleteMany({});
+    await UserP.deleteMany({});
     // DeprecationWarning: collection.remove is deprecated. Use deleteOne, deleteMany, or bulkWrite instead.
 }
 
@@ -31,11 +34,13 @@ pushDataToDb(){
         });
         user.save();
         user2.save();
+
+      
     }
 
     async seedDb(){
         await this.cleanDb(); //removes data from database  
-         this.pushDataToDb();   // saves data to database
+        // this.pushDataToDb();   // saves data to database
     }
 }
 module.exports = FakeDb;  // enables importing to another file

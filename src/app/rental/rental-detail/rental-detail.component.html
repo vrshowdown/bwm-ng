@@ -17,9 +17,12 @@
       <div class="col-md-8">
         <div class="rental">
 
-<div class="rental-owner">
-<img src="assets/images/adorable.png" alt="">
-<span>{{rental.user.username}}</span>
+<div class="rental-owner" >
+  <a routerLink="/users/owner/{{rental.userp._id}}">
+    <img *ngIf="rental.user.image" src="{{rental.user.image}}" alt="">
+    <img *ngIf="!rental.user.image" src="assets/images/adorable.png"  alt="">
+    <span>{{rental.user.username}}</span>
+  </a>
 </div>
           <h2 class="rental-type {{rental.category}}">{{rental.shared ? 'Shared' : 'Whole'}} {{rental.category}}</h2>
           <h1 class="rental-title">{{rental.title}}</h1>

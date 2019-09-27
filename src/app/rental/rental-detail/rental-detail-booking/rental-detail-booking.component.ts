@@ -81,7 +81,7 @@ export class RentalDetailBookingComponent implements OnInit {
     this.modalRef = this.modalService.open(content);
     this.resetDatePicker();
   }
-
+//// function to receive token and place it in booking data 
   onPaymentConfirmed(paymentToken: any) {
     this.newBooking.paymentToken = paymentToken;
   }

@@ -18,7 +18,8 @@ exports: [
     EditableInputComponent,
     EditableTextareaComponent,
     EditableSelectComponent,
-    EditableImageComponent 
+    EditableImageComponent
+     
 ],
 declarations: [
     EditableInputComponent,

@@ -33,6 +33,7 @@
 <ng-template #content let-c="close" let-d="dismiss">
 <div class="modal-header">
   <h4 class="modal-title">Confirm Booking<p>{{newBooking.startAt}} to {{newBooking.endAt}}</p></h4>
+  
   <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -42,7 +43,11 @@
     $<em>{{rental.dailyRate}}</em> per Night
     <p>Guests: <em>{{newBooking.guests}}</em></p>
     <p>Price: $<em>{{newBooking.totalPrice}}</em></p>
+    <!--// when paymentConfirmed is emitted then it starts onPaymentConfirmed function in the  parent ts file  rental-detail-booking.component.ts-->
+    <p>To test process on this demo, use this card Number:</p>
+    <p> 4000 0000 0000 0077</p>
 <bwm-payment (paymentConfirmed)='onPaymentConfirmed($event)'></bwm-payment>
+
     <p>Do you confirm booking for selected days?</p>
 </div>
 <div *ngIf="errors.length > 0" class="alert-danger modal-error">

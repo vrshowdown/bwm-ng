@@ -8,3 +8,81 @@
     .text-center{
     margin-bottom: 20px;
     }
+    
+#rentalList{
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+ /*JIBREEL UTLEY**/
+ @import 'variables';
+
+    a {
+        &:hover, &:focus{
+            text-decoration: none; 
+        }
+   }
+   .col-md-4{
+       margin:0 auto;
+       display: inline-block;
+   /* SINGLE CARD STYLES*/
+    .bwm-card {
+        text-align: left;
+        border: none;
+        margin-bottom: 25px;
+        display:inline-block;
+        .card-block {
+          padding-top: 8px;
+     
+    
+          .card-subtitle {
+            margin: 0;
+            font-weight: 500;
+            font-size: 12px;
+            text-transform: uppercase;
+            /*color: #16861a;*/
+          }
+    
+    
+    
+    
+          .card-title {
+            font-size: 19px;
+            margin: 3px 0;
+            color: $main-text-color;
+          }
+    
+    
+          .card-text {
+            font-size: 14px;
+            font-weight: 300;
+            color: #7e7e7e;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+
+   #bank-Card-selector{
+     overflow:hidden;
+      -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+      -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+      animation-name: example;
+      animation-duration: 4s;
+    }
+
+    
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+/* Standard syntax */
+@keyframes example {
+   from {opacity:0 !important;}
+  to {opacity:1 !important;}
+}

@@ -17,12 +17,12 @@ const rentalRoutes = require('./routes/rentals'),
 mongoose.connect(config.DB_URI,{ useNewUrlParser: true }).then(() =>{
    if (process.env.NODE_ENV !== 'production') {
       const fakeDb = new FakeDb();
-      //fakeDb.seedDb();
+     // fakeDb.seedDb();
    }
 });
 
 
-const app = express(); // assigning app variable all the functions  required to run  server side application
+const app = express(); // assigning app express variable all the functions  required to run  server side application
 app.use(bodyParser.json());
 
 app.use('/api/v1/rentals', rentalRoutes);

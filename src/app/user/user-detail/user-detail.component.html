@@ -1,121 +1,312 @@
-<div *ngIf="user" class="container bootstrap snippet">
-    <div class="row">
-      <div class="col-sm-8">
-        <h1>{{user.username}}</h1>
+<div *ngIf="user" class="container bootstrap snippet" >
+ 
+  <div class="row">
+    <div class="col-sm-3">
+      <!--left col-->
+      <div class="text-center">
+        <div *ngIf="user.image">
+        <img src="{{user.image}}" class="avatar img-circle img-thumbnail" alt="avatar">
       </div>
-      <div *ngIf="user.revenue" class="col-sm-4"><h1>Revenue {{user.revenue / 100}}</h1></div>
-    </div>
-    <div class="row">
-      <div class="col-sm-3">
-        <!--left col-->
-        <div class="text-center">
+      <div *ngIf="!user.image">
           <img src="assets/images/adorable.png" class="avatar img-circle img-thumbnail" alt="avatar">
-          <h6>Upload a different photo...</h6>
-          <input type="file" class="text-center center-block file-upload">
-        </div>
-        <div class="panel panel-default">
-        
+      </div>
+      
+        <h6>Upload a different photo...</h6>
+
+   
+        <bwm-editable-image
+        [(entity)]="user"
+        [field]=" 'image' "
+        (entityUpdated)="updateImage(user._id, $event)"
+        >
+       </bwm-editable-image>
+    
+
      
-        </div>
-        <ul class="list-group">
-          <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
-        </ul>
-        <div class="panel panel-default">
-          <div class="panel-heading">Social Media</div>
-          <div class="panel-body">
-            <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
-          </div>
+      </div>
+      <div class="panel panel-default">
+      
+   
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item text-muted">Varified <i class="fa fa-dashboard fa-1x"></i><span class="pull-right">Yes</span></li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Name</strong></span> <span></span></li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Phone Number</strong></span><span></span></li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Address</strong></span></li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Goverment ID</strong></span></li>
+      </ul>
+      <div class="panel panel-default">
+        <div class="panel-heading">Social Media</div>
+        <div class="panel-body">
+          <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
         </div>
       </div>
-      <!--/col-3-->
-      <div class="col-sm-9">
-        <ul class="nav nav-tabs">
-          <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#settings">Settings</a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="home">
-  <form class="form">
-  <br>
-              <div class="form-group">
-                <div class="col-xs-6">
-                  <label for="first_name">
-                    <h4>Username</h4>
-                  </label>
-                  <input [(ngModel)]="user.username"  
-                   type="text" 
-        class="form-control" 
-        name="username" 
-        id="username" 
-        placeholder="first name" 
-        title="enter your first name if any.">
-                </div>
-              </div>
-             
-              <div class="form-group">
-                <div class="col-xs-6">
-                  <label for="email">
-                    <h4>Email</h4>
-                  </label>
-                  <input [(ngModel)]="user.email" 
-        type="email" class="form-control" 
-        name="email" 
-        id="email" 
-        placeholder="you@email.com" 
-        title="enter your email.">
-                </div>
-              </div>
-            
-              <div class="form-group">
-                <div class="col-xs-12">
-                  <br>
-                  <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                  <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
-                </div>
-              </div>
-            </form>
+    </div>
+    <!--/col-3-->
+    <div class="col-sm-9">
+        <div class="row">
+    
+            <div #revenue  *ngIf="user.revenue"   class="col-sm-6"  id="revenue"><h1>Revenue ${{rev}}</h1></div>
           </div>
-          <!--/tab-pane-->
-          <div class="tab-pane" id="settings">
-            <form class="form">
-  <br>
-              <div class="form-group">
-                <div class="col-xs-6">
-                  <label for="option1">
-                    <h4>Option 1</h4>
-                  </label>
-                  <input type="text" class="form-control" name="option1" id="option1" placeholder="first name" title="option not decided yet">
+      <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#settings">User Settings</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#passwordChange">Change Password</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#ownerSettings">Owner Settings</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#WithdrawMoney">Withdraw Money</a></li>
+      </ul>
+      <div class="tab-content">
+
+
+
+
+        <div class="tab-pane active" id="home">
+            <form #profileForm="ngForm">
+                <br>
+                <div>
+                    <h2>Hello, I'm {{user.username}}</h2>
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="col-xs-6">
-                  <label for="option2">
-                    <h4>Option 2</h4>
-                  </label>
-                  <input type="text" class="form-control" name="option2" id="option2" placeholder="last name" title="enter your last name if any.">
+                <div class="form-group">
+                  <label for="name">Full Name</label>
+                  <input [(ngModel)]="formData.name"
+                                #name="ngModel" 
+                                name ="name" 
+                                type="text" 
+                                class="form-control" 
+                                id="name"
+                                placeholder="{{user.name}}"
+                                >
+                    <div *ngIf ="name.invalid && (name.dirty || name.touched)" class="alert alert-danger" >
+                    <!--- <div *ngIf = "name.errors.required">
+                      Name is required.
+                      </div>-->
+                    </div>
                 </div>
-              </div>
-             
-              <div class="form-group">
-                <div class="col-xs-12">
-                  <br>
-                  <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                  <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+      
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input [(ngModel)]="formData.address" 
+                                name ="address" 
+                                type="text" 
+                                class="form-control" 
+                                id="address"
+                                placeholder="{{user.address}}"
+                                >
                 </div>
+      
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input [(ngModel)]="formData.phone" 
+                                name ="phone" 
+                                type="number" 
+                                class="form-control" 
+                                id="phone"
+                                placeholder="{{user.phone}}"
+                                >
+                </div>
+      
+                <div class="form-group">
+                  <label for="about">Introduction</label>
+                  <textarea [(ngModel)]="formData.about" 
+                                name ="about" 
+                                type="textarea" 
+                                class="form-control" 
+                                id="about"
+                                placeholder="{{user.about}}"
+                                rows = "5"
+                                ></textarea>
+                </div>
+                <button [disabled]="!profileForm.form.valid" (click)="updateProfile()" 
+                        type="submit" 
+                        class="btn btn-bwm">Submit</button>
+              </form>
+              <div *ngIf="errors.length > 0" class="alert alert-danger">
+                  <p *ngFor="let error of errors">
+                      {{error.detail}}
+                  </p>
+                
               </div>
-            </form>
-          </div>
-          <!--/tab-pane-->
-          
+
+
+            <div id="rentalList">
+              <ng-container  *ngIf="rentals && rentals.length > 0">
+                  <div  *ngFor="let rental of rentals; let i = index" class="col-md-4">
+              
+                    <a routerLink="/rentals/{{rental._id}}"><!--linked to  display individual page of item when clicked-->
+                        <div class="card bwm-card">
+                              <img class="card-img-top" src="{{rental.image}}" alt="">
+                              <div class="card-block">
+                              
+                              
+                              <h6 class="card-subtitle {{rental.category}}">{{rental.shared ? 'Shared' : 'Whole'}} {{rental.category}} &#183; {{rental.city}}</h6>
+                              <h4 class="card-title">{{rental.title}}</h4>
+                              <p class="card-text">${{rental.dailyRate}} per Night &#183; Free Cancelation</p>
+                       
+                              </div>
+                        </div>
+                    </a>
+                
+                  </div>
+                </ng-container>
+
+              </div>
+
+
         </div>
         <!--/tab-pane-->
+        <div class="tab-pane" id="settings">
+         
+
+            <form #userForm="ngForm">
+                <br>
+                <h2>Change Username and E-mail</h2>
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input [(ngModel)]="formData2.username"
+                                #username="ngModel" 
+                                name ="username" 
+                                type="text" 
+                                class="form-control" 
+                                id="username"
+                                placeholder="{{user.username}}"
+                                required>
+                    <div *ngIf ="username.invalid && (username.dirty || username.touched)" class="alert alert-danger" >
+                      <div *ngIf = "username.errors.required">
+                      Username is required.
+                      </div>
+                    </div>
+                </div>
+      
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input [(ngModel)]="formData2.email" 
+                                name ="email" 
+                                type="email" 
+                                class="form-control" 
+                                id="email"
+                               
+                                autocomplete="off"
+                                required>
+                </div>
+      
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input [(ngModel)]="formData2.password" 
+                                name ="password" 
+                                type="password" 
+                                class="form-control" 
+                                id="password"
+                                autocomplete="off"
+                                required>
+                </div>
+      
+                <button [disabled]="!userForm.form.valid" (click)="updateUser()" 
+                        type="submit" 
+                        class="btn btn-bwm">Submit</button>
+              </form>
+              <div *ngIf="errors.length > 0" class="alert alert-danger">
+                  <p *ngFor="let error of errors">
+                      {{error.detail}}
+                  </p>
+                
+              </div>
+
+
+              
+
+
+        </div>
+        <!--/tab-pane-->
+        <div class="tab-pane" id="passwordChange">
+            <br>
+            <form #passwordForm="ngForm">
+                <h2>Change Password</h2>
+              
+    
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input [(ngModel)]="formData3.email" 
+                              name ="email" 
+                              type="email" 
+                              class="form-control" 
+                              id="email"
+                             
+                              autocomplete="off"
+                              required>
+              </div>
+    
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input [(ngModel)]="formData3.password" 
+                              name ="password" 
+                              type="password" 
+                              class="form-control" 
+                              id="password"
+                              autocomplete="off"
+                              required>
+              </div>
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input [(ngModel)]="formData3.newPassword" 
+                              name ="newPassword" 
+                              type="password" 
+                              class="form-control" 
+                              id="newPassword"
+                              autocomplete="off"
+                              required>
+              </div>
+              <div class="form-group">
+                <label for="passwordConfirmation">Confirm Password</label>
+                <input [(ngModel)]="formData3.passwordConfirmation" 
+                              name ="passwordConfirmation" 
+                              type="password" 
+                              class="form-control" 
+                              id="passwordConfirmation"
+                              required>
+              </div>
+    
+              <button [disabled]="!passwordForm.form.valid" (click)="updatePassword()" 
+                      type="submit" 
+                      class="btn btn-bwm">Submit</button>
+            </form>
+            <div *ngIf="errors.length > 0" class="alert alert-danger">
+                <p *ngFor="let error of errors">
+                    {{error.detail}} 
+                </p>
+              
+            </div>
+        </div>
+
+        
+        <div class="tab-pane" id="ownerSettings">
+       
+         <div *ngIf="stipeId"  [@simpleFadeAnimation]="'in'" style="overflow: hidden;">
+            <br>
+            <h2>Add Bank Account</h2>   
+            <bwm-create-bank (bankConfirmed)='onBankConfirmed($event)'></bwm-create-bank>
+            <button [disabled]="!user.bankToken" type="button" class="btn btn-bwm" (click)="updateBank()">Confirm</button>
+        
+          </div>
+          <br>
+            <h2>Become A Rental Owner</h2>
+            <bwm-create-individual 
+            [formDatax] = "formDatax"
+            [isValidatingAccount] = "isValidatingAccount"
+            (stipeIdEvent)="stipeId=$event"
+            >
+            </bwm-create-individual>  
+    
+        
       </div>
-      <!--/tab-content-->
+     
+      <div class="tab-pane" id="WithdrawMoney">
+         <bwm-withdraw-money [formDataz]="formDataz" (childEvent)="rev=$event"></bwm-withdraw-money>
+      </div>
+      <!--/tab-pane-->
     </div>
-    <!--/col-9-->
+    <!--/tab-content-->
   </div>
-  <!--/row-->
+  <!--/col-9-->
+</div>
+<!--/row-->
+

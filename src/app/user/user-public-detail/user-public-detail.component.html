@@ -1,0 +1,131 @@
+<div *ngIf="userp" class="container bootstrap snippet">
+   
+
+    <div class="row">
+
+
+
+
+      <div class="col-md-3">
+        <!--left col-->
+        <div class="text-center">
+
+          <div *ngIf="userp.user.image">
+            <img src="{{userp.user.image}}" class="avatar img-circle img-thumbnail" alt="avatar">
+          </div>
+
+            <div *ngIf="!userp.user.image">
+                <img src="assets/images/adorable.png" class="avatar img-circle img-thumbnail" alt="avatar">
+            </div>
+        </div>
+
+        <div class="v-borders">
+         <table>
+            <tr>
+                <td><strong>Varification</strong></td>
+                <td><i class="fa fa-dashboard fa-1x"></i></td>
+              </tr>
+           <tr>
+             <td><strong>Varified</strong></td>
+             <td>Yes</td>
+           </tr>
+           <tr>
+              <td><strong>Name</strong></td>
+              <td></td>
+            </tr>
+            <tr>
+                <td><strong>Phone</strong></td>
+                <td></td>
+              </tr>
+              <tr>
+                  <td><strong>Work Email</strong></td>
+                  <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Goverment ID</strong></td>
+                  <td></td>
+                </tr>
+         </table>
+        </div>
+          
+         
+      
+
+        <div class="panel panel-default">
+          <div class="panel-heading">Social Media</div>
+          <div class="panel-body">
+            <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <!--/col-3-->
+      <div class="col-sm-9">
+
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">Home</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="home">
+
+
+                <div class="row">
+
+                        <div class="col-sm-11 ">
+
+
+                            <div class="profileBody">
+                                <h2>Hello, I'm {{userp.user.username}}</h2>
+                                <div class="aboutBody">{{userp.user.about}}</div>
+                            </div>
+                        </div>
+                       
+                </div>
+
+
+
+                <div class="profileBody">
+                <ng-container *ngIf="userp.user.rentals && userp.user.rentals.length > 0">
+
+                 
+                    <h3>{{userp.user.username}}'s Listings</h3>
+                    <div  *ngFor="let rental of userp.user.rentals; let i = index" class="col-md-4">
+                  
+                  
+                  
+                      <a routerLink="/rentals/{{userp.user.rentals[i]._id}}"><!--linked to  display individual page of item when clicked-->
+                          <div class="card bwm-card">
+                                <img class="card-img-top" src="{{userp.user.rentals[i].image}}" alt="">
+                                <div class="card-block">
+                                
+                                
+                                <h6 class="card-subtitle {{userp.user.rentals[i].category}}">{{userp.user.rentals[i].shared ? 'Shared' : 'Whole'}} {{userp.user.rentals[i].category}} &#183; {{userp.user.rentals[i].city}}</h6>
+                                <h4 class="card-title">{{userp.user.rentals[i].title}}</h4>
+                                <p class="card-text">${{userp.user.rentals[i].dailyRate}} per Night &#183; Free Cancelation</p>
+                         
+                                </div>
+                          </div>
+                      </a>
+                  
+                    </div>
+                  
+                  </ng-container>
+
+                </div>
+
+
+
+
+          </div>
+        </div>
+
+      </div>
+      <!--/tab-content-->
+    </div>
+    <!--/col-9-->
+  </div>
+  <!--/row-->

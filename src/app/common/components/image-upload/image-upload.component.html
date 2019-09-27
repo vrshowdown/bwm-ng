@@ -6,18 +6,30 @@
 </label>
     
    
-    
-    <image-cropper *ngIf="imageChangedEvent"
-        [imageChangedEvent]="imageChangedEvent"
-        [maintainAspectRatio]="true"
-        [aspectRatio]="4 / 3"
-        [resizeToWidth]="950"
-        format="jpeg"
-        (imageCroppedFile)="imageCropped($event)"
-        (imageLoaded)="imageLoaded()">
-      </image-cropper>
-    
-
+<!---<div class="avatar img-circle img-thumbnail">-->
+    <div *ngIf="!pro" >
+        <image-cropper *ngIf="imageChangedEvent"
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="4 / 3"
+            [resizeToWidth]="950"
+            format="jpeg"
+            (imageCroppedFile)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()">
+        </image-cropper>
+      </div>
+      
+      <div *ngIf="pro">
+      <image-cropper *ngIf="imageChangedEvent"
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="3 / 3"
+      [resizeToWidth]="540"
+      format="jpeg"
+      (imageCroppedFile)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()">
+    </image-cropper>
+    </div>
     <button *ngIf="imageChangedEvent" 
             (click)='uploadImage()'
             class='btn btn-success'
