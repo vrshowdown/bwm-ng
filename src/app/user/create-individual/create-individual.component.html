@@ -227,7 +227,7 @@
 
 
 
-        <button [disabled]="!AccForm.valid" type="submit" class="btn btn-bwm" (click)="submitforToken()">Submit</button> 
+        <button [disabled]="!AccForm.valid" type="submit" class="btn btn-bwm" (click)="submitforToken(formDatax)">Submit</button> 
 
 
         <div *ngIf="isValidatingAccount" class='img-loading-overlay'>
