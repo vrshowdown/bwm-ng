@@ -41,6 +41,7 @@ export class ResetpasswordComponent implements OnInit {
         //this.logout(userData);
         this.toastr.success('You have Successfully updated your password', 'Success!');
         this.formData = {};
+        this.router.navigate(['/login', {reset: 'success'}]);
       },
       (errorResponse /*errorResponse: HttpErrorResponse*/)=>{
         //this.toastr.error(errorResponse.error.errors[0].detail, 'Error');
