@@ -25,6 +25,9 @@ export class LoginComponent implements OnInit{
       if(params['registered']=== 'success'){
         this.notifyMessage = 'You have been successfully registered, you can log in now!';
       }
+      if(params['reset']=== 'success'){
+        this.notifyMessage = 'You have been successfully reset your password, you can log in now with your new password!';
+      }
     })
   }
   

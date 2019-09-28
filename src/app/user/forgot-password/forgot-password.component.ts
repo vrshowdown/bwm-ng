@@ -43,7 +43,7 @@ export class ForgotPasswordComponent implements OnInit {
         ()=>{
           this.toastr.success('You have Successfully updated your password', 'Success!');
           //this.formData = {};
-         
+          this.router.navigate(['/login', {reset: 'success'}]);
         },
         (errorResponse)=>{
           this.errors = errorResponse.error.errors;
