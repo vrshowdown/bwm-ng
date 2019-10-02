@@ -11,6 +11,10 @@ import { UserComponent } from './user.component';
 import { ResetpasswordComponent } from '../user/resetpassword/resetpassword.component';
 import { ForgotPasswordComponent } from '../user/forgot-password/forgot-password.component';
 import { CreateBankComponent } from './create-bank/create-bank.component';
+import { CreateIndividualComponent } from './create-individual/create-individual.component';
+import { WithdrawMoneyComponent } from './withdraw-money/withdraw-money.component';
+import { ActivationComponent } from './activation/activation.component';
+
 
 import { EditableModule } from '../common/components/editable/editable.module';
 import { ImageUploadModule } from '../common/components/image-upload/image-upload.module';
@@ -20,8 +24,7 @@ import { UserService } from './shared/user.service';
 import{ PaymentService } from './shared/payment.service';
 import { AuthGuard } from '../auth/shared/auth.guard';
 import { AuthService } from '../auth/shared/auth.service';
-import { CreateIndividualComponent } from './create-individual/create-individual.component';
-import { WithdrawMoneyComponent } from './withdraw-money/withdraw-money.component';
+
 
 const routes: Routes =[
 
@@ -32,7 +35,9 @@ const routes: Routes =[
             { path: 'profile', canActivate: [AuthGuard], component: UserDetailComponent },
             { path: 'forgotpassword/email', component:ForgotPasswordComponent},
             { path: 'resetpassword/form/:token', component:ResetpasswordComponent},
-            { path: 'owner/:userpId', component:UserPublicDetailComponent}
+            { path: 'owner/:userpId', component:UserPublicDetailComponent},
+            { path: 'activation/:token', component:ActivationComponent},
+           
             ]
     }
   
@@ -59,7 +64,9 @@ declarations: [
     UserPublicDetailComponent,
     CreateBankComponent,
     CreateIndividualComponent,
-    WithdrawMoneyComponent
+    WithdrawMoneyComponent,
+    ActivationComponent
+ 
 ],
 providers: [
     UserService,

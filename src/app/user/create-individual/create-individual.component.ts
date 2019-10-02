@@ -105,7 +105,7 @@ user: User;
 userData:any;
 
  async submitforToken(formDatax:ConnectedAccount){
-   debugger;
+
    formDatax = this.formDatax;
   const birthDateSplit = formDatax.birthDate.split("-",); 
    

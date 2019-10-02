@@ -22,9 +22,8 @@ export class UserService {
     public forgotPassword(userData: any): Observable<any> {
         return this.http.post('/api/v1/users/forgotpassword/email', userData);
     }
-    public getPassChangeAuth(token: string, userData: any): Observable<any> {
-        return this.http.put(`/api/v1/users/resetpassword/form/${token}`, userData);
-    }
+   
+  
     public getUserpById(userpId: string): Observable<any>{
         return   this.http.get('/api/v1/users/owner/'+ userpId);     
       }
@@ -34,8 +33,16 @@ export class UserService {
       public CreateCardAccount(userData: any): Observable<any>{
         return   this.http.post('/api/v1/payments/accountcard/', userData); 
       }
-     
-     
+      public getPassChangeAuth(token: string, userData: any): Observable<any> {
+        return this.http.put(`/api/v1/users/resetpassword/form/${token}`, userData);
+    }
+      public getActivationAuth(token: string, userData: any): Observable<any> {
 
+        return this.http.put(`/api/v1/users/activation/${token}`,token);
+    }
+    
+    public ResendActivationAuth(userData: any): Observable<any> {
+      return this.http.post('/api/v1/users/resendactivation',userData);
+  }
      
 }

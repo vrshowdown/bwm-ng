@@ -35,7 +35,9 @@ exports.createBooking = function(req, res) {
             return res.status(422).send({errors: [{title: 'Invalid Booking', detail: 'Cannot create a booking on your rental!'}] });
         }
         
-
+        if(user.activated !== true){
+            return res.status(422).send({errors: [{title: 'Wrong Data!', detail: 'User is not activated!'}] }); 
+          }
         if(isValidBooking(booking, foundRental)){
             booking.user = user;
             booking.rental = foundRental;
