@@ -102,6 +102,10 @@ exports.MoneyWithdrawl = async function(req, res){
     if(err){
       return res.status(422).send({errors: normalizeErrors(err.errors)});
     }
+    if(foundUser.activated !== true){
+      return res.status(422).send({errors: [{title: 'Wrong Data!', detail: 'User is not activated!'}] });
+     
+    }
     
     if(foundUser.hasSamePassword(userData.password)){
      
@@ -167,7 +171,11 @@ exports.stripeAcc =  function(req, res, next){
           if(err){
             return res.status(422).send({errors: normalizeErrors(err.errors)});
           }
-
+          
+          if(foundUser.activated !== true){
+            return res.status(422).send({errors: [{title: 'Wrong Data!', detail: 'User is not activated!'}] });
+           
+        }
           if(foundUser){
             if(user.stripeAccountId){
               //return res.status(422).send({errors:[{title: 'Account Exist!', detail: 'This User already has a Stripe account!'}]}); 
@@ -205,6 +213,9 @@ exports.StripeAccount = function(req,res, next) {
         const user =  res.locals.user;
       
   User.findById(user.id,function(err,foundUser){
+    if(foundUser.activated !== true){
+      return res.status(422).send({errors: [{title: 'Wrong Data!', detail: 'User is not activated!'}] }); 
+    }
       stripe.accounts.update(
         foundUser.stripeAccountId,
            {

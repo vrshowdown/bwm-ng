@@ -14,6 +14,7 @@ export class User{
     revenue: number;
     bankToken: any;
     currency: string;
+    activated: boolean;
     stripeAccountId:string;
 
 }

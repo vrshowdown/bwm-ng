@@ -40,6 +40,8 @@ const userSchema = new Schema({
         revenue: Number,
         randomToken: String,
         stripeAccountId: String,
+        ipToken: String,
+        activated: Boolean,
         rentals: [{type: Schema.Types.ObjectId, ref: 'Rental'}], // reference rental array ids for user
         bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking'}], // reference booking array ids for user
       
@@ -54,11 +56,11 @@ userSchema.pre('save', function(next){
     const user = this;
     user.randomToken = Math.random();
     bcrypt.genSalt(10, function(err, salt) {
+
         bcrypt.hash(user.password, salt, function(err, hash) {
-            // Store hash in your password DB.
     user.password = hash;
-    next();
-        });
+    next();});
+
     });
 });
 

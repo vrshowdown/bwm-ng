@@ -23,11 +23,28 @@ export class LoginComponent implements OnInit{
     this.initForm();
     this.route.params.subscribe((params)=>{
       if(params['registered']=== 'success'){
-        this.notifyMessage = 'You have been successfully registered, you can log in now!';
+        this.notifyMessage = 'You have been successfully registered, Check your email to confirm account! To send this Confirmation email agin, log in and goto Owner Section > Profile > User Settings';
       }
       if(params['reset']=== 'success'){
-        this.notifyMessage = 'You have been successfully reset your password, you can log in now with your new password!';
+        this.notifyMessage = 'You have successfully reseted your password, you can log in now with your new password!';
       }
+      if(params['activated']=== 'success'){
+        this.notifyMessage = 'Your account has been activated, you can log in now!';
+        
+      }
+      if(params['emailchange']=== 'success'){
+        this.notifyMessage = 'You have successfully changed your e mail, you can log in now';  
+      }
+      if(params['usernamechange']=== 'success'){
+        this.notifyMessage = 'You have successfully changed your username, you can log in now';  
+      }
+      if(params['reactivationNewEmailRequest']=== 'success'){
+        this.notifyMessage = 'You have Successfully changed your email. please find your confirmation e mail in your inbox or junkmail, and activate your account';
+      }
+      if(params['reactivationRequest']=== 'success'){
+        this.notifyMessage = 'You have Successfully sent a confirmation e mail. please find your e mail in the inbox or junkmail and activate your account';
+      }
+     
     })
   }
   
@@ -50,12 +67,20 @@ export class LoginComponent implements OnInit{
   
   login(){
     this.auth.login(this.loginForm.value).subscribe(
-    (token)=>{
+    ()=>{
      
       this.router.navigate(['/rentals']);
     },
     (errorResponse)=>{
+      
       this.errors = errorResponse.error.errors;
+      
     })
   }
+
+
+
+
+
+
 }

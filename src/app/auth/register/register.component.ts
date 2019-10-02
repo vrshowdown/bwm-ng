@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
 import { Router } from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 @Component({
   selector: 'bwm-register',
   templateUrl: './register.component.html',
@@ -12,7 +13,8 @@ export class RegisterComponent implements OnInit {
   formData: any = {};
   errors: any[] =[]; 
 
-  constructor(private auth: AuthService, private router: Router){
+  constructor(private auth: AuthService, private router: Router, private http: HttpClient){
+    
   }
   ngOnInit(){
   }
@@ -25,4 +27,10 @@ export class RegisterComponent implements OnInit {
       this.errors = errorResponse.error.errors;
     })
   }
+
+
+getIpAddress(){
+
+}
+
 }

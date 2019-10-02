@@ -1,4 +1,4 @@
-import { Component, OnInit,Output, EventEmitter,Input,ChangeDetectorRef,ChangeDetectionStrategy, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import {UserService} from '../shared/user.service';
 import { ToastrService } from 'ngx-toastr';
@@ -6,7 +6,6 @@ import {User} from '../shared/user.model';
 import { AuthService } from '../../auth/shared/auth.service';
 import { HttpErrorResponse } from '@angular/common/http'; 
 import { Router} from '@angular/router';
-import { Subject } from 'rxjs';
 
 import { Rental } from '../../rental/shared/rental.model';
 import { RentalService } from '../../rental/shared/rental.service';
@@ -30,7 +29,6 @@ animations: [
     
   ])
 ]
-//changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
@@ -51,8 +49,10 @@ export class UserDetailComponent implements  OnInit {
   formData: any = {};
   formData2: any = {};
   formData3: any = {};
+  formData4: any = {};
   formDatax: any = {};//create individual
   formDataz: any = {};
+  emailForm: any = {};
   image: string;
   token: String;
   token2:String;
@@ -73,7 +73,6 @@ export class UserDetailComponent implements  OnInit {
                    }
   ngOnInit(){
     
-   
     this.getUser();
     
     this.rentalService.getUserRentals().subscribe(
@@ -125,6 +124,7 @@ export class UserDetailComponent implements  OnInit {
       this.formData2.username = user.username;
       this.formData2.email = user.email;
       this.formData3.email = user.email;
+      this.formData4.email = user.email;
       this.isValidatingAccount=false;
       this.rev = user.revenue/100;
       this.stipeId = user.stripeAccountId;
@@ -149,21 +149,77 @@ export class UserDetailComponent implements  OnInit {
       })
   }
 
+
+
+
+
+
+
+
 //update user account
-  updateUser(userId: string, userData: any){
-    userId = this.auth.getUserId();
-    userData = this.formData2;
-   
+  updateUserEmail(userId: string, userData: any){
     this.userService.updateAccount(userId, userData).subscribe(
       (updatedUser: User)=>{
         this.user = updatedUser;  
-        this.logout(userData);
-        this.toastr.success('You have Successfully updated your account', 'Success!');
+         if(this.user.activated===false){
+          this.auth.logout();
+          this.router.navigate(['/login', {reactivationNewEmailRequest: 'success'}]);
+         }else{
+          this.auth.logout();
+          this.router.navigate(['/login', {emailchange: 'success'}]);
+         }
       },
       (errorResponse)=>{
         this.errors = errorResponse.error.errors;
       })
   }
+
+
+ 
+
+  updateUserName(userId: string, userData: any){
+     this.userService.updateAccount(userId, userData).subscribe(
+       (updatedUser: User)=>{
+         this.user = updatedUser;  
+             this.auth.logout();
+             
+             this.router.navigate(['/login', {usernamechange: 'success'}]);
+       },
+       (errorResponse)=>{
+         this.errors = errorResponse.error.errors;
+       })
+   }
+
+updateUserAccount(userId: string, userData: any){
+  userId = this.auth.getUserId();
+  userData = this.formData2;
+  if(userData.email != this.user.email){
+    this.updateUserEmail(userId, userData);
+  }else{
+    this.updateUserName(userId, userData);
+  }
+}
+
+
+resendActivationAuth(user){
+  user = this.user.email;
+  this.userService.ResendActivationAuth(user).subscribe(
+    ()=>{
+      
+      this.auth.logout();
+      this.router.navigate(['/login', {reactivationRequest: 'success'}]);
+    },
+    (errorResponse)=>{
+      this.errors = errorResponse.error.errors;
+    })
+}
+
+
+
+
+
+
+
   
 // update user password
   updatePassword(userId: string, userData: any){

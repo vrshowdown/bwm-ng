@@ -51,9 +51,9 @@
       <ul class="nav nav-tabs">
         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">Home</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#settings">User Settings</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#passwordChange">Change Password</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#ownerSettings">Owner Settings</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#WithdrawMoney">Withdraw Money</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#passwordChange" *ngIf="user.activated">Change Password</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#ownerSettings" *ngIf="user.activated">Owner Settings</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#WithdrawMoney" *ngIf="user.activated">Withdraw Money</a></li>
       </ul>
       <div class="tab-content">
 
@@ -200,10 +200,20 @@
                                 required>
                 </div>
       
-                <button [disabled]="!userForm.form.valid" (click)="updateUser()" 
-                        type="submit" 
-                        class="btn btn-bwm">Submit</button>
+              
+                <button [disabled]="!userForm.form.valid" (click)="updateUserAccount()" 
+                type="submit" 
+                class="btn btn-bwm">Submit</button>
+             
               </form>
+              <br>
+              <div *ngIf="!user.activated">
+                <h2>Resend Confirmation E-mail</h2>
+                <p><button type="submit"  class="btn btn-bwm" (click)="resendActivationAuth()">Send E mail Confirmation</button></p>
+              </div>
+
+                  
+           
               <div *ngIf="errors.length > 0" class="alert alert-danger">
                   <p *ngFor="let error of errors">
                       {{error.detail}}
@@ -211,6 +221,8 @@
                 
               </div>
 
+
+            
 
               
 
@@ -279,27 +291,29 @@
 
         
         <div class="tab-pane" id="ownerSettings">
-       
-         <div *ngIf="stipeId"  [@simpleFadeAnimation]="'in'" style="overflow: hidden;">
+         
+            <div *ngIf="stipeId && user.activated"  [@simpleFadeAnimation]="'in'" style="overflow: hidden;">
+              <br>
+              <h2>Add Bank Account</h2>   
+              <bwm-create-bank (bankConfirmed)='onBankConfirmed($event)'></bwm-create-bank>
+              <button [disabled]="!user.bankToken" type="button" class="btn btn-bwm" (click)="updateBank()">Confirm</button>
+          
+            </div>
             <br>
-            <h2>Add Bank Account</h2>   
-            <bwm-create-bank (bankConfirmed)='onBankConfirmed($event)'></bwm-create-bank>
-            <button [disabled]="!user.bankToken" type="button" class="btn btn-bwm" (click)="updateBank()">Confirm</button>
-        
+            <div *ngIf="user.activated">
+              <h2>Become A Rental Owner</h2>
+              <bwm-create-individual 
+              [formDatax] = "formDatax"
+              [isValidatingAccount] = "isValidatingAccount"
+              (stipeIdEvent)="stipeId=$event"
+              >
+              </bwm-create-individual>
           </div>
-          <br>
-            <h2>Become A Rental Owner</h2>
-            <bwm-create-individual 
-            [formDatax] = "formDatax"
-            [isValidatingAccount] = "isValidatingAccount"
-            (stipeIdEvent)="stipeId=$event"
-            >
-            </bwm-create-individual>  
     
         
       </div>
      
-      <div class="tab-pane" id="WithdrawMoney">
+      <div class="tab-pane" id="WithdrawMoney" *ngIf="user.activated">
          <bwm-withdraw-money [formDataz]="formDataz" (childEvent)="rev=$event"></bwm-withdraw-money>
       </div>
       <!--/tab-pane-->
