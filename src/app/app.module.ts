@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import{HeaderComponent} from './common/header/header.component';
+import { FooterComponent } from './common/footer/footer.component';
 
 
 
@@ -30,7 +31,8 @@ const routes: Routes =[
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent, 
+    HeaderComponent,
+    FooterComponent, 
    ],
   imports: [
     //enables router module import

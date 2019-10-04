@@ -1,15 +1,11 @@
 <!-- app.component.html acts as the main template for the root component that is attached to index.html
 It is now used  for to display routed peices of content under a header menu By Jibreel-->
-
-<!--Example of a new custom header component, a menu
-<div class='imageContainer'>
-  <div class='slogan'>Book the world with a click!
-  <div><span class = "btn btn-bwm" >Sign in</span></div></div>
-  <img src='assets/images/photo-greese-min.jpg'></div>
--->
+<div class="wrapper">
 <bwm-header></bwm-header>
 
-<div class="container">
-  <!--Displays webpage content based on routing to componants. Displays rental  page and  Temp in in app.module.ts -->
+<div class="container containerj">
   <router-outlet></router-outlet>
 </div>
+</div>
+
+<bwm-footer></bwm-footer>

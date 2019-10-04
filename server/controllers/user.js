@@ -339,8 +339,8 @@ function activationEmail(res,req,email){
                 from: 'jibreelutley@jmu3d.com',
                 to: foundUser.email,                   // http://localhost:4200/users/resetpassword/form/
                 subject: 'BookWithMe Account Activation',    // https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/
-                text: 'Hello '+ foundUser.username+', You recently Registered to a new account. click this link '+'http://localhost:4200/users/activation'+ token,
-                html: 'Hello '+ foundUser.username+'</strong>,<br><br>, You recently registered to a new account. Please click this link '+'<a href ="'+'http://localhost:4200/users/activation/'+token+'">Activate Account</a>'
+                text: 'Hello '+ foundUser.username+', You recently Registered to a new account. click this link '+'https://jmu-bwm-ng.herokuapp.com/users/activation'+ token,
+                html: 'Hello '+ foundUser.username+'</strong>,<br><br>, You recently registered to a new account. Please click this link '+'<a href ="'+'https://jmu-bwm-ng.herokuapp.com/users/activation/'+token+'">Activate Account</a>'
               }
               sgMail
                   .send(msg)
@@ -483,8 +483,8 @@ exports.forgotPassword = function(req, res){
       from: 'jibreelutley@jmu3d.com',
       to: existingUser.email,                   // http://localhost:4200/users/resetpassword/form/
       subject: 'Localhost Password request',    // https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/
-      text: 'Hello'+ existingUser.name+', You recently requested reset password. click this link '+'http://localhost:4200/users/resetpassword/form/'+ token,
-      html: 'Hello'+ existingUser.name+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+'http://localhost:4200/users/resetpassword/form/'+token+'">Reset Password</a>'
+      text: 'Hello'+ existingUser.name+', You recently requested reset password. click this link '+'https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/'+ token,
+      html: 'Hello'+ existingUser.name+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+'https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/'+token+'">Reset Password</a>'
     }
     sgMail
         .send(msg)
