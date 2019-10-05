@@ -368,7 +368,7 @@ function activationEmail(res,req,email){
 
 //To authorize User
 exports.authMiddleware = function(req, res, next){
- 
+ debugger;
     let token = '';
     const url = req.url;
 
@@ -378,11 +378,11 @@ exports.authMiddleware = function(req, res, next){
             token = 'Bearer '+ req.params.token;
           break;
         case '/resetpassword/form/'+req.params.token:
-            token = 'Bearer '+ req.params.token
+            token = 'Bearer '+ req.params.token;
           break;
        default:
             token = req.headers.authorization;
-            break;
+         break;
       }
 
     try{
@@ -435,24 +435,7 @@ function notAuthorized(res){
 
 
 
-function saveAccount(res,req,userData,foundUser){
-   
-    foundUser.set(userData);
-    foundUser.save(userData,function(err){
-        const user = res.locals.user;
-        if (err){
-            return res.status(422).send({errors: normalizeErrors(err.errors)});
-        }
 
-        if(foundUser.email !== user.email ){
-            if(foundUser.activated === false){
-            activationEmail(res,req,foundUser.email);
-            }
-        }
-        return res.status(200).send(foundUser);
-    }); 
- 
-}
 
 
 
@@ -483,8 +466,8 @@ exports.forgotPassword = function(req, res){
       from: 'jibreelutley@jmu3d.com',
       to: existingUser.email,                   // http://localhost:4200/users/resetpassword/form/
       subject: 'Localhost Password request',    // https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/
-      text: 'Hello'+ existingUser.name+', You recently requested reset password. click this link '+'https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/'+ token,
-      html: 'Hello'+ existingUser.name+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+'https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/'+token+'">Reset Password</a>'
+      text: 'Hello'+ existingUser.name+', You recently requested reset password. click this link '+'http://localhost:4200/users/resetpassword/form/'+ token,
+      html: 'Hello'+ existingUser.name+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+'http://localhost:4200/users/resetpassword/form/'+token+'">Reset Password</a>'
     }
     sgMail
         .send(msg)
@@ -511,8 +494,8 @@ exports.forgotPassword = function(req, res){
   
 // for changing password  from forgotpass
 exports.getPassChangeAuth = function(req, res){
-    debugger;
-   
+  
+   debugger;
     
     const user = res.locals.user;
    
@@ -536,20 +519,39 @@ exports.getPassChangeAuth = function(req, res){
                   
                     const userData = req.body;
                     userData.password = newPassword;
-                    saveAccount(res,userData,foundUser,err); 
+                    saveAccount(req,res,userData,foundUser,err); 
                 
                 });
     
    
 }
 
+function saveAccount(req,res,userData,foundUser,err){
+    debugger;
+    const user = res.locals.user;
+     if(foundUser.email !== user.email ){
+         if(foundUser.activated === false){
+         activationEmail(res,req,foundUser.email);
+         }
+     }
+     foundUser.set(userData);
+     foundUser.save(userData,function(err){
+         const user = res.locals.user;
+         if (err){
+             return res.status(422).send({errors: normalizeErrors(err.errors)});
+         }
+ 
+         return res.status(200).send(foundUser);
+     }); 
+  
+ }
 
 //To make account activated
 exports.getActivation = function(req,res){
-debugger;
+
     const user = res.locals.user;
     const requestedUserId = user.id;
-    const ipaddress =  req.connection.remoteAddress;
+    //const ipaddress =  req.connection.remoteAddress;
 
     userData = req.body;
 
