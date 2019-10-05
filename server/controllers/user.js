@@ -42,7 +42,7 @@ exports.getUser = function(req,res){
 
 //to update profile
 exports.updateUser = function(req,res){
-    debugger;
+   
     const requestedUserId = req.params.id;
     const user = res.locals.user;
     const userData = req.body;
@@ -139,7 +139,7 @@ exports.checkEmailforUpdate = function(req, res, next){
 
 //for  request activation button
 exports.requestActivation = function(req, res){
-    debugger;
+    
    // const requestedUserId = req.params.id;
     const user = res.locals.user;
     const userData = req.body;
@@ -245,7 +245,7 @@ exports.auth = function(req, res){
 exports.register = function(req, res){
     const {username, email, password, passwordConfirmation, activated} = req.body; // variables that holds user input data
   
-    debugger;
+  
    
         if (!password || !email){ // if no password or e mail
             // send error message
@@ -368,7 +368,7 @@ function activationEmail(res,req,email){
 
 //To authorize User
 exports.authMiddleware = function(req, res, next){
- debugger;
+
     let token = '';
     const url = req.url;
 
@@ -466,8 +466,8 @@ exports.forgotPassword = function(req, res){
       from: 'jibreelutley@jmu3d.com',
       to: existingUser.email,                   // http://localhost:4200/users/resetpassword/form/
       subject: 'Localhost Password request',    // https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/
-      text: 'Hello'+ existingUser.name+', You recently requested reset password. click this link '+'http://localhost:4200/users/resetpassword/form/'+ token,
-      html: 'Hello'+ existingUser.name+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+'http://localhost:4200/users/resetpassword/form/'+token+'">Reset Password</a>'
+      text: 'Hello'+ existingUser.name+', You recently requested reset password. click this link '+'https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/'+ token,
+      html: 'Hello'+ existingUser.name+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+'https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/'+token+'">Reset Password</a>'
     }
     sgMail
         .send(msg)
@@ -495,8 +495,6 @@ exports.forgotPassword = function(req, res){
 // for changing password  from forgotpass
 exports.getPassChangeAuth = function(req, res){
   
-   debugger;
-    
     const user = res.locals.user;
    
     const { newPassword, passwordConfirmation} = req.body;
@@ -527,7 +525,7 @@ exports.getPassChangeAuth = function(req, res){
 }
 
 function saveAccount(req,res,userData,foundUser,err){
-    debugger;
+
     const user = res.locals.user;
      if(foundUser.email !== user.email ){
          if(foundUser.activated === false){
