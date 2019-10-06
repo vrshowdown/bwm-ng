@@ -3,6 +3,7 @@
 //This componant also used for to make list item attributes accessable
 //This Organizes a single rental  item as a componant so it can be displayed in an array, in rental-list.component's forloop
 //current processed information from the list will be passed through this component and displayed, based on item in the list
+// But right now its just used for the input 
 // BY JIBREEL UTLEY
 import { Component, OnInit, Input } from '@angular/core';  // declare Angular component/OnInit functions and input  function for interface  
 
