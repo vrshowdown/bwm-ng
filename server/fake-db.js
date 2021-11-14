@@ -7,40 +7,53 @@ const Booking = require('./models/booking');
 const fakeDbData = require('./data.json');
 class FakeDb{
 
-    constructor(){
+    constructor(){        
         this.rentals = fakeDbData.rentals;
-        this.users = fakeDbData.users ;
+        this.users = fakeDbData.users;
         this.userp = fakeDbData.userps;
     }
 
     
-async cleanDb(){    // removes all rentals
-    await Rental.deleteMany({});
-    await User.deleteMany({});  //make sure  remove is executed first before  anything else starts
-    await Booking.deleteMany({});
-    await UserP.deleteMany({});
-    // DeprecationWarning: collection.remove is deprecated. Use deleteOne, deleteMany, or bulkWrite instead.
-}
+    async cleanDb(){    // removes all rentals
+        try{
+            await Rental.deleteMany({});
+            await User.deleteMany({});  //make sure  remove is executed first before  anything else starts
+            await Booking.deleteMany({});
+            await UserP.deleteMany({});
+        }catch(error){
+            console.log(error);
+        }
+        // DeprecationWarning: collection.remove is deprecated. Use deleteOne, deleteMany, or bulkWrite instead.
+    }
 
 
-pushDataToDb(){
-    const user = new User(this.users[0]);
-    const user2 = new User(this.users[1]);
-        this.rentals.forEach((rental) => {      // forloops each rental to save to database
-            const newRental = new Rental(rental);
-            newRental.user = user;
-            user.rentals.push(newRental);
-            newRental.save();   // saves each rental data
+   pushDataToDb(num){
+        //USer 1
+        const user = new User(this.users[num]);
+        const userp = new UserP({
+            username: this.users[num].username,
+            user
         });
-        user.save();
-        user2.save();
+       //user1 rentals
+        this.rentals.forEach((rental) => {      // forloops each rental to save to database
+                const newRental = new Rental(rental);
+                newRental.user = user; 
+                user.rentals.push(newRental);
+                newRental.save();   // saves each rental data           
+        });
+            user.save();
+            userp.save();
+        }
 
-      
+        async seedDb(){
+            try{
+            await this.cleanDb(); //removes data from database  
+             this.pushDataToDb(0);   // saves data to database
+             this.pushDataToDb(1);
+            
+            } catch(error){
+                console.log(error);
+            }
+        }
     }
-
-    async seedDb(){
-        await this.cleanDb(); //removes data from database  
-        // this.pushDataToDb();   // saves data to database
-    }
-}
-module.exports = FakeDb;  // enables importing to another file
+    module.exports = FakeDb;  // enables importing to another file
