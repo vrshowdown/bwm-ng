@@ -86,6 +86,13 @@
       "email": "test1@gmail.com",
       "password": "testtest1"
       }
-    ]
+    ],
+    "userps":[{
+      "username":"Test User",
+      "user": null
+    },{
+      "username":"Test User1",
+      "user": null
+    }]
    
   }
