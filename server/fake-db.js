@@ -7,7 +7,7 @@ const Booking = require('./models/booking');
 const fakeDbData = require('./data.json');
 class FakeDb{
 
-    constructor(){        
+    constructor(){  
         this.rentals = fakeDbData.rentals;
         this.users = fakeDbData.users;
         this.userp = fakeDbData.userps;
@@ -32,12 +32,13 @@ class FakeDb{
         const user = new User(this.users[num]);
         const userp = new UserP({
             username: this.users[num].username,
-            user
+            user,
         });
        //user1 rentals
         this.rentals.forEach((rental) => {      // forloops each rental to save to database
                 const newRental = new Rental(rental);
-                newRental.user = user; 
+                newRental.user = user;
+                newRental.userp = userp;
                 user.rentals.push(newRental);
                 newRental.save();   // saves each rental data           
         });
