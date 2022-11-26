@@ -47,7 +47,7 @@
     "ngx-image-cropper": "^1.4.1",
     "ngx-pipes": "^2.3.10",
     "ngx-toastr": "^10.0.4",
-    "node-sass": "^4.11.0",
+   
     "nodemailer": "^6.3.0",
     "nodemailer-express-handlebars": "^3.1.0",
     "rxjs": "^6.5.2",
