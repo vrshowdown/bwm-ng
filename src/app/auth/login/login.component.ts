@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../shared/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { RentalOwnerService } from '../../user/shared/rental-owner.service';
 @Component({
   selector: 'bwm-login',
   templateUrl: './login.component.html',
@@ -17,9 +18,11 @@ export class LoginComponent implements OnInit{
   private fb: FormBuilder, 
   private auth: AuthService, 
   private router: Router,
-  private route: ActivatedRoute){}
+  private route: ActivatedRoute,
+  private rentalOwner: RentalOwnerService){}
 
   ngOnInit(){
+    this.auth.logout();
     this.initForm();
     this.route.params.subscribe((params)=>{
       if(params['registered']=== 'success'){
@@ -44,7 +47,9 @@ export class LoginComponent implements OnInit{
       if(params['reactivationRequest']=== 'success'){
         this.notifyMessage = 'You have Successfully sent a confirmation e mail. please find your e mail in the inbox or junkmail and activate your account';
       }
-     
+      if(params['rentalOwner']=== 'success'){
+        this.notifyMessage = 'You have Successfully completed Your Stipe Account Activation as a rental owner. Please login to Access The New Rental Owner Features ';
+      }
     })
   }
   
@@ -68,7 +73,7 @@ export class LoginComponent implements OnInit{
   login(){
     this.auth.login(this.loginForm.value).subscribe(
     ()=>{
-     
+      this.rentalOwner.hideRentalOwner();// from auth module
       this.router.navigate(['/rentals']);
     },
     (errorResponse)=>{

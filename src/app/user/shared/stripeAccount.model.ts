@@ -12,6 +12,7 @@ export class ConnectedAccount{
     birthYear: any;
     birthDate: any;
     ssLast4: any;
+    id_number:any;
     file: any;
     tos: boolean;
   }

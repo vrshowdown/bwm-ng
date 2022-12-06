@@ -48,3 +48,6 @@ Thumbs.db
 
 # Debug config
 /.vscode
+
+# env
+/src/environments/json/keys.json

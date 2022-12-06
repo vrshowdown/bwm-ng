@@ -98,7 +98,7 @@ exports.updateAccount  = function(req,res){
             if (foundUser.hasSamePassword(password)) {
               //Checks to see if form data is different in e mail, then allows user to choose a unique e mail
               
-              saveAccount(res,req,userData,foundUser);
+              saveAccount(req,res,userData,foundUser);
             
                    
 
@@ -138,12 +138,12 @@ exports.checkEmailforUpdate = function(req, res, next){
 
 
 //for  request activation button
-exports.requestActivation = function(req, res){
+exports.requestActivation = function(req, res,err){
     
    // const requestedUserId = req.params.id;
     const user = res.locals.user;
     const userData = req.body;
-    activationEmail(res,req, user.email);
+    activationEmail(req,res, user.email);
     return res.json('done');
 }
 
@@ -192,7 +192,7 @@ exports.updatePassword  = function(req,res){
                 userData.password = userData.newPassword;
              
                     //return res.status(422).send({errors: [{title: 'valid', detail: 'You found user With same password!'}] });
-                    saveAccount(res,req,userData,foundUser);
+                    saveAccount(req,res,userData,foundUser); 
             }else{
                     return res.status(422).send({errors: [{title: 'Wrong Data!', detail: 'Wrong email or password'}] }); 
             }
@@ -226,6 +226,7 @@ exports.auth = function(req, res){
                     const token =  jwt.sign({
                         userId: user.id,
                         username: user.username,
+                        rentalOwner:user.rentalOwner,
                         randomToken: user.randomToken,
                     }, config.SECRET, {expiresIn: '1h'});
                     return res.json(token);
@@ -243,7 +244,7 @@ exports.auth = function(req, res){
 
 // registration System
 exports.register = function(req, res){
-    const {username, email, password, passwordConfirmation, activated} = req.body; // variables that holds user input data
+    const {username, email, password, passwordConfirmation, activated,rentalOwner} = req.body; // variables that holds user input data
   
   
    
@@ -273,10 +274,11 @@ exports.register = function(req, res){
                 username,
                 email,
                 password,
-                activated
-              
+                activated,
+                rentalOwner
             });
             user.activated = false;
+            user.rentalOwner = false;
            // user.ipToken = ipaddress;
             
             const userp = new UserP({
@@ -291,7 +293,7 @@ exports.register = function(req, res){
                     return res.status(422).send({errors: normalizeErrors(err.errors)});// return mongoose error
                 }
                 if(user){
-                    sendActivationEmail(res,req,email);
+                    sendActivationEmail(req,res,email);
                     return res.json({'registered': true});
                 }
             });
@@ -311,9 +313,9 @@ exports.register = function(req, res){
 }
 
 // auto request activation confirmation, after registering 
-function sendActivationEmail(res,req,email){
+function sendActivationEmail(req,res,email){
 
-    activationEmail(res,req,email);
+    activationEmail(req,res,email);
     
 }
 
@@ -321,7 +323,13 @@ function sendActivationEmail(res,req,email){
 
 
 //Request  activation function
-function activationEmail(res,req,email){
+function activationEmail(req,res,email){
+    let activation;
+    if (process.env.NODE_ENV !== 'production') {
+        activation = 'http://localhost:4200/users/activation/';
+     }else{
+        activation = 'https://jmu-bwm-ng.herokuapp.com/users/activation/';
+     }
 
     User.findOne({email}, function(err, foundUser){
         if(err){// if there is an error
@@ -339,8 +347,8 @@ function activationEmail(res,req,email){
                 from: 'jibreelutley@jmu3d.com',
                 to: foundUser.email,                   // http://localhost:4200/users/resetpassword/form/
                 subject: 'BookWithMe Account Activation',    // https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/
-                text: 'Hello '+ foundUser.username+', You recently Registered to a new account. click this link '+'https://jmu-bwm-ng.herokuapp.com/users/activation'+ token,
-                html: 'Hello '+ foundUser.username+'</strong>,<br><br>, You recently registered to a new account. Please click this link '+'<a href ="'+'https://jmu-bwm-ng.herokuapp.com/users/activation/'+token+'">Activate Account</a>'
+                text: 'Hello '+ foundUser.username+', You recently Registered to a new account. click this link '+activation+token,
+                html: 'Hello '+ foundUser.username+'</strong>,<br><br>, You recently registered to a new account. Please click this link '+'<a href ="'+activation+token+'">Activate Account</a>'
               }
               sgMail
                   .send(msg)
@@ -446,7 +454,12 @@ function notAuthorized(res){
 
 // Forgot password, request to change
 exports.forgotPassword = function(req, res){
-  
+    let resetpw;
+    if (process.env.NODE_ENV !== 'production') {
+        resetpw = 'http://localhost:4200/users/resetpassword/form/';
+     }else{
+        resetpw = 'https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/';
+     }
     //const userData = req.body;
     const {email} = req.body;
 
@@ -466,8 +479,8 @@ exports.forgotPassword = function(req, res){
       from: 'jibreelutley@jmu3d.com',
       to: existingUser.email,                   // http://localhost:4200/users/resetpassword/form/
       subject: 'Localhost Password request',    // https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/
-      text: 'Hello'+ existingUser.name+', You recently requested reset password. click this link '+'https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/'+ token,
-      html: 'Hello'+ existingUser.name+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+'https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/'+token+'">Reset Password</a>'
+      text: 'Hello '+ existingUser.username+', You recently requested reset password. click this link '+resetpw+ token,
+      html: 'Hello '+ existingUser.username+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+resetpw+token+'">Reset Password</a>'
     }
     sgMail
         .send(msg)
@@ -517,19 +530,19 @@ exports.getPassChangeAuth = function(req, res){
                   
                     const userData = req.body;
                     userData.password = newPassword;
-                    saveAccount(req,res,userData,foundUser,err); 
+                    saveAccount(req,res,userData,foundUser); 
                 
                 });
     
    
 }
 
-function saveAccount(req,res,userData,foundUser,err){
+function saveAccount(req,res,userData,foundUser){
 
     const user = res.locals.user;
      if(foundUser.email !== user.email ){
          if(foundUser.activated === false){
-         activationEmail(res,req,foundUser.email);
+         activationEmail(req,res,foundUser.email);
          }
      }
      foundUser.set(userData);

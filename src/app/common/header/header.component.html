@@ -47,7 +47,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" routerLink="/users/profile">Profile</a>
-          <a class="dropdown-item" routerLink="/rentals/new">Create Rental</a>
+          <div *ngIf="owner==true">
+            <a class="dropdown-item" routerLink="/rentals/new">Create Rental</a>
+          </div>    
             <a class="dropdown-item" routerLink="/manage/rentals">Manage Rentals</a>
             <a class="dropdown-item" routerLink="/manage/bookings">Manage Bookings</a>
           </div>

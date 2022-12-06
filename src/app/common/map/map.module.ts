@@ -7,7 +7,7 @@ import {CommonModule} from '@angular/common';
 import { MapComponent } from'./map.component';
 import{ CamelizePipe } from 'ngx-pipes';
 import { MapService } from './map.service';
-
+import { environment } from '../../../environments/environment';
 // Register main components of the site  by declaring them
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { MapService } from './map.service';
     MapComponent
     ],
     imports: [
-        AgmCoreModule.forRoot({ apiKey: 'AIzaSyCxFVx5KlCDE577ijGlV5F2_rHGbqpXFWw' }),
+        AgmCoreModule.forRoot({ apiKey: environment.GOOGLE_MAP_PUBLIC_KEY}),
         CommonModule 
     ],
   providers: [

@@ -34,9 +34,7 @@ export class CreateIndividualComponent implements OnInit {
                 
                 
                }
-  ngOnInit(){ 
-    
-  
+  ngOnInit(){
                   this.states = [{abv:'AL',name:'Alabama'},
                                 {abv:'AK',name:'Alaska'},
                                 {abv:'AZ',name:'Arizona'},
@@ -121,6 +119,7 @@ userData:any;
           email: this.formDatax.email,
           phone: this.formDatax.phone,
           ssn_last_4: this.formDatax.ssLast4,
+          id_number: this.formDatax.id_number,
           dob:{
             day: birthDateSplit[2],
             month: birthDateSplit[1],

@@ -100,8 +100,10 @@ export class UserDetailComponent implements  OnInit {
       (userData: any)=>{
       
         userData = new User();
-        
         this.toastr.success('You have successfully added your bank debt card', 'Success!');
+          //this.user.rentalOwner = true;
+          this.auth.logout();
+          this.router.navigate(['/login', {rentalOwner: 'success'}]);
        // this.ref.markForCheck();
       },
       (errorResponse: any)=>{

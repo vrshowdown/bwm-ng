@@ -69,4 +69,7 @@ export class AuthService {
   public getUserId(): string {
     return this.decodedToken.userId;
   }
+  public getRentalowner(): string { //to check token obtained
+    return this.decodedToken.rentalOwner;
+  }
 }

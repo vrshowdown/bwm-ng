@@ -42,6 +42,7 @@ const userSchema = new Schema({
         stripeAccountId: String,
         ipToken: String,
         activated: Boolean,
+        rentalOwner:Boolean,
         rentals: [{type: Schema.Types.ObjectId, ref: 'Rental'}], // reference rental array ids for user
         bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking'}], // reference booking array ids for user
       
