@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import{HeaderComponent} from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
-
+import { RentalOwnerService } from './user/shared/rental-owner.service';  // for header
 
 
 
@@ -47,7 +47,7 @@ const routes: Routes =[
     ManageModule,
     UserModule
   ],
-  providers: [],
+  providers: [RentalOwnerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

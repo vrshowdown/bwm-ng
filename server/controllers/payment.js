@@ -49,7 +49,7 @@ exports.confirmPayment = function(req, res){
             }) */
             
             // STRIPE_FEE = 0.029;
-            const PLATFORM_FEE = booking.totalPrice * CUSTOMER_SHARE*100;
+            const PLATFORM_FEE = (booking.totalPrice * CUSTOMER_SHARE*100).toFixed(0);
          const charge = await stripe.charges.create({
               amount: booking.totalPrice * 100,
               currency: 'usd',
@@ -60,14 +60,14 @@ exports.confirmPayment = function(req, res){
             })
 
             if(charge){
-                Booking.update({_id: booking.id}, {status: 'active'}, function(){});
+                Booking.updateMany({_id: booking.id}, {status: 'active'}, function(){});
                 foundPayment.charge = charge;
                 foundPayment.status = 'paid';
                 foundPayment.save(function(err){
                     if(err){
                     return res.status(422).send({errors: normalizeErrors(err.errors)});
                     }
-                    User.update({_id: foundPayment.toUser}, {$inc: {revenue: foundPayment.amount-30}}, function(err,user){
+                    User.updateMany({_id: foundPayment.toUser}, {$inc: {revenue: foundPayment.amount-30}}, function(err,user){
                         if(err){
                         return res.status(422).send({errors: normalizeErrors(err.errors)});
                         }
@@ -188,7 +188,7 @@ exports.stripeAcc =  function(req, res, next){
                 requested_capabilities: ['card_payments', 'transfers'],
               },function(err, account) {
                   if(account){
-                    User.update({_id: foundUser.id}, { $set: {stripeAccountId: account.id}}, () =>{
+                    User.updateMany({_id: foundUser.id}, { $set: {stripeAccountId: account.id, rentalOwner:true}}, () =>{
                       next();
                   });
                   
@@ -339,7 +339,7 @@ exports.StripeAccount = function(req,res, next) {
   const user =  res.locals.user;
   const cards = req.body;
   User.findById(user.id,function(err,foundUser){
-    User.update({_id: foundUser.id}, { $set: {stripeCid: card.id}}, () =>{});
+    User.updateMany({_id: foundUser.id}, { $set: {stripeCid: card.id}}, () =>{});
   });
   return res.json('done');
 }

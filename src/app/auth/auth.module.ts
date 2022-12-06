@@ -9,6 +9,7 @@ import { AuthComponent } from './auth.component';
 import { AuthService } from './shared/auth.service';
 import { AuthGuard } from './shared/auth.guard';
 import { TokenInterceptor } from './shared/token.interceptor';
+import { RentalOwnerService } from '../user/shared/rental-owner.service'; // for login
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent,  canActivate: [AuthGuard]  },
@@ -32,6 +33,7 @@ const routes: Routes = [
     providers: [
     AuthService,
     AuthGuard,
+    RentalOwnerService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,

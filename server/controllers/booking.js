@@ -52,7 +52,7 @@ exports.createBooking = function(req, res) {
                     }
 
                     foundRental.save()
-                    User.update({_id: user.id},{$push: {bookings: booking}}, function(){});
+                    User.updateMany({_id: user.id},{$push: {bookings: booking}}, function(){});
                     return res.json({startAt: booking.startAt, endAt: booking.endAt});
                 });
             }else{
@@ -122,7 +122,7 @@ const PLATFORM_FEE = booking.totalPrice * (CUSTOMER_SHARE + STRIPE_FEE);
   
 
     if (customer){
-        User.update({_id: user.id}, { $set: {stripeCustomerId: customer.id}}, () =>{});
+        User.updateMany({_id: user.id}, { $set: {stripeCustomerId: customer.id}}, () =>{});
         const payment = new Payment({
             fromUser: user,
             toUser,

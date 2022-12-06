@@ -16,5 +16,6 @@ export class User{
     currency: string;
     activated: boolean;
     stripeAccountId:string;
+    rentalOwner:boolean;
 
 }
