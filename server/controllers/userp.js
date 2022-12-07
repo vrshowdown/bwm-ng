@@ -41,7 +41,6 @@ exports.getUserP = function(req, res){
 // to get public id 
 
 exports.getUserP2 = function(req, res){
-    debugger;
    
     const user =  res.locals.user;
     

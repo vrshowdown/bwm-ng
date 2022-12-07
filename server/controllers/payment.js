@@ -94,7 +94,7 @@ exports.declinePayment = function (req, res){
 
 
 exports.MoneyWithdrawl = async function(req, res){
-  debugger;
+
   const user =  res.locals.user;
   const userData =   req.body;
  
@@ -140,7 +140,7 @@ exports.MoneyWithdrawl = async function(req, res){
     
 // tos agreement
       exports.StripeAgreement = function(req, res) {
-        debugger;
+        
         const user =  res.locals.user;
        
         const personInfo =  req.body;
@@ -208,7 +208,7 @@ exports.stripeAcc =  function(req, res, next){
       
 //update Account
 exports.StripeAccount = function(req,res, next) {
-        debugger;
+      
         const personInfo =  req.body;
         const user =  res.locals.user;
       
@@ -269,8 +269,7 @@ exports.StripeAccount = function(req,res, next) {
 
 
    async function updateSAccount(req,res, stripeacc){
-      debugger;
-     
+      
       const user =  res.locals.user;
        const token = req.body; // Using Express
    
@@ -320,7 +319,7 @@ exports.StripeAccount = function(req,res, next) {
 
 //Add Debt card  to Connected account
  exports.CreateCardAccount =  function(req, res){
-  debugger;
+
   const user =  res.locals.user;
   const card = req.body;
   stripe.accounts.createExternalAccount(
@@ -329,13 +328,13 @@ exports.StripeAccount = function(req,res, next) {
             external_account: card.bankToken.id
            
         },function(err, card) {
-          debugger;
+        
           updateCard(req, res, card);    
       });  
  }
  
  function updateCard(req, res, card){
-  debugger;
+
   const user =  res.locals.user;
   const cards = req.body;
   User.findById(user.id,function(err,foundUser){

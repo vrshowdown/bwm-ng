@@ -113,7 +113,6 @@ exports.updateAccount  = function(req,res){
 }
 // to check if there is an existing email that is not my own
 exports.checkEmailforUpdate = function(req, res, next){
-    debugger;
     const requestedUserId = req.params.id;
     const user = res.locals.user;
     const {email} = req.body; 
@@ -324,7 +323,7 @@ function sendActivationEmail(req,res,email){
 
 //Request  activation function
 function activationEmail(req,res,email){
-    debugger;
+
     let address=config.DOMAIN+'/users/activation/';
    
     User.findOne({email}, function(err, foundUser){
@@ -451,13 +450,16 @@ function notAuthorized(res){
 // Forgot password, request to change
 exports.forgotPassword = function(req, res){
     let address = config.DOMAIN+'/users/resetpassword/form/';
-    //const userData = req.body;
+
     const {email} = req.body;
 
   User.findOne({email},function(err, existingUser){
+
     if (err){
+    
           return res.status(422).send({errors:[{title: 'Invalid E mail!', detail: 'E-mail was not found!'}]});
     }
+
     const token =  jwt.sign({
         userId: existingUser.id,
         username: existingUser.username,
