@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@agm/core": "^1.0.0-beta.6",
-    "@angular-devkit/build-angular": "~0.801.0",
+    "@angular-devkit/build-angular": "~15.0.2",
     "@angular/cli": "^8.1.0",
     "@angular/core": "^8.1.0",
     "@auth0/angular-jwt": "^2.1.1",
