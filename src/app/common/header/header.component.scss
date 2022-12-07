@@ -1,8 +1,10 @@
 @import 'variables';
 .navbar{
     padding:20px;
-    margin-bottom:40px;
-
+    margin-bottom:40px!important;
+    max-width: 1154px;
+    margin: auto;
+    background-color:$header-color!important;
     .bwm-search{
         height:50px;
         width:300px;
@@ -11,7 +13,7 @@
         margin-right:30px;
         font-size: 30px;
         letter-spacing: 1px;
-        color: $main-color;
+        color: $main-color2;
         font-weight: 500;
         img{
             margin-top:15px;
@@ -20,22 +22,25 @@
     }
     .nav-item{
         font-size: 14px;
+        .nav-link{
+            color:white;
+        } 
     }
     .btn-bwm-search{
-        border-color:$main-color;
-        color:$main-color;
+        border-color:$main-color2;
+        color:$main-color2;
 
         &:hover, &:focus, &:active{
             background-color: transparent;
-            border-color:$main-color !important;
-            color:$main-color !important;
+            border-color:$main-color2 !important;
+            color:$main-color2 !important;
             box-shadow: none;
         }
     }
     .dropdown-Item{
         font-size: 14px;
         &:active, &focus {
-            background-color: $main-color;
+            background-color: $main-color2;
         }
     }
 }

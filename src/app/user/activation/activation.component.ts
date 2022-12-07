@@ -37,7 +37,7 @@ export class ActivationComponent implements OnInit {
       ()=>{
         //this.user = updatedUser;  
         //this.logout(userData);
-        this.toastr.success('You have Successfully Activated your account', 'Success!');
+        this.toastr.success('Instructions to activate your account was sent to your email', 'Success!');
         //this.formData = {};
         this.router.navigate(['/login', {activated: 'success'}]);
       },
