@@ -1,6 +1,7 @@
 
+const config = require('../../server/config');
 export const environment = {
   production: true,
-  STRIPE_PK: process.env.STRIPE_PK,
-  GOOGLE_MAP_PUBLIC_KEY: process.env.GOOGLE_MAP_PUBLIC_KEY
+  STRIPE_PK: config.STRIPE_PK,
+  GOOGLE_MAP_PUBLIC_KEY: config.GOOGLE_MAP_PUBLIC_KEY
 };
