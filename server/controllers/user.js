@@ -324,13 +324,9 @@ function sendActivationEmail(req,res,email){
 
 //Request  activation function
 function activationEmail(req,res,email){
-    let activation;
-    if (process.env.NODE_ENV !== 'production') {
-        activation = 'http://localhost:4200/users/activation/';
-     }else{
-        activation = 'https://jmu-bwm-ng.herokuapp.com/users/activation/';
-     }
-
+    debugger;
+    let address=config.DOMAIN+'/users/activation/';
+   
     User.findOne({email}, function(err, foundUser){
         if(err){// if there is an error
             return res.status(422).send({errors: normalizeErrors(err.errors)});// return mongoose error
@@ -345,10 +341,10 @@ function activationEmail(req,res,email){
 
      const msg ={
                 from: 'jibreelutley@jmu3d.com',
-                to: foundUser.email,                   // http://localhost:4200/users/resetpassword/form/
-                subject: 'BookWithMe Account Activation',    // https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/
-                text: 'Hello '+ foundUser.username+', You recently Registered to a new account. click this link '+activation+token,
-                html: 'Hello '+ foundUser.username+'</strong>,<br><br>, You recently registered to a new account. Please click this link '+'<a href ="'+activation+token+'">Activate Account</a>'
+                to: foundUser.email,
+                subject: 'BookWithMe Account Activation',
+                text: 'Hello '+ foundUser.username+', You recently Registered to a new account. click this link '+address+token,
+                html: 'Hello '+ foundUser.username+'</strong>,<br><br>, You recently registered to a new account. Please click this link '+'<a href ="'+address+token+'">Activate Account</a>'
               }
               sgMail
                   .send(msg)
@@ -454,12 +450,7 @@ function notAuthorized(res){
 
 // Forgot password, request to change
 exports.forgotPassword = function(req, res){
-    let resetpw;
-    if (process.env.NODE_ENV !== 'production') {
-        resetpw = 'http://localhost:4200/users/resetpassword/form/';
-     }else{
-        resetpw = 'https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/';
-     }
+    let address = config.DOMAIN+'/users/resetpassword/form/';
     //const userData = req.body;
     const {email} = req.body;
 
@@ -477,10 +468,10 @@ exports.forgotPassword = function(req, res){
     //newToken(token, userId, username, password);
     const msg ={
       from: 'jibreelutley@jmu3d.com',
-      to: existingUser.email,                   // http://localhost:4200/users/resetpassword/form/
-      subject: 'Localhost Password request',    // https://jmu-bwm-ng.herokuapp.com/users/resetpassword/form/
-      text: 'Hello '+ existingUser.username+', You recently requested reset password. click this link '+resetpw+ token,
-      html: 'Hello '+ existingUser.username+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+resetpw+token+'">Reset Password</a>'
+      to: existingUser.email,
+      subject: 'Localhost Password request',
+      text: 'Hello '+ existingUser.username+', You recently requested reset password. click this link '+address+token,
+      html: 'Hello '+ existingUser.username+'</strong>,<br><br>, You recently requested to reset password. Please click this link '+'<a href ="'+address+token+'">Reset Password</a>'
     }
     sgMail
         .send(msg)
