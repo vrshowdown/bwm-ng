@@ -1,10 +1,14 @@
  /*JIBREEL UTLEY**/
-   @import 'variables';
+   @import '../../../styles/variables';
 
    a {
-        &:hover, &:focus{
+        &:hover {
             text-decoration: none; 
         }
+        &:focus{
+          text-decoration: none; 
+        }
+        text-decoration: none; 
    }
    /* SINGLE CARD STYLES*/
     .bwm-card {

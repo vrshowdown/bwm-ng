@@ -12,7 +12,7 @@ styleUrls: ['./rental-create.component.scss']
 
 export class RentalCreateComponent implements OnInit{
 
-  newRental: Rental;
+  newRental: Rental|any;
   
   rentalCategories = Rental.CATEGORIES;
   errors: any[] = [];
@@ -29,11 +29,13 @@ export class RentalCreateComponent implements OnInit{
   }
 handleImageUpload(imageUrl: string){
 this.newRental.image = imageUrl;
+console.log("handle image upload"+this.newRental);
 }
 handleImageError(){
 this.newRental.image = '';
 }
   createRental(){
+    console.log("handle image upload"+this.newRental);
     this.rentalService.createRental(this.newRental).subscribe(
     (rental: Rental)=>{
       this.router.navigate([`/rentals/${rental._id}`]);

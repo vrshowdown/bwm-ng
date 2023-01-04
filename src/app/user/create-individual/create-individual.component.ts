@@ -22,7 +22,7 @@ export class CreateIndividualComponent implements OnInit {
   stripeId:any;
   states: any = [];
  
-  @Input() formDatax: ConnectedAccount;
+  @Input() formDatax:any| ConnectedAccount; //JMU
   @Input() isValidatingAccount: boolean = false;
   @Output() stipeIdEvent = new EventEmitter();
 
@@ -91,26 +91,26 @@ export class CreateIndividualComponent implements OnInit {
 
 
   
-  userDatap:PAYMENT;
+  userDatap:any =PAYMENT;
   
  
   errors: any[] =[]; 
  token2: any = {};
  error: string = '';
  fileData: any;
-forPublic: UserP;
-user: User;
+forPublic:any= UserP;
+user:any= User;
 userData:any;
-
  async submitforToken(formDatax:ConnectedAccount){
 
    formDatax = this.formDatax;
   const birthDateSplit = formDatax.birthDate.split("-",); 
    
    this.isValidatingAccount = false;
-   const  stripe = Stripe(environment.STRIPE_PK);
+    this.stripe= Stripe(environment.STRIPE_PK);
    this.isValidatingAccount = true;
-   const accountResult =  await stripe.createToken('account', {
+   const accountResult =  await this.stripe.createToken('account', {
+    
       //business_type:'individual',
        //email: this.formDatax.email,
         individual: {
@@ -162,7 +162,7 @@ userData:any;
      
   
 
-  updateSAccount(token){
+  updateSAccount(token:any){ //JMU
 
    /// this.userDatap = this.formDatax;
     this.paymentService.userCreateCAccount(token).subscribe(
@@ -179,18 +179,18 @@ userData:any;
 
 
 
-async uploadFile(event){
+async uploadFile(event:any){
 
     const file = event.target.files[0];
     const data = new FormData();  
     data.append('purpose', 'identity_document');
     data.append('file', file);
     data.get('file');
-     const  stripe = Stripe(environment.STRIPE_PK);
+     this.stripe = Stripe(environment.STRIPE_PK);
  
      const fileResult = await fetch('https://uploads.stripe.com/v1/files', {
        method: 'POST',
-       headers: {'Authorization': `Bearer ${stripe._apiKey}`},
+       headers: {'Authorization': `Bearer ${this.stripe._apiKey}`},
        body: data
      });
  

@@ -12,11 +12,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit {
-    user: User;
+    user: User = new User();
     //formData: any = {};
     userData: any = {};
     errors: any[] =[]; 
-    emailForm: FormGroup;
+   
     notifyMessage: string = '';
     //@Input() type: string = 'text';
 
@@ -28,7 +28,7 @@ export class ForgotPasswordComponent implements OnInit {
       private router: Router){
         
       }
-
+ emailForm?:any;
     ngOnInit() {
       this.initForm();
     }
@@ -62,11 +62,11 @@ export class ForgotPasswordComponent implements OnInit {
       })
     }
   
-    isInvalidForm(fieldName): boolean{
+    isInvalidForm(fieldName:any): boolean{
       return this.emailForm.controls[fieldName].invalid &&
       (this.emailForm.controls[fieldName].dirty || this.emailForm.controls[fieldName].touched)
     }
-    isRequired(fieldName): boolean{
+    isRequired(fieldName:any): boolean{
       return this.emailForm.controls[fieldName].errors.required
     }
 

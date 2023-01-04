@@ -1,8 +1,9 @@
-@import 'variables';
+@import '../../../styles/variables';
+//@import "bootstrap/scss/bootstrap";
 .navbar{
     padding:20px;
     margin-bottom:40px!important;
-    max-width: 1154px;
+    max-width: 1334px;
     margin: auto;
     background-color:$header-color!important;
     .bwm-search{
@@ -29,7 +30,7 @@
     .btn-bwm-search{
         border-color:$main-color2;
         color:$main-color2;
-
+        margin-left: 14px;
         &:hover, &:focus, &:active{
             background-color: transparent;
             border-color:$main-color2 !important;
@@ -42,5 +43,17 @@
         &:active, &focus {
             background-color: $main-color2;
         }
+    }
+    .btn{
+        color: white !important;
+        
+        &:hover{
+            background-color: transparent!important;
+        }
+    }
+    .flex-container{
+        display: flex;
+        flex-wrap: nowrap;
+        
     }
 }

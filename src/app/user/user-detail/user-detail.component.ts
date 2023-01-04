@@ -7,9 +7,10 @@ import { AuthService } from '../../auth/shared/auth.service';
 import { HttpErrorResponse } from '@angular/common/http'; 
 import { Router} from '@angular/router';
 
+
 import { Rental } from '../../rental/shared/rental.model';
 import { RentalService } from '../../rental/shared/rental.service';
-
+import { RentalOwnerService } from '../shared/rental-owner.service';
 import{ PaymentService } from '../shared/payment.service';
 @Component({
 selector: 'bwm-user-detail',
@@ -18,7 +19,7 @@ styleUrls: ['./user-detail.component.scss'],
 animations: [
 
   trigger('simpleFadeAnimation', [
-    state('in', style({opacity: 1, height: 232,})),
+    state('in', style({opacity: 1, height: 400,})),
 
     transition(':enter', [
       style({opacity: 0, height:0}),animate(600 )
@@ -42,7 +43,7 @@ export class UserDetailComponent implements  OnInit {
   isValidatingAccount: boolean = false;
 
   
-  user: User;
+  user?: User|any;
   errors: any[] =[]; 
   userData:any;
   UserTrigger:any;
@@ -53,13 +54,14 @@ export class UserDetailComponent implements  OnInit {
   formDatax: any = {};//create individual
   formDataz: any = {};
   emailForm: any = {};
-  image: string;
-  token: String;
-  token2:String;
-  rentals: Rental[];
-  rev: number;
-  stipeId: string;
- 
+  image?: string;
+  token?: String;
+  token2?:String;
+  rentals?: Rental[];
+  rev: string|any;
+  stipeId?: string;
+  owner:any;
+  varification:boolean|any;
  
 
   constructor(private userService: UserService,
@@ -68,13 +70,14 @@ export class UserDetailComponent implements  OnInit {
                    private router: Router,
                    private rentalService: RentalService,
                    private paymentService:PaymentService,
+                   private rentalowner:RentalOwnerService
                    /*private ref:ChangeDetectorRef*/){
                 
                    }
   ngOnInit(){
     
     this.getUser();
-    
+   
     this.rentalService.getUserRentals().subscribe(
       (rentals: Rental[])=>{
         this.rentals = rentals;
@@ -118,9 +121,10 @@ export class UserDetailComponent implements  OnInit {
     const userId = this.auth.getUserId();
      
     this.userService.getUser(userId).subscribe(
-    (user)=>{
+    (user:User|any)=>{
       
       this.user = user;
+      console.log(user);
       this.user.revenue = user.revenue;
       
       this.formData2.username = user.username;
@@ -128,8 +132,14 @@ export class UserDetailComponent implements  OnInit {
       this.formData3.email = user.email;
       this.formData4.email = user.email;
       this.isValidatingAccount=false;
-      this.rev = user.revenue/100;
+      this.rev = (user.revenue/100).toFixed(2);
       this.stipeId = user.stripeAccountId;
+
+      if(user.stripeAccountId && user.stripeCid){
+        this.varification = true;
+       }else{
+         this.varification = false;
+       }
     },
     (err)=>{
      // this.ref.detectChanges();
@@ -137,14 +147,15 @@ export class UserDetailComponent implements  OnInit {
   }
 
 // to update/save  user data
-  updateProfile(userId: string, userData: any){
-    userId = this.auth.getUserId();
+  updateProfile(){
+    let userId = this.auth.getUserId();
    
-    userData = this.formData;
+    let userData = this.formData;
     
     this.userService.updateUser(userId, userData).subscribe(
       (updatedUser: User)=>{
         this.user = updatedUser;
+        this.toastr.success('You have Successfully updated your Profile', 'Success!');
       },
       (errorResponse: HttpErrorResponse)=>{
         this.toastr.error(errorResponse.error.errors[0].detail, 'Error');
@@ -192,9 +203,9 @@ export class UserDetailComponent implements  OnInit {
        })
    }
 
-updateUserAccount(userId: string, userData: any){
-  userId = this.auth.getUserId();
-  userData = this.formData2;
+updateUserAccount(){
+  let userId = this.auth.getUserId();
+  let userData = this.formData2;
   if(userData.email != this.user.email){
     this.updateUserEmail(userId, userData);
   }else{
@@ -203,8 +214,8 @@ updateUserAccount(userId: string, userData: any){
 }
 
 
-resendActivationAuth(user){
-  user = this.user.email;
+resendActivationAuth(){ //JMU
+ let user = this.user.email;
   this.userService.ResendActivationAuth(user).subscribe(
     ()=>{
       
@@ -224,9 +235,9 @@ resendActivationAuth(user){
 
   
 // update user password
-  updatePassword(userId: string, userData: any){
-    userId = this.auth.getUserId();
-    userData = this.formData3;
+  updatePassword(){
+   let userId = this.auth.getUserId();
+   let userData = this.formData3;
    
     this.userService.updatePassword(userId, userData).subscribe(
       (updatedUser: User)=>{
@@ -241,10 +252,15 @@ resendActivationAuth(user){
 
 
 //update profile image
-  updateImage(userId: string, userData: any){
+  updateImage(userId: string, userData:User){
+    userId = this.auth.getUserId();
+    userData = this.user;
+    console.log('user id...'+userId);
+    console.log('user Data...'+userData);
     this.userService.updateUser(userId, userData).subscribe(
       (updatedUser: User)=>{
         this.user = updatedUser;
+        this.toastr.success('You have Successfully updated your profile', 'Success!');
       },
       (errorResponse: HttpErrorResponse)=>{
         this.toastr.error(errorResponse.error.errors[0].detail, 'Error');
@@ -270,14 +286,18 @@ resendActivationAuth(user){
     }
   
 
-    logout(userData){
+    logout(userData:any){ //JMU
       this.login(userData);
       this.auth.logout();
     }
 
 
     
-
+  ownerVarification(){
+    this.rentalowner.validOwner.subscribe((c:any) => {
+      this.owner = c;
+    });
+  }
 
 
 }

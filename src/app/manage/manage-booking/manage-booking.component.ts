@@ -12,8 +12,8 @@ styleUrls: ['./manage-booking.component.scss']
 
 export class ManageBookingComponent implements OnInit {
  
-  bookings: Booking[];
-  payments: any[];
+  bookings?: any[];
+  payments?: any[];
   constructor(private bookingService: BookingService, 
                      private paymentService: PaymentService){}
   
@@ -34,7 +34,7 @@ this.payments = payments;
 },
 ()=>{})
 }
-acceptPayment(payment){
+acceptPayment(payment:any){
 this.paymentService.acceptPayment(payment).subscribe(
 (json)=>{
 payment.status =  'paid';
@@ -42,7 +42,7 @@ payment.status =  'paid';
 (err)=>{})
 }
 
-declinePayment(payment){
+declinePayment(payment:any){
 this.paymentService.declinePayment(payment).subscribe(
 (json)=>{
 payment.status =  'declined';

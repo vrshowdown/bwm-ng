@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class RentalSearchComponent implements OnInit{
-  city: string;
+  city?:any = String;
   rentals: Rental[] = [];
   errors: any[] = [];
 

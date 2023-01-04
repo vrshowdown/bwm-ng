@@ -17,7 +17,8 @@ import { Subject } from 'rxjs';
 
 export class RentalUpdateComponent implements OnInit{  
 
-rental: Rental;  
+rental: Rental|any; 
+rentalId:string|any; 
 rentalCategories: string[] = Rental.CATEGORIES;
 locationSubject: Subject<any> = new Subject();
 
@@ -32,6 +33,7 @@ this.transformLocation = this.transformLocation.bind(this);
   ngOnInit() {
     this.route.params.subscribe(
       (params) => {
+        this.rentalId = params['rentalId'];
         this.getRental(params['rentalId']);
       })
   }
@@ -41,12 +43,15 @@ return this.upperPipe.transform(location);
 }
 
   getRental(rentalId: string){
+    
     this.rentalService.getRentalById(rentalId).subscribe(
     (rental: Rental)=>{
       this.rental = rental;
+      console.log(rental._id);
     });
   }
-  updateRental(rentalId: string, rentalData: any){
+  updateRental(rentalId: string|any, rentalData: any){
+  
   this.rentalService.updateRental(rentalId, rentalData).subscribe(
     (updatedRental: Rental)=>{
       this.rental = updatedRental;
@@ -61,6 +66,6 @@ return this.upperPipe.transform(location);
   }
 
   countBedroomAssets(assetsNum: number){
-    return  parseInt(<any>this.rental.bedrooms || 0, 10) + assetsNum;
+    return  parseInt(<any>this.rental?.bedrooms || 0, 10) + assetsNum;
   }
 }

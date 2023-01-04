@@ -8,6 +8,8 @@ import { MapComponent } from'./map.component';
 import{ CamelizePipe } from 'ngx-pipes';
 import { MapService } from './map.service';
 import { environment } from '../../../environments/environment';
+
+
 // Register main components of the site  by declaring them
 @NgModule({
   declarations: [

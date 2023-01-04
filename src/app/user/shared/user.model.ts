@@ -3,19 +3,20 @@ import { Booking } from '../../booking/shared/booking.model';
 import { Rental } from '../../rental/shared/rental.model';
 
 export class User{
-    username: string;
-    email: string;
-    name:String;
-    address:string;
-    phone: string;
-    image: string; 
-    about: String;
-    rentals:Rental;
-    revenue: number;
+    _id?:string;
+    username?: string;
+    email?: string;
+    name?:string;
+    address?:string;
+    phone?: string;
+    image?: string; 
+    about?: string;
+    rentals?:Rental[];
+    revenue?: number;
     bankToken: any;
-    currency: string;
-    activated: boolean;
-    stripeAccountId:string;
-    rentalOwner:boolean;
+    currency?: string;
+    activated?: boolean;
+    stripeAccountId:string|undefined;
+    rentalOwner?:boolean;
 
 }

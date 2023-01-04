@@ -1,5 +1,6 @@
 import { Component, OnInit,ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { environment } from '../../environments/environment';
+
 @Component({
 selector: 'bwm-payment',
 templateUrl: './payment.component.html',
@@ -11,9 +12,9 @@ export class PaymentComponent implements OnInit {
   stripe: any;
   elements: any;
 
-  @ViewChild('cardNumber',{static: true}) cardNumRef: ElementRef;
-  @ViewChild('cardExp',{static: true}) cardExpRef: ElementRef;
-  @ViewChild('cardCvc',{static: true}) cardCvcRef: ElementRef;
+  @ViewChild('cardNumber',{static: true}) cardNumRef:any|ElementRef; //JMU
+  @ViewChild('cardExp',{static: true}) cardExpRef: any|ElementRef; //JMU
+  @ViewChild('cardCvc',{static: true}) cardCvcRef: any|ElementRef; //JMU
   @Output() paymentConfirmed = new EventEmitter();
   cardNumber: any;
   cardExp: any;
@@ -54,7 +55,7 @@ export class PaymentComponent implements OnInit {
     this.cardCvc.destroy();
   }
 
-  onChange({error}){
+  onChange({error}:any){
     if (error){
       this.error = error.message;
     } else {

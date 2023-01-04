@@ -1,5 +1,7 @@
 //Rental Module is a sub module that handles   all rental components BY JIBREEL UTLEY
+import { NgbDatepickerModule, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 
+import { JsonPipe } from '@angular/common';
 //Sub modules of rental module
 import{NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -8,6 +10,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { NgPipesModule, UcWordsPipe } from 'ngx-pipes'; // for manipulating type
 import { MapModule } from '../common/map/map.module';
 import { Daterangepicker } from 'ng2-daterangepicker'; //date range picker
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { FormsModule } from '@angular/forms';
 import { EditableModule } from '../common/components/editable/editable.module';
 import { ImageUploadModule } from '../common/components/image-upload/image-upload.module';
@@ -21,12 +24,14 @@ import { RentalDetailBookingComponent } from './rental-detail/rental-detail-book
 import { RentalSearchComponent } from './rental-search/rental-search.component';
 import {RentalCreateComponent} from './rental-create/rental-create.component';
 import{ RentalUpdateComponent } from './rental-update/rental-update.component';
+//import { BookingDateRangePickerComponent } from './rental-detail/rental-detail-booking/booking-date-range-picker/booking-date-range-picker.component';
 
 // Services
 import {RentalService} from './shared/rental.service';
 import { BookingService } from '../booking/shared/booking.service';
 import { HelperService } from '../common/service/helper.service';
 import { UppercasePipe } from '../common/pipes/uppercase.pipe';
+
 
 import { AuthGuard } from '../auth/shared/auth.guard';
 import { RentalGuard } from './shared/rental.guard';
@@ -60,7 +65,9 @@ const routes: Routes =[
         RentalDetailBookingComponent,
         RentalSearchComponent,
         RentalCreateComponent,
-        RentalUpdateComponent
+        RentalUpdateComponent,
+        //BookingDateRangePickerComponent
+        
     ],
     imports: [
         CommonModule,
@@ -72,14 +79,19 @@ const routes: Routes =[
         FormsModule,
         EditableModule,
         ImageUploadModule,
-        PaymentModule
+        PaymentModule,
+        NgxDaterangepickerMd.forRoot(),
+        NgbDatepickerModule,
+        JsonPipe
     ],
     providers: [
         RentalService,
         HelperService,
         BookingService,
         UcWordsPipe,
-        RentalGuard
+        RentalGuard,
+       
+       // NgbDateParserFormatter
     ]
 })
 

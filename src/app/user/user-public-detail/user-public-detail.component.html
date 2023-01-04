@@ -1,4 +1,4 @@
-<div *ngIf="userp" class="container bootstrap snippet">
+<div *ngIf="userp.user" class="container bootstrap snippet">
    
 
     <div class="row">
@@ -32,19 +32,7 @@
            <tr>
               <td><strong>Name</strong></td>
               <td></td>
-            </tr>
-            <tr>
-                <td><strong>Phone</strong></td>
-                <td></td>
-              </tr>
-              <tr>
-                  <td><strong>Work Email</strong></td>
-                  <td></td>
-                </tr>
-                <tr>
-                    <td><strong>Goverment ID</strong></td>
-                  <td></td>
-                </tr>
+            </tr>    
          </table>
         </div>
           
@@ -89,7 +77,7 @@
 
 
                 <div class="profileBody">
-                <ng-container *ngIf="userp.user.rentals && userp.user.rentals.length > 0">
+                <ng-container *ngIf="rentals && rentals.length > 0">
 
                  
                     <h3>{{userp.user.username}}'s Listings</h3>
@@ -97,15 +85,15 @@
                   
                   
                   
-                      <a routerLink="/rentals/{{userp.user.rentals[i]._id}}"><!--linked to  display individual page of item when clicked-->
+                      <a routerLink="/rentals/{{rental._id}}"><!--linked to  display individual page of item when clicked-->
                           <div class="card bwm-card">
-                                <img class="card-img-top" src="{{userp.user.rentals[i].image}}" alt="">
+                                <img class="card-img-top" src="{{rentals[i].image}}" alt="">
                                 <div class="card-block">
                                 
                                 
-                                <h6 class="card-subtitle {{userp.user.rentals[i].category}}">{{userp.user.rentals[i].shared ? 'Shared' : 'Whole'}} {{userp.user.rentals[i].category}} &#183; {{userp.user.rentals[i].city}}</h6>
-                                <h4 class="card-title">{{userp.user.rentals[i].title}}</h4>
-                                <p class="card-text">${{userp.user.rentals[i].dailyRate}} per Night &#183; Free Cancelation</p>
+                                <h6 class="card-subtitle {{rentals[i].category}}">{{rentals[i].shared ? 'Shared' : 'Whole'}} {{rentals[i].category}} &#183; {{rentals[i].city}}</h6>
+                                <h4 class="card-title">{{rentals[i].title}}</h4>
+                                <p class="card-text">${{rentals[i].dailyRate}} per Night &#183; Free Cancelation</p>
                          
                                 </div>
                           </div>

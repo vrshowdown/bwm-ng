@@ -1,8 +1,9 @@
-@import 'variables';
+@import '../../../styles/variables';
 
 #userRentals {
   .card {
     margin-bottom: 20px;
+    width:340px
   }
 
   .card-block {

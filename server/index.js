@@ -17,7 +17,7 @@ const rentalRoutes = require('./routes/rentals'),
 mongoose.connect(config.DB_URI,{ useNewUrlParser: true }).then(() =>{
    if (process.env.NODE_ENV !== 'production') {
       const fakeDb = new FakeDb();
-     // fakeDb.seedDb();
+      //fakeDb.seedDb();
    }
 });
 

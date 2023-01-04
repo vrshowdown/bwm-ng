@@ -12,6 +12,7 @@ aws.config.update({
 const s3 = new aws.S3();
 
 const fileFilter = (req, file, cb) => {
+
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
     cb(null, true);
   } else {
@@ -25,6 +26,7 @@ const upload = multer({
     acl: 'public-read',
     s3,
     bucket: 'jmu-bwm-ng-dev',
+    ContentEncoding: 'base64',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: 'TESTING_METADATA'});
     },

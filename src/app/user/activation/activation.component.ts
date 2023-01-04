@@ -22,12 +22,12 @@ export class ActivationComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.token = this.route.snapshot.params.token;
+    this.token = this.route.snapshot.params['token'];
     this.ActivationAuth(this.token);
   }
   token: any;
   errors: any= {}; 
-  user: User;
+  user?: User;
   userData: any;
 
   ActivationAuth(token: any){

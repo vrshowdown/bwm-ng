@@ -17,7 +17,7 @@ private rentalService: RentalService,
 private router: Router) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-const rentalId: string = route.params.rentalId;
+const rentalId: string = route.params['rentalId'];
 
 return this.rentalService.verifyRentalUser(rentalId).pipe(map(()=>{
 return true;

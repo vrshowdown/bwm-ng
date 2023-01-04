@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from "@auth0/angular-jwt";
 
 import * as moment from 'moment';
-import 'rxjs/Rx';
+import 'rxjs';
 
 // const jwt = new JwtHelperService();
 const jwt = new JwtHelperService();
@@ -19,10 +19,10 @@ class DecodedToken {
 
 @Injectable()
 export class AuthService {
-  private decodedToken;
+  private decodedToken:any;
 
   constructor(private http: HttpClient) {
-    this.decodedToken = JSON.parse(localStorage.getItem('bwm_meta')) || new DecodedToken();
+    this.decodedToken = JSON.parse(localStorage.getItem('bwm_meta')as string)! ?? new DecodedToken();
   }
 
   private saveToken(token: string): string {
@@ -44,7 +44,7 @@ export class AuthService {
 
   public login(userData: any): Observable<any> {
     return this.http.post('api/v1/users/auth', userData).pipe(map(
-      (token: string) => this.saveToken(token)));
+      (token:any) => this.saveToken(token)));
   }
 
   public logout() {
@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   public getAuthToken(): string {
-    return localStorage.getItem('bwm_auth');
+    return localStorage.getItem('bwm_auth')||'';
   }
 
   public getUsername(): string {

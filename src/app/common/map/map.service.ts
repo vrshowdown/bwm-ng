@@ -8,7 +8,7 @@ import{ CamelizePipe } from 'ngx-pipes';
 @Injectable()
 export class MapService {
 
-    private geoCoder; //variable to accesss a google geocoder class that operates in the browser
+    private geoCoder:any; //variable to accesss a google geocoder class that operates in the browser
     private locationCache: any = {}; // holds saved cache location data
    
     constructor(private camelizePipe: CamelizePipe) {} 
@@ -17,7 +17,7 @@ export class MapService {
     }
 
 // function  to check if location is saved in cached
-    private isLocationCached(location): boolean{
+    private isLocationCached(location:any): boolean{
         return this.locationCache[this.camelize(location)];
     }
 
@@ -30,13 +30,13 @@ export class MapService {
     private geocodeLocation(location: string): Observable<any>{
         // for to not keep loading instances  of the geocoder window
         if (!this.geoCoder){
-            // loads geocoder window
+           // loads geocoder window
             this.geoCoder = new (<any>window).google.maps.Geocoder();
            }
 
         return new Observable((observer) => {
-            //looks for location based on address
-            this.geoCoder.geocode({address: location}, (result, status) =>{
+           //looks for location based on address
+            this.geoCoder.geocode({address: location}, (result:any, status:any) =>{
                 if (status === 'OK') {
                     //if geocode found  gets location and coordinates
                     const geometry = result[0].geometry.location;
@@ -45,6 +45,7 @@ export class MapService {
                     //saves to cache
                     this.cacheLocation(location, coordinates);
                 }else{
+                    
                     observer.error( 'Location could not be geocoded' );
                 }
             });
@@ -58,7 +59,7 @@ export class MapService {
                 //Gets geocode location from cache
                 return observableOf(this.locationCache[this.camelize(location)]);
             }else{
-                // Gets Geocode location from server
+               // Gets Geocode location from server
                 return this.geocodeLocation(location);
             }
        

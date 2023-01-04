@@ -160,9 +160,10 @@ function VarifyAccount(req,res,next){
 
 
 // to get rentals by search
-router.get('', function(req,res){  
+router.get('', function(req,res){ 
+
     const city = req.query.city;
-    const query = city ?  {city: city.toLowerCase()} : {};
+    const query = city ? {city: city.toLowerCase()} : {};
     Rental.find(query)
     .select('-bookings')
     .exec(function(err, foundRentals){

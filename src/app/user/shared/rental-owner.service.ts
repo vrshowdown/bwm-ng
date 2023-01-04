@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Boolean } from 'aws-sdk/clients/apigateway';
+//import * as AWS from 'aws-sdk';
+//import { Boolean } from 'aws-sdk/clients/apigateway';
 import { BehaviorSubject } from 'rxjs';
 import { User } from './user.model';
 import { AuthService } from '../../auth/shared/auth.service';
@@ -8,23 +9,27 @@ import { AuthService } from '../../auth/shared/auth.service';
     providedIn: 'root'
 })
 export class RentalOwnerService {
+    //apigateway?:AWS.APIGateway;
+    boolean:any;
     rentalOwner = false;
-    validOwner: BehaviorSubject<Boolean>;
+    validOwner:any = BehaviorSubject<Boolean>;
     constructor(private auth:AuthService) {
 
+        //this.apigateway = new AWS.APIGateway();
+        //this.boolean = this.apigateway;
         this.validOwner = new BehaviorSubject(this.rentalOwner);
         this.enableOwner(false);
 
    
     }
-    enableOwner(owner) {
+    enableOwner(owner:any) {
      
         this.validOwner.next(owner);
     }
 
 
  hideRentalOwner(){
-   let rentalOwnerChange:boolean;
+   let rentalOwnerChange:boolean = false;
         const token = this.auth.getAuthToken();
         console.log(token);
         if(token != undefined){
@@ -32,12 +37,12 @@ export class RentalOwnerService {
             console.log(rentowner);
             if(rentowner == true){ // if from token meta data  is true 
                 this.enableOwner(true);
-               this.validOwner.subscribe((c)=>{ 
+               this.validOwner.subscribe((c:any)=>{ 
                 rentalOwnerChange = c;
                 console.log("Token Captured rentowner available is... "+c)
                });
             }else{ //If  metadata from token is false
-                this.validOwner.subscribe((c)=>{ 
+                this.validOwner.subscribe((c:any)=>{ 
                     rentalOwnerChange = c;  
                 });
                 this.enableOwner(false);

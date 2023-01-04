@@ -16,7 +16,7 @@ export class ResetpasswordComponent implements OnInit {
   userData: any;
   token: any;
   errors: any= {}; 
-  user: User;
+  user:any = User;
 
   constructor(
  private userService: UserService,
@@ -33,7 +33,7 @@ export class ResetpasswordComponent implements OnInit {
 
   getPassChangeAuth(userData: any, token: any){
 
-    token = this.route.snapshot.params.token;
+    token = this.route.snapshot.params['token'];
     userData = this.formData;
     this.userService.getPassChangeAuth(token,userData).subscribe(
       (updatedUser: User)=>{
