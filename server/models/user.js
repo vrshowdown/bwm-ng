@@ -36,6 +36,7 @@ const userSchema = new Schema({
         address:String,
         stripeCustomerId: String,
         stripeCid: String,
+        stripeExtAccount: String,
         about: String,
         revenue: Number,
         randomToken: String,

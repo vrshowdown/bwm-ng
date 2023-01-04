@@ -9,18 +9,18 @@ styleUrls: ['./editable-image.component.scss']
 
 export class EditableImageComponent extends EditableComponent {
 
-handleImageUpload(imageUrl: string){
-this.entity[this.entityField] = imageUrl;
-this.updateEntity();
-}
+  handleImageUpload(imageUrl: string){
+    this.entity[this.entityField] = imageUrl;
+    this.updateEntity();
+  }
 
-handleImageError(){
+  handleImageError(){
 
-  this.cancelUpdate();
-}
+    this.cancelUpdate();
+  }
 
-handleImageLoad(){
-this.isActiveInput = true;
-}
+  handleImageLoad(){
+  this.isActiveInput = false;
+  }
 
 }

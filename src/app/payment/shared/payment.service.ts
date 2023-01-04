@@ -9,10 +9,10 @@ export class PaymentService {
     public getPendingPayments(): Observable<any>{
     return this.http.get('/api/v1/payments');
     }
-    public acceptPayment(payment): Observable<any> {
+    public acceptPayment(payment:any): Observable<any> {
     return this.http.post('/api/v1/payments/accept', payment);
     }
-    public declinePayment(payment): Observable<any> {
+    public declinePayment(payment:any): Observable<any> {
     return this.http.post('/api/v1/payments/decline', payment);
     }
 }

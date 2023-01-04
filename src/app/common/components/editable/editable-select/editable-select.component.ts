@@ -8,5 +8,5 @@ import { EditableComponent } from '../editable.component';
 })
 
 export class EditableSelectComponent  extends EditableComponent {
-    @Input() public options: any[];
+    @Input() public options?: any[];
 }

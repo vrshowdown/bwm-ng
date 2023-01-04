@@ -11,12 +11,12 @@ import { Subject } from 'rxjs';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, OnDestroy{
-@Input() location: string;
-@Input() locationSubject: Subject<any>;
+@Input() location?: string;
+@Input() locationSubject?: Subject<any>;
 
 isPositionError: boolean = false;
-lat: number;
-lng: number;
+lat: any;
+lng: any;
 
 constructor(private mapService: MapService, private ref:ChangeDetectorRef) { }
 ngOnInit(){
@@ -28,21 +28,24 @@ this.locationSubject.subscribe(
 }
 }
 ngOnDestroy(){
+        
 if (this.locationSubject) {
 this.locationSubject.unsubscribe();
 }
 }
 
-getLocation(location){
+getLocation(location:any){     
    this.mapService.getGeoLocation(location).subscribe(
 
-(coordinates)=>{
+(coordinates:any)=>{
+        
         this.lat = coordinates.lat;
         this.lng = coordinates.lng;
         this.ref.detectChanges();
 }, 
 
 () =>{ 
+        
         this.isPositionError = true;
         this.ref.detectChanges();
 });
@@ -50,6 +53,7 @@ getLocation(location){
 
 
   mapReadyHandler(){
+
  this.getLocation(this.location);
     }
 }

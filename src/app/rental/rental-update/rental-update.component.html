@@ -10,7 +10,7 @@
             <bwm-editable-image
                 [(entity)]="rental"
                 [field]=" 'image' "
-                (entityUpdated)="updateRental(rental._id, $event)"
+                (entityChange)="updateRental(rentalId, $event)"
                 >
             </bwm-editable-image>
   
@@ -37,7 +37,7 @@
                 [options]="[true, false]"
                 [style]="{'display': 'inline-block'}"
                 [className]=" 'rental-shared' "
-                (entityUpdated)="updateRental(rental._id, $event)"
+                (entityChange)="updateRental(rentalId, $event)"
                 >
               </bwm-editable-select>
   
@@ -46,7 +46,7 @@
                 [field]=" 'category' "
                 [options]="rentalCategories"
                 [className]=" 'rental-category' "
-                (entityUpdated)="updateRental(rental._id, $event)"
+                (entityChange)="updateRental(rentalId, $event)"
               >
               </bwm-editable-select>
             </h2>
@@ -59,7 +59,7 @@
                 [(entity)]="rental"
                 [field]=" 'title' "
                 [className]=" 'rental-title' "
-                (entityUpdated)="updateRental(rental._id, $event)"
+                (entityChange)="updateRental(rentalId, $event)"
                 >
             </bwm-editable-input>
   
@@ -68,7 +68,7 @@
               [field]=" 'city' "
               [transformView]="transformLocation"
               [className]=" 'rental-city' "
-              (entityUpdated)="updateRental(rental._id, $event)"
+              (entityChange)="updateRental(rentalId, $event)"
               >
             </bwm-editable-input>
   
@@ -77,7 +77,7 @@
               [field]=" 'street' "
               [transformView]="transformLocation"
               [className]=" 'rental-street' "
-              (entityUpdated)="updateRental(rental._id, $event)"
+              (entityChange)="updateRental(rentalId, $event)"
               >
             </bwm-editable-input>
   
@@ -90,7 +90,7 @@
                 [type]="'number'"
                 [style]="{'display': 'inline-block'}"
                 [className]=" 'rental-bedrooms' "
-                (entityUpdated)="updateRental(rental._id, $event)"
+                (entityChange)="updateRental(rentalId, $event)"
                 >
             </bwm-editable-input> bedrooms
              </span>
@@ -103,7 +103,7 @@
               [className]=" 'rental-description' "
               [rows]="'6'"
               [cols]="'50'"
-              (entityUpdated)="updateRental(rental._id, $event)"
+              (entityChange)="updateRental(rentalId, $event)"
               >
             </bwm-editable-textarea>
             <hr>

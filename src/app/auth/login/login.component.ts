@@ -10,7 +10,7 @@ import { RentalOwnerService } from '../../user/shared/rental-owner.service';
 })
 export class LoginComponent implements OnInit{
 
-  loginForm: FormGroup;
+  loginForm:any = FormGroup;
   errors: any[] = [];
   notifyMessage: string = '';
 
@@ -61,12 +61,12 @@ export class LoginComponent implements OnInit{
     })
   }
 
-  isInvalidForm(fieldName): boolean{
+  isInvalidForm(fieldName:any): boolean{
     return this.loginForm.controls[fieldName].invalid &&
     (this.loginForm.controls[fieldName].dirty || this.loginForm.controls[fieldName].touched)
   }
-  isRequired(fieldName): boolean{
-    return this.loginForm.controls[fieldName].errors.required;
+  isRequired(fieldName:any): boolean{
+    return this.loginForm.controls[fieldName].errors['required'];
   }
 
   

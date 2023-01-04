@@ -4,6 +4,7 @@ import {UserService} from '../shared/user.service';
 import { ActivatedRoute } from '@angular/router'; // to link detail
 import { Rental } from '../../rental/shared/rental.model';
 //import { RentalService } from '../../rental/shared/rental.service';
+import {User} from '../shared/user.model';
 @Component({
   selector: 'bwm-user-public-detail',
   templateUrl: './user-public-detail.component.html',
@@ -14,13 +15,17 @@ export class UserPublicDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private userService: UserService) { 
 
   }
-  userp: UserP; 
-
+  userp: UserP|any;
+  rentals: Rental[] |any
+  user: User|any;
   ngOnInit() {
     this.route.params.subscribe(
       (params) => {
         this.getUserP(params['userpId']); // Function call method for  rental object to be retrieved by router number
+       
+       
       })
+     
       
   }
 
@@ -30,10 +35,15 @@ export class UserPublicDetailComponent implements OnInit {
   
     // assign rental to a variable for individual item in array
   getUserP(userpId: string){
+    debugger
     this.userService.getUserpById(userpId).subscribe(
     (userp: UserP)=>{
+      debugger
       this.userp = userp;
+      this.rentals = this.userp.user.rentals;
+      let rentid = this.userp.user.rentals[0]._id
       //this.varifyInfo(this.userp);
+      console.log(userp);
     },
     (err)=>{})
   }

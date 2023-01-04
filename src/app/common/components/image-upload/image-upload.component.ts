@@ -1,13 +1,15 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ImageUploadService } from './image-upload.service';
+import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
 
 
 class FileSnippet {
   static readonly IMAGE_SIZE = {width: 950, height: 720};
-  static readonly IMAGE_SIZE2 = {width: 540, height: 540};
+  static readonly IMAGE_SIZE2 = {width: 300, height: 300};
   pending: boolean = false;
   status: string = 'INIT';
  
@@ -24,15 +26,16 @@ class FileSnippet {
 
 export class ImageUploadComponent {
 
-  @Output() imageUploaded = new EventEmitter();
+  @Output() imageChange = new EventEmitter();
   @Output() imageError = new EventEmitter();
   @Output() imageLoadedToContainer = new EventEmitter();
   @Output() croppingCanceled = new EventEmitter();
 
-  selectedFile: FileSnippet;
+  selectedFile:FileSnippet|any;
   imageChangedEvent: any;
-  url:String;
-  pro:boolean;
+  url:string|any;
+  pro:boolean|any;
+  croppedImage:any = '';
   constructor(private toastr: ToastrService,
               private imageService: ImageUploadService,
               private router: Router){}
@@ -41,7 +44,7 @@ export class ImageUploadComponent {
     this.selectedFile.pending = false;
     this.selectedFile.status = 'OK';
     this.imageChangedEvent = null;
-    this.imageUploaded.emit(imageUrl);
+    this.imageChange.emit(imageUrl);
   }
   private onFailure(){
     this.selectedFile.pending = false;
@@ -50,8 +53,9 @@ export class ImageUploadComponent {
     this.imageError.emit('');
   }
 
-  imageCropped(file: File): FileSnippet | File {
-
+  imageCropped(event: ImageCroppedEvent, file:File|any): FileSnippet | File {
+       this.croppedImage = event.base64;
+       file = this.convertBase64ToBlob(this.croppedImage);
     if (this.selectedFile){
       return this.selectedFile.file = file;
     }
@@ -62,7 +66,12 @@ export class ImageUploadComponent {
   imageLoaded(){
     this.imageLoadedToContainer.emit();
   }
-
+cropperReady(){
+  return console.log('Cropper Ready');
+}
+loadImageFailed(){
+  return console.log('load Image Failed');
+}
   cancelCropping(){
     this.imageChangedEvent = null;
     this.croppingCanceled.emit();
@@ -75,12 +84,13 @@ export class ImageUploadComponent {
     const url = this.router.url;
     const URL = window.URL;
    
-    let file, img;
+    let file; 
+    let img:any;
     if ((file = event.target.files[0]) && (file.type === 'image/png' || file.type === 'image/jpeg')){
 
       img = new Image();
       const self = this;
-
+     
       img.onload = function (){
 
         if(url !== '/users/profile' ){
@@ -135,4 +145,25 @@ export class ImageUploadComponent {
       reader.readAsDataURL(this.selectedFile.file);
     }
   }
+  convertBase64ToBlob(base64Image: string) {
+    // Split into two parts
+    const parts = base64Image.split(';base64,');
+
+    // Hold the content type
+    const imageType = parts[0].split(':')[1];
+
+    // Decode Base64 string
+    const decodedData = window.atob(parts[1]);
+
+    // Create UNIT8ARRAY of size same as row data length
+    const uInt8Array = new Uint8Array(decodedData.length);
+
+    // Insert all character code into uInt8Array
+    for (let i = 0; i < decodedData.length; ++i) {
+      uInt8Array[i] = decodedData.charCodeAt(i);
+    }
+
+    // Return BLOB image after conversion
+    return new Blob([uInt8Array], { type: imageType });
+  } 
 }

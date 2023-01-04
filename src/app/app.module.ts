@@ -10,11 +10,13 @@ import {Routes, RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbDropdownConfig, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import{HeaderComponent} from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { RentalOwnerService } from './user/shared/rental-owner.service';  // for header
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -45,9 +47,11 @@ const routes: Routes =[
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     ManageModule,
-    UserModule
+    UserModule,
+    NgbDropdownModule,
+    NgbCollapseModule
   ],
-  providers: [RentalOwnerService],
+  providers: [RentalOwnerService, NgbDropdownConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,9 +11,9 @@ export class CreateBankComponent implements OnInit {
   stripe: any;
   elements: any;
 
-  @ViewChild('cardNumber',{static: true}) cardNumRef: ElementRef;
-  @ViewChild('cardExp',{static: true}) cardExpRef: ElementRef;
-  @ViewChild('cardCvc',{static: true}) cardCvcRef: ElementRef;
+  @ViewChild('cardNumber',{static: true}) cardNumRef: ElementRef|any;
+  @ViewChild('cardExp',{static: true}) cardExpRef: ElementRef|any;
+  @ViewChild('cardCvc',{static: true}) cardCvcRef: ElementRef|any;
 
   //@ViewChild('currency',{static: true}) currencyRef: ElementRef;
  
@@ -32,7 +32,7 @@ export class CreateBankComponent implements OnInit {
   token: any;
 
   constructor(){
-
+/* global Stripe */
   this.stripe = Stripe(environment.STRIPE_PK);
   this.elements = this.stripe.elements();
 
@@ -76,7 +76,7 @@ export class CreateBankComponent implements OnInit {
     //this.currency.destroy();
   }
 
-  onChange({error}){
+  onChange({error}:any){
     if (error){
       this.error = error.message;
     } else {
@@ -84,10 +84,10 @@ export class CreateBankComponent implements OnInit {
     }
   }
 
-  stripeTokenHandler = (token) => {
+  stripeTokenHandler = (token:any) => {
     // Insert the token ID into the form so it gets submitted to the server
     
-    const form = document.getElementById('group');
+    const form:any = document.getElementById('group');
     const hiddenInput = document.createElement('input');
     hiddenInput.setAttribute(token.card.currency, 'usd');
     hiddenInput.setAttribute('value', token.id);

@@ -10,7 +10,7 @@ import { AuthService } from './shared/auth.service';
 import { AuthGuard } from './shared/auth.guard';
 import { TokenInterceptor } from './shared/token.interceptor';
 import { RentalOwnerService } from '../user/shared/rental-owner.service'; // for login
-
+import { ValidatorDirective } from './shared/validators/validator.directive';
 const routes: Routes = [
     { path: 'login', component: LoginComponent,  canActivate: [AuthGuard]  },
     { path: 'register', component:RegisterComponent,  canActivate: [AuthGuard] },
@@ -20,9 +20,9 @@ const routes: Routes = [
 @NgModule({
     declarations: [
     LoginComponent,
+    ValidatorDirective,
     RegisterComponent,
-    AuthComponent,
-   
+    AuthComponent
     ],
     imports: [
     RouterModule.forChild(routes),

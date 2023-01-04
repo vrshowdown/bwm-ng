@@ -1,6 +1,8 @@
-.revenue{
-    text-align: right;
-    }
+.justify-rev{
+/*background-color: black;*/
+text-align: end;
+}
+/*.revenue{}*/
     .avatar{
     border-radius: 50%;
     }
@@ -15,9 +17,13 @@
     text-align: center;
 }
 
-
+.flexContainer{
+  display: flex;
+ /* flex-wrap: nowrap;*/
+  width:100%;
+}
  /*JIBREEL UTLEY**/
- @import 'variables';
+ @import '../../../styles/variables';
 
     a {
         &:hover, &:focus{
@@ -73,7 +79,9 @@
       animation-name: example;
       animation-duration: 4s;
     }
-
+    .userProfileTitle{
+      width:100%;
+    }
     
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes example {
@@ -86,3 +94,14 @@
    from {opacity:0 !important;}
   to {opacity:1 !important;}
 }
+
+
+  @media screen and (max-width:768px){
+    .justify-rev{
+    text-align:start;
+    /*background-color: red;*/
+    }
+  }
+ .fa{
+  padding:5px;
+ }

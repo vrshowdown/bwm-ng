@@ -12,8 +12,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 export class ManageRentalComponent implements OnInit {
 
-  rentals: Rental[];
-  rentalDeleteIndex: number;
+  rentals?:any; //JMU
+  rentalDeleteIndex: any; //JMU
   constructor(private rentalService: RentalService,  
     private toastr: ToastrService){
    
@@ -31,7 +31,7 @@ export class ManageRentalComponent implements OnInit {
   deleteRental(rentalId: string){
     this.rentalService.deleteRental(rentalId).subscribe(
       ()=>{
-        this.rentals.splice(this.rentalDeleteIndex, 1);
+        this.rentals?.splice(this.rentalDeleteIndex, 1);
         this.rentalDeleteIndex = undefined;
       },
       (errorResponse: HttpErrorResponse) => {

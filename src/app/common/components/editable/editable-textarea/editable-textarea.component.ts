@@ -9,7 +9,7 @@ import { EditableComponent } from '../editable.component';
 
 export class EditableTextareaComponent extends EditableComponent {
 
-    @Input() rows: string;
-    @Input() cols: string;
+    @Input() rows?: string;
+    @Input() cols?: string;
 
 }

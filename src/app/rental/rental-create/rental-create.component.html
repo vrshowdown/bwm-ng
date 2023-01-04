@@ -45,7 +45,7 @@
   
             <div class="form-group">
               
-  <bwm-image-upload (imageUploaded)="handleImageUpload($event)"
+  <bwm-image-upload (imageChange)="handleImageUpload($event)"
       (imageError)="handleImageError()">
   </bwm-image-upload>
             </div>
@@ -94,7 +94,7 @@
                     [(ngModel)]="newRental.shared">
             </div>
             <button (click)="createRental()"
-            [disabled]="!rentalForm.form.valid || !newRental.image"
+            [disabled]="rentalForm.form.status == 'INVALID'" 
             type="button"
             class="btn btn-bwm">Submit</button>
           </form>

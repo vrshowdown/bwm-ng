@@ -10,7 +10,7 @@ import { Component } from '@angular/core'; // will be recognized as a component 
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  //title = 'app';
+  title = 'app';
   //Example of property Binding
   //a String variable in ts
   componentTitle = "I am app component from component.ts";

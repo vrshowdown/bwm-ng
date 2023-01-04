@@ -14,7 +14,7 @@ import { CreateBankComponent } from './create-bank/create-bank.component';
 import { CreateIndividualComponent } from './create-individual/create-individual.component';
 import { WithdrawMoneyComponent } from './withdraw-money/withdraw-money.component';
 import { ActivationComponent } from './activation/activation.component';
-
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { EditableModule } from '../common/components/editable/editable.module';
 import { ImageUploadModule } from '../common/components/image-upload/image-upload.module';
@@ -54,7 +54,9 @@ imports: [
     ReactiveFormsModule,
     EditableModule,
     ImageUploadModule,
-    PaymentModule
+    PaymentModule,
+    NgbNavModule,
+    
 ],
 declarations: [
     UserComponent,
@@ -65,14 +67,16 @@ declarations: [
     CreateBankComponent,
     CreateIndividualComponent,
     WithdrawMoneyComponent,
-    ActivationComponent
+    ActivationComponent,
+    
  
 ],
 providers: [
     UserService,
     RentalService,
     AuthService,
-    PaymentService
+    PaymentService,
+
 ]
 })
 export class UserModule {}

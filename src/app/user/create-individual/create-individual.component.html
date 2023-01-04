@@ -225,18 +225,19 @@
                                
                     </div> 
         </div>
-        <div class="row" style="margin-top:30px;">
-                <div style="float:right; display:block;">
+        <div class="row" style="margin-top:30px; display:flex; flex-wrap: nowrap; ">
+                <div style="width:auto">
                                 
                         <input [(ngModel)]="formDatax.tos"
-                        style="width:78px;margin-left:15px"
+                   
+                        style="width:50px; height:50px;margin-left:15px"
                         name ="tos" 
                         type="checkbox" 
-                        class="form-control inp-individual-tos" 
+                        class="form-control inp-individual-tos form-check-input mt-0" 
                         id="tos"
-                        required>
+                        required >
                 </div>
-                <div style="width:80%">
+                <div style="max-width: 90%;">
                 <p>By registering your account, you agree to our Services Agreement and the Stripe Connected Account Agreement.</p>
                 </div>
         </div>

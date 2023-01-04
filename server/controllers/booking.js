@@ -105,19 +105,19 @@ function isValidBooking(proposedBooking, rental){
 
 
 
-
 //Create Payment to owner
 async function createPayment(booking, toUser, token){
 const { user } =  booking; 
 
 const PLATFORM_FEE = booking.totalPrice * (CUSTOMER_SHARE + STRIPE_FEE);
-    const customer = await stripe.customers.create({
+const idempotency = `${Date.now()}-${Math.random()}`;
+const customer = await stripe.customers.create({
     source: token.id,
     email: user.email
     },{
         
-            stripe_account: toUser.stripeAccountId,
-           
+       stripeAccount: toUser.stripeAccountId,
+       idempotencyKey: idempotency 
     }); 
   
 

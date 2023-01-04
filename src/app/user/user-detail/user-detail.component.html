@@ -17,7 +17,7 @@
         <bwm-editable-image
         [(entity)]="user"
         [field]=" 'image' "
-        (entityUpdated)="updateImage(user._id, $event)"
+        (entityChange)="updateImage(user._id, $event)"
         >
        </bwm-editable-image>
     
@@ -29,43 +29,54 @@
    
       </div>
       <ul class="list-group">
-        <li class="list-group-item text-muted">Varified <i class="fa fa-dashboard fa-1x"></i><span class="pull-right">Yes</span></li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Name</strong></span> <span></span></li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Phone Number</strong></span><span></span></li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Address</strong></span></li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Goverment ID</strong></span></li>
+
+        <li class="list-group-item text-right">
+          <strong>
+            Varified<i class="fa fa-dashboard fa-1x"></i>
+          </strong>
+          <span class="pull-right">{{varification==true?'Yes':'No'}}</span>
+        </li>
+
+        <li class="list-group-item text-right">
+          <span class="pull-left">
+            <strong>Name</strong>
+          </span> 
+          <span class="pull-right">
+            {{user.username}}
+          </span>
+        </li>
+      
+      
       </ul>
       <div class="panel panel-default">
         <div class="panel-heading">Social Media</div>
         <div class="panel-body">
-          <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
+          <i class="fa fa-facebook fa-2x"> </i> 
+          <i class="fa fa-github fa-2x"> </i> 
+          <i class="fa fa-twitter fa-2x"> </i> 
+          <i class="fa fa-pinterest fa-2x"> </i> 
+          <i class="fa fa-google-plus fa-2x"> </i>
         </div>
       </div>
     </div>
     <!--/col-3-->
     <div class="col-sm-9">
-        <div class="row">
-    
-            <div #revenue  *ngIf="user.revenue"   class="col-sm-6"  id="revenue"><h1>Revenue ${{rev}}</h1></div>
+        <div class="flexContainer row">
+          <div class="col-md-6">
+            <h2>Hello, I'm {{user.username}}</h2>
           </div>
-      <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#settings">User Settings</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#passwordChange" *ngIf="user.activated">Change Password</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#ownerSettings" *ngIf="user.activated">Owner Settings</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#WithdrawMoney" *ngIf="user.activated">Withdraw Money</a></li>
-      </ul>
-      <div class="tab-content">
-
-
-
-
-        <div class="tab-pane active" id="home">
-            <form #profileForm="ngForm">
-                <br>
-                <div>
-                    <h2>Hello, I'm {{user.username}}</h2>
-                </div>
+          
+          <div class="col-md-6"  #revenue  *ngIf="user.revenue"   id="revenue">
+            <h2 class="justify-rev">Revenue ${{rev}}</h2>
+          </div>
+            
+        </div>
+  
+          <nav ngbNav #nav="ngbNav" class="nav-tabs">
+            <ng-container ngbNavItem>
+              <a ngbNavLink>Home</a>
+              <ng-template ngbNavContent>
+                <form #profileForm="ngForm">
                 <div class="form-group">
                   <label for="name">Full Name</label>
                   <input [(ngModel)]="formData.name"
@@ -82,7 +93,6 @@
                       </div>-->
                     </div>
                 </div>
-      
                 <div class="form-group">
                   <label for="address">Address</label>
                   <input [(ngModel)]="formData.address" 
@@ -93,7 +103,6 @@
                                 placeholder="{{user.address}}"
                                 >
                 </div>
-      
                 <div class="form-group">
                   <label for="phone">Phone Number</label>
                   <input [(ngModel)]="formData.phone" 
@@ -104,7 +113,6 @@
                                 placeholder="{{user.phone}}"
                                 >
                 </div>
-      
                 <div class="form-group">
                   <label for="about">Introduction</label>
                   <textarea [(ngModel)]="formData.about" 
@@ -126,8 +134,6 @@
                   </p>
                 
               </div>
-
-
             <div id="rentalList">
               <ng-container  *ngIf="rentals && rentals.length > 0">
                   <div  *ngFor="let rental of rentals; let i = index" class="col-md-4">
@@ -150,12 +156,11 @@
                 </ng-container>
 
               </div>
-
-
-        </div>
-        <!--/tab-pane-->
-        <div class="tab-pane" id="settings">
-         
+            </ng-template>
+            </ng-container>
+            <ng-container ngbNavItem>
+              <a ngbNavLink>User Settings</a>
+        <ng-template ngbNavContent>
 
             <form #userForm="ngForm">
                 <br>
@@ -171,7 +176,7 @@
                                 placeholder="{{user.username}}"
                                 required>
                     <div *ngIf ="username.invalid && (username.dirty || username.touched)" class="alert alert-danger" >
-                      <div *ngIf = "username.errors.required">
+                      <div *ngIf? = "username.errors.required">
                       Username is required.
                       </div>
                     </div>
@@ -222,15 +227,14 @@
               </div>
 
 
-            
+              </ng-template>
+            </ng-container>
 
-              
-
-
-        </div>
-        <!--/tab-pane-->
-        <div class="tab-pane" id="passwordChange">
-            <br>
+            <ng-container ngbNavItem>
+              <a ngbNavLink>Change Password</a>
+              <ng-template ngbNavContent>
+               
+                <br>
             <form #passwordForm="ngForm">
                 <h2>Change Password</h2>
               
@@ -287,10 +291,12 @@
                 </p>
               
             </div>
-        </div>
 
-        
-        <div class="tab-pane" id="ownerSettings">
+              </ng-template>
+            </ng-container>
+            <ng-container ngbNavItem [disabled]="!user.activated">
+              <a ngbNavLink>Owner Settings</a>
+              <ng-template ngbNavContent>
          
             <div *ngIf="stipeId && user.activated"  [@simpleFadeAnimation]="'in'" style="overflow: hidden;">
               <br>
@@ -300,7 +306,7 @@
           
             </div>
             <br>
-            <div *ngIf="user.activated">
+            <div >
               <h2>Become A Rental Owner</h2>
               <bwm-create-individual 
               [formDatax] = "formDatax"
@@ -309,15 +315,24 @@
               >
               </bwm-create-individual>
           </div>
-    
-        
-      </div>
-     
+
+              </ng-template>
+            </ng-container>
+            <ng-container ngbNavItem [disabled]="!user.activated">
+              <a ngbNavLink>Withdraw Money</a>
+              <ng-template ngbNavContent>
       <div class="tab-pane" id="WithdrawMoney" *ngIf="user.activated">
          <bwm-withdraw-money [formDataz]="formDataz" (childEvent)="rev=$event"></bwm-withdraw-money>
       </div>
-      <!--/tab-pane-->
-    </div>
+              </ng-template>
+            </ng-container>
+          </nav>
+          
+          <div [ngbNavOutlet]="nav" class="mt-2"></div>
+          
+
+
+
     <!--/tab-content-->
   </div>
   <!--/col-9-->

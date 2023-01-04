@@ -8,7 +8,7 @@ styleUrls: ['./manage-rental-booking.component.scss']
 })
 
 export class ManageRentalBookingComponent implements OnInit{
-  @Input() bookings: Booking[];
+  @Input() bookings:Booking[]|any; //JMU
   constructor(public modalService: NgbModal){}
   ngOnInit(){}
 }

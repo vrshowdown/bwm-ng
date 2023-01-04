@@ -16,7 +16,7 @@ import{ PaymentService } from '../shared/payment.service';
 export class WithdrawMoneyComponent implements OnInit {
 
 
-  user: User;
+  user: User = new User();
   userData:any;
   errors: any[] =[];
   revenue: any;
@@ -36,9 +36,10 @@ ngOnDestroy(){
 }
   onSubmitToPay(){
     this.paymentService.payoutToBankCard(this.formDataz).subscribe(
-      (user: User)=>{
+      (res: any)=>{
         this.getUser();
-        user = this.user;
+        //user = this.user;
+        //console.log(res);
         this.toastr.success('You have Successfully withdraw money from your account. It will be available in 2 days', 'Success!');
       },
       (errorResponse)=>{
@@ -55,7 +56,7 @@ getUser(){
   (user:User)=>{
     this.user = user;
     this.revenue = this.user.revenue;
-    if(this.revenue){this.revenue =  this.revenue/100 - this.formDataz.amount;  this.childEvent.emit(this.revenue);}
+    if(this.revenue){this.revenue =  (this.revenue/100) - this.formDataz.amount;  this.childEvent.emit(this.revenue);}
       },
       (err)=>{
       });

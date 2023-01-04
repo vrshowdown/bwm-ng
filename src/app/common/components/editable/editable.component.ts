@@ -1,6 +1,10 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
-
+@Component({
+    selector: 'bwm-editable',
+    templateUrl: './editable.component.html',
+    styleUrls: ['./editable.component.scss']
+    })
 export class EditableComponent implements OnChanges {
 
     @Input() entity: any;
@@ -8,13 +12,13 @@ export class EditableComponent implements OnChanges {
         this.entityField = entityField;
         this.setOriginValue();
     };
-    @Input() className: string;
+    @Input() className?: string;
     //input type removed 
     @Input() style: any;
-    @Output() entityUpdated = new EventEmitter();
+    @Output() entityChange = new EventEmitter();
 
     isActiveInput: boolean = false;
-    public entityField: string;
+    public entityField:any = String;
     public originEntityValue: any;
 
     constructor(){}
@@ -28,7 +32,7 @@ export class EditableComponent implements OnChanges {
         const entityValue = this.entity[this.entityField];
 
         if (entityValue !== this.originEntityValue) {
-            this.entityUpdated.emit({[this.entityField]: this.entity[this.entityField]});
+            this.entityChange.emit({[this.entityField]: this.entity[this.entityField]});
             this.setOriginValue();
         }
         this.isActiveInput = false;

@@ -16,7 +16,7 @@ import {UserService} from '../../user/shared/user.service';
 export class RentalDetailComponent implements OnInit {
   
   
-  rental: Rental;   // assign rental to a variable for individual item in array
+  rental:any;   // assign rental to a variable for individual item in array
  
 
   
