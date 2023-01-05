@@ -1,7 +1,8 @@
 
 //modules
 import { NgModule } from '@angular/core';
-import { AgmCoreModule } from '@agm/core';
+//import { AgmCoreModule } from '@agm/core';
+import { GoogleMapsModule } from '@angular/google-maps';
 import {CommonModule} from '@angular/common';
 //components and other imports
 import { MapComponent } from'./map.component';
@@ -19,7 +20,8 @@ import { environment } from '../../../environments/environment';
     MapComponent
     ],
     imports: [
-        AgmCoreModule.forRoot({ apiKey: environment.GOOGLE_MAP_PUBLIC_KEY}),
+      GoogleMapsModule,
+        //AgmCoreModule.forRoot({ apiKey: environment.GOOGLE_MAP_PUBLIC_KEY}),
         CommonModule 
     ],
   providers: [

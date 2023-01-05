@@ -1,10 +1,13 @@
 <!--When map is ready use mapHandler to get geolocation -->
+<!----
 <agm-map
 (mapReady)="mapReadyHandler()"
 [latitude]="lat"
 [longitude]="lng"
 [zoom]="13">
+-->
 <!--checks to see if there are ant lat and lng data for circle-->
+<!----
   <agm-circle *ngIf ="!isPositionError && lat && lng" 
   [latitude]="lat"
   [longitude]="lng"
@@ -20,4 +23,15 @@
   Oops, there is a problem to find location on the map, we are trying to resolve the problem as fast as possible. Contact host for additional info if you are still interested in this place. We are sorry for inconvenience. --Jibreel
   </agm-info-window>
 </agm-map>
+-->
+<google-map height="475px"
+            width="610px"
+            [center]="center"
+            [zoom]="zoom"
+            (mapClick)="moveMap($event)"
+            (mapMousemove)="move($event)">
+            <Map center="center" zoom="zoom">
+             <map-marker [position]="center" style="border-radius: 20px; background-color: red; width:50px; height:50px" ></map-marker>
+            </Map>
+</google-map>
 
