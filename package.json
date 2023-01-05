@@ -1,6 +1,10 @@
 {
   "name": "bwm-ng-v15",
   "version": "0.0.0",
+  "engines": {
+    "node": "v18.12.1",
+    "npm":"8.19.2"
+  },
   "scripts": {
     "ng": "ng",
     "start": "npm start --prefix server",
