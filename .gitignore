@@ -44,3 +44,4 @@ Thumbs.db
 # server
 /server/config/dev.js
 # env
+/src/environments/json/keys.json
