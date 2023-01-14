@@ -19,11 +19,11 @@ export class ResetpasswordComponent implements OnInit {
   user:any = User;
 
   constructor(
- private userService: UserService,
-                   private route: ActivatedRoute,
-                   private toastr: ToastrService, 
-                   private auth: AuthService,
-                   private router: Router) { }
+      private userService: UserService,
+      private route: ActivatedRoute,
+      private toastr: ToastrService, 
+      private auth: AuthService,
+      private router: Router) { }
 
   ngOnInit() {
     //this.getPassChange();
@@ -41,17 +41,26 @@ export class ResetpasswordComponent implements OnInit {
         //this.logout(userData);
         this.toastr.success('You have Successfully updated your password', 'Success!');
         this.formData = {};
-        this.router.navigate(['/login', {reset: 'success'}]);
+       
+        
       },
       (errorResponse /*errorResponse: HttpErrorResponse*/)=>{
         //this.toastr.error(errorResponse.error.errors[0].detail, 'Error');
         this.errors = errorResponse.error.errors;
       })
-
+      this.logout();
   }
 
 
+logout(){
+ 
+  
+    this.auth.logout();
+    this.router.navigate(['/login', {reset: 'success'}]); 
+  
 
+ 
+}
   
 
 }

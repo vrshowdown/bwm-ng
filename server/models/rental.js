@@ -13,6 +13,7 @@ const rentalSchema = new Schema({
         image: { type: String, required: true },
         bedrooms: Number,
         shared: Boolean,
+        anemities:[{type: String}],
         description: { type: String, required: true },
         dailyRate: Number,
         createdAt: { type: Date, default: Date.now },

@@ -8,7 +8,7 @@
   <option *ngFor="let option of options" [ngValue]="option">{{option}}</option>
   </select>
   
-  <span *ngIf="!isActiveInput" class="{{className}} inline">{{entity[entityField]}}</span>
+  <span *ngIf="!isActiveInput && (className!=='rental-anemities')" class="{{className}} inline">{{entity[entityField]}}</span>
   
   <div class="inline">
     <button *ngIf="!isActiveInput" 

@@ -62,22 +62,36 @@ class FakeDb{
     **************************************** 
     Note: Must  Register as a rental owner before creating and  booking rentals
      Important Test List:
-     1. test registration system (check)
-     2. test login system (check)
-     3. test activation system including activation (check) re-submit, from profile (check) (user options should be limited before activation) (from registered users only)
-     4. test forgot password  (check)                                               (from registered users only)
-     5. test change password from profile (check)
-     6. test change username and email from profile   (check)                        (from registered users only)
-     7. test registering as a rental owner (includes debt card submission) (checked)
-     8. test to see when  rental owner is verified ( verification stays false untill rental owner registration and card submission is complete) (checked)
-     9. test withdrawing  money from account (checked)
-     10.test uploading profile picture (checked)
-     11. test Creating Rental (checked)
-     12. Test editing Rental (checked)
-     13. Test Booking  (includes datepicker booking  submition and seeing bookedout dates on calendar)(checked)
-     14. test manage booking ( accept booking to receive money from rental owner & see receipts of  booked dates from customer) (checked)
-     15. test User  profile edits  and Public User profile (checked)
-     16. Test user rental list on public and private profile (check if rental links of user displays and works)(checked)
-     17. Test  Public rental page and Search engine on rentals (rental needs to be displayed)(checked)
+     1. test registration system (check)*$
+     2. test login system (check) *$
+     3. test activation system including activation (check)$ 
+            re-submit, from profile (check) 
+            (user options should be limited before activation) (from registered users only)(check)*
+     4. test forgot password  (check)*$   
+     5. test change password from profile (check) * $
+     6. test change username and email from profile   (check)* (May Remove the ability to change email)$
+     7. test registering as a rental owner (includes debt card submission) (checked)*$
 
+     8. test to see when  rental owner is verified (check)*$
+            ( verification stays false until rental owner registration and card submission is complete) (checked)*$
+     9. test withdrawing  money from account (checked)*$
+            (sometimes inaccurate total amount displayed before reloading)$
+     10.test uploading profile picture (checked)*$
+     11. test Creating Rental (checked)*$
+            Rental map do not initially load
+     12. Test editing Rental (checked) *$
+        (map does not appear  on the first load)
+     13. Test Booking  (checked)*$
+            (includes datepicker booking  submition *$
+            and seeing bookedout dates on calendar)*$
+            (dates booked dispite error blocking process)
+            (Booking that declined  ends up  still booked on the calendar)*
+            (data to card not found in token)*$
+     14. test manage booking ( accept booking to receive money from rental owner & see receipts of  booked dates from customer) (checked)*
+            (data to card not found in token)(checked)*
+            (deletes Whole rental instead of just declining payment)(checked)*
+     15. test User  profile edits  and Public User profile (checked)*
+     16. Test user rental list on public and private profile (check if rental links of user displays and works)(checked)*
+     17. Test  Public rental page and Search engine on rentals (rental needs to be displayed)(checked)*
+     18. Test Anemities  system Public rental and rental edit(checked) *$
     */

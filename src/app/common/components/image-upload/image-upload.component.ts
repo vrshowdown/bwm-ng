@@ -8,7 +8,7 @@ import { map } from 'rxjs';
 
 
 class FileSnippet {
-  static readonly IMAGE_SIZE = {width: 950, height: 720};
+  static readonly IMAGE_SIZE = {width: 475, height: 360};
   static readonly IMAGE_SIZE2 = {width: 300, height: 300};
   pending: boolean = false;
   status: string = 'INIT';
