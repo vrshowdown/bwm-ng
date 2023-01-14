@@ -1,13 +1,16 @@
 const User = require('../models/user');
 const UserP = require('../models/userp');
-const Booking = require('../models/rental');
+const Booking = require('../models/booking');
 const Rental = require('../models/rental');
 const Payment = require ('../models/payment');
 
 const { normalizeErrors } = require('../helpers/mongoose');
 
 const config = require('../config');
+
+const { set } = require('mongoose/lib/promise_provider');
 const stripe = require('stripe')(config.STRIPE_SK);
+const mongoose = require('mongoose');
 
 const CUSTOMER_SHARE = 0.051;
 //
@@ -39,28 +42,32 @@ exports.getPendingPayments = function(req, res) {
 }
 
 exports.confirmPayment = function(req, res){
-  
+  debugger
     const payment =  req.body;
     const user = res.locals.user;
     Payment.findById(payment._id)
         .populate('toUser')
         .populate('booking')
         .exec(async function(err, foundPayment){
-        
+      
         if(err){
             return res.status(422).send({errors: normalizeErrors(err.errors)});
         }
         if(foundPayment.status === 'pending' && user.id === foundPayment.toUser.id){
           
             const booking = foundPayment.booking;
-            
-            /*
+            const idempotency = `${Date.now()}-${Math.random()}`;
+            const PLATFORM_FEE = (booking.totalPrice * CUSTOMER_SHARE*100).toFixed(0);
             const charge = await stripe.charges.create({
-                amount: booking.totalPrice * 100,
-                currency: 'usd',
-                customer: payment.fromStripeCustomerId
-            }) */
-            
+                 amount: booking.totalPrice * 100,
+                 currency: 'usd',
+                 customer: payment.fromStripeCustomerId,
+                 application_fee_amount: PLATFORM_FEE
+               },{
+                 stripeAccount: user.stripeAccountId,
+                 idempotencyKey:idempotency
+               })
+            /*
             // STRIPE_FEE = 0.029;
             const tokenObject = await stripe.tokens.retrieve(payment.tokenId);
             const paymentMethodId = tokenObject.card.id;
@@ -78,10 +85,10 @@ exports.confirmPayment = function(req, res){
               },
             });
             
-           
+           */
 
             if(charge){
-              confirmation(paymentMethodId,charge.id);
+             // confirmation(paymentMethodId,charge.id);
                 Booking.updateMany({_id: booking.id}, {status: 'active'}, function(){});
                 foundPayment.charge = charge;
                 foundPayment.status = 'paid';
@@ -128,19 +135,31 @@ exports.confirmPayment = function(req, res){
   }
 }
 
-exports.declinePayment = function (req, res){
-    const payment = req.body;
-    const { booking } = payment;
-    Booking.deleteOne({id: booking._id}, (err, deleteBooking)=>{
-        if(err){
-            return res.status(422).send({errors: normalizeErrors(err.errors)});
-        }
-        Payment.update({_id: payment._id}, {status: 'declined'}, function(){});
-        Rental.update({_id: booking.rental}, {$pull: {bookings: booking._id}}, ()=>{});
-        return res.json({status: 'deleted'});
-    })
-}
+exports.declinePayment = async function (req, res) {
 
+  const payment = req.body;
+  const { booking } = payment;
+
+
+  Booking.findById(booking._id, (err, deleteBooking)=>{
+ 
+    if(err){
+        return res.status(422).send({errors: normalizeErrors(err.errors)});
+    }
+    Booking.updateOne({_id: booking._id}, {status: 'declined'}, function(err,declined){
+   
+      if(err){
+        return res.status(422).send({errors: normalizeErrors(err.errors)});
+      }
+    });
+    Payment.updateOne({_id: payment._id}, {status: 'declined'}, function(){});
+    Rental.updateOne({_id: booking.rental}, {$pull: {bookings: booking._id}}, ()=>{});
+
+    return res.json({status: 'declined'});
+  });
+
+ 
+}
 
 exports.MoneyWithdrawl = async function(req, res){
 
@@ -162,31 +181,7 @@ exports.MoneyWithdrawl = async function(req, res){
           return res.status(422).send({errors: [{title: 'Insuffecient funds', detail: 'The amount you requested is too high'}] });
         }
         const idempotency = `${Date.now()}-${Math.random()}`;
-      
-        /*
-        stripe.payouts.create(
-          {
-          amount: userData.amount.toString()*100,
-          /*
-          currency: 'usd',
-          destination: '',
-          source_type:'bank_account'
-          
-         currency: 'usd',
-         destination:'card_1MLfr24KqCVcfHJirwh0Iupa',
-          },{
-           // stripe_account: 'acct_1MHr4k4KqCVcfHJi',
-            idempotencyKey:idempotency
-           }).then(function(payout) {
-            User.findById(user.id,function(err,foundUser){
-              if(err){
-                return res.status(422).send({errors: normalizeErrors(err.errors)});
-              }
-              User.update({_id: foundUser.id}, {$inc: {revenue:-userData.amount*100}}, function(err,user){});
-            });
 
-          });
-          */
          const payout = await stripe.payouts.create({  
               amount: userData.amount.toString()*100,
               destination: user.stripeCid,
@@ -202,7 +197,7 @@ exports.MoneyWithdrawl = async function(req, res){
               if(err){
                 return res.status(422).send({errors: normalizeErrors(err.errors)});
               }
-              User.update({_id: foundUser.id}, {$inc: {revenue:-userData.amount*100}}, function(err,user){});
+              User.updateMany({_id: foundUser.id}, {$inc: {revenue:-userData.amount*100}}, function(err,user){});
             });
           });
       return res.json('payout');
@@ -414,13 +409,14 @@ exports.StripeAccount = function(req,res, next) {
                 account_holder_name:'Jibreel Utley',
                 account_holder_type:'individual',
                 routing_number: '',
-                account_number: '000999999991',
+                account_number: 'bank account number#',
                 default_for_currency:true
             }
             */
         
-        },function(err, bank) {
-          updateCard(req, res, bank);    
+        },function(err, card) {
+          if(err) return res.status(422).send({errors: normalizeErrors(err.errors)});
+          updateCard(req, res, card);    
       });  
  }
  

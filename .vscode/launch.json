@@ -1,10 +1,15 @@
 {
   "configurations": [
-  {
-    "command": "npm start",
-    "name": "Run npm start",
-    "request": "launch",
-    "type": "node-terminal"
-  }
+
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "nodemon",
+        "runtimeExecutable": "nodemon",
+        "program": "${workspaceFolder}/server/index.js",
+        "restart": true,
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen"
+    }
   ]
 }

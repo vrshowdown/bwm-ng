@@ -242,7 +242,8 @@ resendActivationAuth(){ //JMU
     this.userService.updatePassword(userId, userData).subscribe(
       (updatedUser: User)=>{
         this.user = updatedUser;  
-        //this.logout(userData);
+        this.logout(userData);
+       // this.auth.logout();
         this.toastr.success('You have Successfully updated your password', 'Success!');
       },
       (errorResponse)=>{
@@ -279,7 +280,7 @@ resendActivationAuth(){ //JMU
        // this.router.navigate(['/rentals']);
       },
       (errorResponse)=>{
-        this.router.navigate(['/login', {registered: 'success'}]);
+        this.router.navigate(['/login', {reset: 'success'}]);
         this.errors = errorResponse.error.errors;
 
       })

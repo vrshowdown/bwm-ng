@@ -126,9 +126,9 @@ router.delete('/:id', UserCtrl.authMiddleware, function(req, res){
 
 // to post  new rental
 router.post('', UserCtrl.authMiddleware,VarifyAccount, function(req,res){
-    const{ title, city, street, category, image, shared, bedrooms, description, dailyRate} = req.body;
+    const{ title, city, street, category, image, shared, bedrooms, description, dailyRate, anemities} = req.body;
     const user = res.locals.user;
-    const rental = new Rental({title, city, street, category, image, shared, bedrooms, description, dailyRate});
+    const rental = new Rental({title, city, street, category, image, shared, bedrooms, description, dailyRate, anemities});
     rental.user = user;//assigning userid to this new rental
     UserP.findOne({user}, function(err, foundUserPId){
         if (err){
@@ -140,10 +140,13 @@ router.post('', UserCtrl.authMiddleware,VarifyAccount, function(req,res){
             if(err){
                 return res.status(422).send({errors: normalizeErrors(err.errors)});
             }
-            User.update({_id: user.id}, { $push: {rentals: newRental}}, function(){});
+            User.updateMany({_id: user.id}, { $push: {rentals: newRental}}, function(){});
         
             return res.json(newRental);  
         });
+       anemities.forEach((anemity)=>{
+         Rental.updateMany({$push: {anemities: anemity}});
+       });
     });
 });
 

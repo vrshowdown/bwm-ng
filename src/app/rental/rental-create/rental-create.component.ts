@@ -13,6 +13,7 @@ styleUrls: ['./rental-create.component.scss']
 export class RentalCreateComponent implements OnInit{
 
   newRental: Rental|any;
+  anemities:any =[];
   
   rentalCategories = Rental.CATEGORIES;
   errors: any[] = [];
@@ -46,7 +47,22 @@ this.newRental.image = '';
   }
 
 
-
+addAnemities(entry:string,checkmark:any){
+  
+  if(checkmark.currentTarget.checked == true){
+    this.anemities.push(entry);
+    console.log(this.anemities);
+  }else{
+    const index = this.anemities.indexOf(entry);
+    this.anemities.splice(index,1);
+    console.log(this.anemities);
+  }
+  debugger
+  if(this.newRental){
+    this.newRental.anemities =this.anemities;
+  }
+ 
+}
 
 
  

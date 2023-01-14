@@ -84,11 +84,139 @@
                     [(ngModel)]="newRental.dailyRate" required>
               </div>
             </div>
+
+            <div class="form-group" style="width:100%">
+              <label for="Anemities">Anemities</label>
+              <br>
+
+              <div class="row padding-new" style="width:100%">
+
+               <div class="col-md-6" style="display:flex; justify-content: space-between">
+               
+                 
+                    <div><i class="fa fa-asterisk"></i> Cooling</div>
+                      
+                    
+                    
+                      <div>
+                        <input type="checkbox"
+                        class="form-control form-check-input mt-0"
+                        style="width:30px; height:30px"
+                        id="cooling"
+                        name="cooling"
+                        (click)="addAnemities('cooling',$event)"
+                        >
+                      </div>
+                    
+              
+               </div>
+               <div class="col-md-6" style="display:flex; justify-content: space-between">
+              
+                    <div>
+                      <i class="fa fa-thermometer"></i> Heating
+                    </div>
+                  
+                      <div>
+                        <input type="checkbox"
+                        class="form-control form-check-input mt-0"
+                        style="width:30px; height:30px"
+                        id="heating"
+                        name="heating"
+                        (click)="addAnemities('heating',$event)"
+                        >
+                      </div>
+                    
+                  
+               </div>
+              </div><!--End of row 1-->
+               
+              <div class="row padding-new" style="width:100%">
+                <div class="col-md-6" style="display:flex; justify-content: space-between">
+                
+                    <div>
+                      <i class="fa fa-tachometer" aria-hidden="true"></i> Iron
+                    </div>
+                    
+                    <div>
+                      <input type="checkbox"
+                      class="form-control form-check-input mt-0"
+                      style="width:30px; height:30px"
+                      id="iron"
+                      name="iron"
+                      (click)="addAnemities('heating',$event)"
+                      >
+                    </div>
+               </div> 
+               <div class="col-md-6" style="display:flex; justify-content: space-between">
+            
+                   <div>
+                    <i class="fa fa-cube"></i> Washing machine
+                   </div>
+                  
+                     <div>
+                       <input type="checkbox"
+                       class="form-control form-check-input mt-0"
+                       style="width:30px; height:30px"
+                       id="cooling"
+                       name="cooling"
+                       (click)="addAnemities('washing-machine',$event)"
+                       >
+                     </div>
+                  
+                
+              </div>
+            </div><!--End of  row 2-->
+              
+
+              <div class="row padding-new" style="width:100%">
+               <div class="col-md-6" style="display:flex; justify-content: space-between">
+              
+                   <div>
+                    <i class="fa fa-desktop"></i> Office
+                   </div>
+                  
+                    <div>
+                      <input type="checkbox"
+                      class="form-control form-check-input mt-0"
+                      style="width:30px; height:30px"
+                      id="heating"
+                      name="heating"
+                      (click)="addAnemities('office',$event)"
+                      >
+                    </div>
+                
+              </div>  
+              <div class="col-md-6" style="display:flex; justify-content: space-between">
+              
+                   <div>
+                    <i class="fa fa-cube"></i> Dishwasher
+                   </div>
+                  
+                     <div class="right">
+                       <input type="checkbox"
+                       class="form-control form-check-input mt-0"
+                       style="width:30px; height:30px"
+                       id="dishwasher"
+                       name="dishwasher"
+                       (click)="addAnemities('dishwasher',$event)"
+                       >
+                     </div>
+                  
+               
+              </div>  
+            </div><!--end of row 3-->
+
+             </div>
+
+              
+            
+
   
             <div class="form-group">
               <label for="shared">Shared</label>
               <input type="checkbox"
-                     class="form-control"
+                     class="form-control form-check-input mt-0"
+                     style="width:30px; height:30px"
                      id="shared"
                     name="shared"
                     [(ngModel)]="newRental.shared">

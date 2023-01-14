@@ -16,6 +16,7 @@ export class Rental{
     createdAt?: string;
     bookings: Booking[]|undefined;
     user?:User;
+    anemities:string[]|undefined;
     
 }
     

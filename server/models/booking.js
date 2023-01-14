@@ -1,5 +1,6 @@
 //Back End Booking Model
 const mongoose = require('mongoose');
+const Payment = require ('../models/payment');
 const Schema = mongoose.Schema;
 
 const bookingSchema = new Schema({

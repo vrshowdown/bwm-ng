@@ -56,7 +56,7 @@ getUser(){
   (user:User)=>{
     this.user = user;
     this.revenue = this.user.revenue;
-    if(this.revenue){this.revenue =  (this.revenue/100) - this.formDataz.amount;  this.childEvent.emit(this.revenue);}
+    if(this.revenue){this.revenue =  (this.revenue/100) - this.formDataz.amount;  this.childEvent.emit(this.revenue.toFixed(2));}
       },
       (err)=>{
       });

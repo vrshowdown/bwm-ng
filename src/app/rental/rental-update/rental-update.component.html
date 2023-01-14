@@ -111,14 +111,83 @@
               <h3 class="title">Assets</h3>
               <div class="row">
                 <div class="col-md-6">
-                  <span><i class="fa fa-asterisk"></i> Cooling</span>
-                  <span><i class="fa fa-thermometer"></i> Heating</span>
-                  <span><i class="fa fa-location-arrow"></i> Iron</span>
+                  <span>
+                  <i class="fa fa-asterisk"></i> Cooling    
+                  <bwm-editable-select
+                    [(entity)]="animitySelect1"
+                    [field]=" 'toggle'"
+                    [options]="[true, false]"
+                    [style]="{'display': 'inline-block'}"
+                    [className]=" 'rental-anemities'"
+                    (entityChange)="updateRentalAnemities(rentalId, $event,'cooling')"
+                    >
+                   </bwm-editable-select>
+                   <i *ngIf="rentalCopy.anemities.includes('cooling')"class="fa fa-check" style="color:green" aria-hidden="true"></i>
+                </span>
+                  <span><i class="fa fa-thermometer"></i> Heating
+                    <bwm-editable-select
+                    [(entity)]="animitySelect2"
+                    [field]=" 'toggle'"
+                    [options]="[true, false]"
+                    [style]="{'display': 'inline-block'}"
+                    [className]=" 'rental-anemities'"
+                    (entityChange)="updateRentalAnemities(rentalId, $event,'heating')"
+                    >
+                   </bwm-editable-select>
+                   <i *ngIf="rentalCopy.anemities.includes('heating')"class="fa fa-check" style="color:green" aria-hidden="true"></i>
+                  </span>
+                  <span><i class="fa fa-location-arrow"></i> Iron
+                    <bwm-editable-select
+                    [(entity)]="animitySelect3"
+                    [field]=" 'toggle'"
+                    [options]="[true, false]"
+                    [style]="{'display': 'inline-block'}"
+                    [className]=" 'rental-anemities'"
+                    (entityChange)="updateRentalAnemities(rentalId, $event,'iron')"
+                    >
+                   </bwm-editable-select>
+                   <i *ngIf="rentalCopy.anemities.includes('iron')"class="fa fa-check" style="color:green" aria-hidden="true"></i>
+                  
+                  </span>
                 </div>
                 <div class="col-md-6">
-                  <span><i class="fa fa-desktop"></i> Working area</span>
-                  <span><i class="fa fa-cube"></i> Washing machine</span>
-                  <span><i class="fa fa-cube"></i> Dishwasher</span>
+                  <span><i class="fa fa-desktop"></i> Working area
+                    <bwm-editable-select
+                    [(entity)]="animitySelect4"
+                    [field]=" 'toggle'"
+                    [options]="[true, false]"
+                    [style]="{'display': 'inline-block'}"
+                    [className]=" 'rental-anemities'"
+                    (entityChange)="updateRentalAnemities(rentalId, $event,'office')"
+                    >
+                   </bwm-editable-select>
+                   <i *ngIf="rentalCopy.anemities.includes('office')"class="fa fa-check" style="color:green" aria-hidden="true"></i>
+                  </span>
+                  <span><i class="fa fa-cube"></i> Washing Machine
+                    <bwm-editable-select
+                    [(entity)]="animitySelect5"
+                    [field]=" 'toggle'"
+                    [options]="[true, false]"
+                    [style]="{'display': 'inline-block'}"
+                    [className]=" 'rental-anemities'"
+                    (entityChange)="updateRentalAnemities(rentalId, $event,'washing-machine')"
+                    >
+                   </bwm-editable-select>
+                   <i *ngIf="rentalCopy.anemities.includes('washing-machine')"class="fa fa-check" style="color:green" aria-hidden="true"></i>
+                  </span>
+                  <span><i class="fa fa-cube"></i> Dishwasher
+                    <bwm-editable-select
+                    [(entity)]="animitySelect6"
+                    [field]=" 'toggle'"
+                    [options]="[true, false]"
+                    [style]="{'display': 'inline-block'}"
+                    [className]=" 'rental-anemities'"
+                    (entityChange)="updateRentalAnemities(rentalId, $event,'dishwasher')"
+                    >
+                   </bwm-editable-select>
+                   <i *ngIf="rentalCopy.anemities.includes('dishwasher')"class="fa fa-check" style="color:green" aria-hidden="true"></i>
+                  
+                  </span>
                 </div>
               </div>
             </div>
