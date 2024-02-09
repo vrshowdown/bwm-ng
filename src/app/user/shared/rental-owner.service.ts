@@ -31,28 +31,28 @@ export class RentalOwnerService {
  hideRentalOwner(){
    let rentalOwnerChange:boolean = false;
         const token = this.auth.getAuthToken();
-        console.log(token);
+        //console.log(token);
         if(token != undefined){
             let rentowner:any = this.auth.getRentalowner(); //Gets Token with rentwoner
-            console.log(rentowner);
+            //console.log(rentowner);
             if(rentowner == true){ // if from token meta data  is true 
                 this.enableOwner(true);
                this.validOwner.subscribe((c:any)=>{ 
                 rentalOwnerChange = c;
-                console.log("Token Captured rentowner available is... "+c)
+                //console.log("Token Captured rentowner available is... "+c)
                });
             }else{ //If  metadata from token is false
                 this.validOwner.subscribe((c:any)=>{ 
                     rentalOwnerChange = c;  
                 });
                 this.enableOwner(false);
-                console.log("Token captured Rent owner not avilable.. "+rentalOwnerChange);  
+                //console.log("Token captured Rent owner not avilable.. "+rentalOwnerChange);  
             }
 
         }else{
             this.enableOwner(false);
             this.auth.logout();
-            console.log("Token not captured Rent owner not avilable.. "+this.validOwner);
+            //console.log("Token not captured Rent owner not avilable.. "+this.validOwner);
         
         }
     }

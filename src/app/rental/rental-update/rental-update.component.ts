@@ -45,25 +45,25 @@ this.transformLocation = this.transformLocation.bind(this);
       (params) => {
         this.rentalId = params['rentalId'];
         this.getRental(params['rentalId']);
-        console.log(this.rental)
+        //console.log(this.rental)
       })
      
   }
   updateRentalAnemities(rentalId: string, animitySelect: any, animity:string){
   
-    console.log(animitySelect);
+    //console.log(animitySelect);
     if(animitySelect.toggle==false){
       if(this.rentalCopy.anemities.includes(animity)==true){
         const index = this.rentalCopy.anemities.indexOf(animity);
         this.rentalCopy.anemities.splice(index,1);
-        console.log('updated..'+ this.rentalCopy.anemities);
+       // console.log('updated..'+ this.rentalCopy.anemities);
       }
       
     }
     if(animitySelect.toggle==true){
       if(this.rentalCopy.anemities.includes(animity)==false){
         this.rentalCopy.anemities.push(animity);
-        console.log('updated..'+ this.rentalCopy.anemities);
+       // console.log('updated..'+ this.rentalCopy.anemities);
       }
     }
 
@@ -80,7 +80,7 @@ return this.upperPipe.transform(location);
       this.rental = rental;
       this.rentalCopy.anemities = rental.anemities;
       
-      console.log(rental._id);
+      //console.log(rental._id);
     });
   }
   updateRental(rentalId: string|any, rentalData: any){

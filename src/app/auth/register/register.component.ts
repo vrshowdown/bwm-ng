@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     if(profileForm.form.controls.email.invalid){
       return this.toastr.error('Incorrect Email Format', 'Failed!');
     }
-    console.log(profileForm.value);
+    //console.log(profileForm.value);
     return this.register(profileForm.value);
   }
 

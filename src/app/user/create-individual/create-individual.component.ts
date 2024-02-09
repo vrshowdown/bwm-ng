@@ -239,7 +239,7 @@ taxId:any;
        tosLastCreated:this.formDatax.tosCreated
     }
    }
-   console.log('Name', datat);
+   //console.log('Name', datat);
   
     this.paymentService.userCreateCAccount(datat).subscribe(
       (token)=>{ 

@@ -124,7 +124,7 @@ export class UserDetailComponent implements  OnInit {
     (user:User|any)=>{
       
       this.user = user;
-      console.log(user);  
+      //console.log(user);  
       this.formDatax.stripeAccountId = user.stripeAccountId;
       this.user.revenue = user.revenue;
       
@@ -170,8 +170,8 @@ export class UserDetailComponent implements  OnInit {
           if(this.stAccount.settings){this.formDatax.prefix = this.stAccount.settings.payments.statement_descriptor_prefix;}
           
         }
-        console.log(this.stAccount);
-        console.log(this.stAccount.requirements.currently_due);
+        //console.log(this.stAccount);
+        //console.log(this.stAccount.requirements.currently_due);
         if(!this.user.rentalOwner || !this.user.stripeAccountId || this.stAccount.requirements.currently_due.length > 0){
           this.formDatax.requirements = this.stAccount.requirements.currently_due;
           this.varification = false;
@@ -304,8 +304,8 @@ resendActivationAuth(){ //JMU
   updateImage(userId: string, userData:User){
     userId = this.auth.getUserId();
     userData = this.user;
-    console.log('user id...'+userId);
-    console.log('user Data...'+userData);
+    //console.log('user id...'+userId);
+    //console.log('user Data...'+userData);
     this.userService.updateUser(userId, userData).subscribe(
       (updatedUser: User)=>{
         this.user = updatedUser;

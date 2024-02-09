@@ -43,7 +43,7 @@ export class UserPublicDetailComponent implements OnInit {
       this.rentals = this.userp.user.rentals;
       let rentid = this.userp.user.rentals[0]._id
       //this.varifyInfo(this.userp);
-      console.log(userp);
+      //console.log(userp);
     },
     (err)=>{})
   }

@@ -30,13 +30,13 @@ export class RentalCreateComponent implements OnInit{
   }
 handleImageUpload(imageUrl: string){
 this.newRental.image = imageUrl;
-console.log("handle image upload"+this.newRental);
+//console.log("handle image upload"+this.newRental);
 }
 handleImageError(){
 this.newRental.image = '';
 }
   createRental(){
-    console.log("handle image upload"+this.newRental);
+    //console.log("handle image upload"+this.newRental);
     this.rentalService.createRental(this.newRental).subscribe(
     (rental: Rental)=>{
       this.router.navigate([`/rentals/${rental._id}`]);
@@ -51,11 +51,11 @@ addAnemities(entry:string,checkmark:any){
   
   if(checkmark.currentTarget.checked == true){
     this.anemities.push(entry);
-    console.log(this.anemities);
+   // console.log(this.anemities);
   }else{
     const index = this.anemities.indexOf(entry);
     this.anemities.splice(index,1);
-    console.log(this.anemities);
+   // console.log(this.anemities);
   }
 
   if(this.newRental){

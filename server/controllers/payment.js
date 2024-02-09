@@ -314,8 +314,8 @@ exports.StripeAccount = function(req,res, next) {
         return res.status(422).send({errors: [{title: 'Wrong Data!', detail: 'Descriptor has to be less than 10 and prefix greater than 5'}] }); 
       }
       if(!personInfo.token || personInfo.token && personInfo.token.created && personInfo.token.created <= personInfo.data.tosLastCreated){
-        console.log('token',personInfo.token);
-        console.log('data',personInfo.data);
+       // console.log('token',personInfo.token);
+       // console.log('data',personInfo.data);
         return res.status(422).send({errors: [{title: 'Wrong Data!', detail: `Service agreement acceptance date is not valid. Dates are expected to be after ${personInfo.data.tosLastCreated} when the most recent update to tax ID number happened. For more information, see https://stripe.com/docs/connect/updating-accounts#tos-acceptance.`}] }); 
       }
     

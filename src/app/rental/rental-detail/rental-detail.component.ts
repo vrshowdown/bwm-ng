@@ -39,7 +39,7 @@ export class RentalDetailComponent implements OnInit {
     (rental: Rental)=>{ //by rental object and type
 
       this.rental = rental;  //current  number in rentals array  is assigned to the current individual  item in rental  service  
-      console.log(this.rental.anemities);
+      //console.log(this.rental.anemities);
     });
   }
  

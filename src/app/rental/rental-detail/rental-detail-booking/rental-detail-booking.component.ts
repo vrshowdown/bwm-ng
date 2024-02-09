@@ -102,7 +102,7 @@ export class RentalDetailBookingComponent implements OnInit {
 
       });
     }
-    console.log("bookedout dates"+ this.bookedOutDates);
+    //console.log("bookedout dates"+ this.bookedOutDates);
   }
 
   private addNewBookedDates(bookingData: any){
@@ -132,7 +132,7 @@ export class RentalDetailBookingComponent implements OnInit {
   onPaymentConfirmed(paymentToken: any) {
   
     this.newBooking.paymentToken = paymentToken;
-    console.log(this.newBooking);
+    //console.log(this.newBooking);
   }
 
   createBooking(){ //JMU1
@@ -186,12 +186,13 @@ onDateSelection(date: NgbDate) {
     this.newBooking.days = -(this.newFromDate.diff(this.newToDate, 'days' )); //4 adds data to days
     this.newBooking.totalPrice = this.newBooking.days * this.rental.dailyRate;
   }
-      
+  /*    
   console.log("fromDate__"+this.newFromDate);
   console.log("toDate__"+this.newToDate);
   console.log("Moment fromDate__"+this.newBooking.startAt);
   console.log("Moment toDate__"+this.newBooking.endAt);
   console.log("moment days..."+ this.newBooking.days);
+  */
 }
 
   isHovered(date: NgbDate) {
