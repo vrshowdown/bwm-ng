@@ -42,7 +42,7 @@ exports.getPendingPayments = function(req, res) {
 }
 
 exports.confirmPayment = function(req, res){
-  debugger
+
     const payment =  req.body;
     const user = res.locals.user;
     Payment.findById(payment._id)
@@ -160,7 +160,25 @@ exports.declinePayment = async function (req, res) {
 
  
 }
+getAccountInfo = function(id) {
+    const account = stripe.accounts.retrieve(id);
+    return account;
+};
 
+exports.getAccount = async (req, res, next) => {
+  const {id,stid}  = req.params;
+  try{
+    const account = await getAccountInfo(stid);
+    if(account.requirements && account.requirements.currently_due.length == 0){
+      User.updateMany({_id: id}, { $set: {rentalOwner:true}}, () =>{});
+      }else {
+       User.updateMany({_id: id}, { $set: {rentalOwner:false}}, () =>{});
+      }
+      return res.json(account);
+  }catch(err){
+     return res.status(422).send({errors: normalizeErrors(err.errors)});
+  }
+};
 exports.MoneyWithdrawl = async function(req, res){
 
   const user =  res.locals.user;
@@ -222,6 +240,10 @@ exports.MoneyWithdrawl = async function(req, res){
        
        const ipaddress =  req.connection.remoteAddress;
        User.findById(user.id,async function(err,foundUser){
+        if(err){
+          return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+         try{
           stripe.accounts.update(foundUser.stripeAccountId,
             {
               tos_acceptance: {
@@ -229,8 +251,12 @@ exports.MoneyWithdrawl = async function(req, res){
                 ip:  ipaddress // Assumes you're not using a proxy
               }
             });
+          }catch(err){
+            res.status(422).send({errors: normalizeErrors(err.errors)});
+          }
+
           });
-        
+      
            return res.json('Done');
         
       }
@@ -239,8 +265,6 @@ exports.MoneyWithdrawl = async function(req, res){
       //Create Stripe Account
 exports.stripeAcc =  function(req, res, next){
         const user =  res.locals.user;
-  
-       
         User.findById(user.id,async function(err,foundUser){
 
           if(err){
@@ -263,7 +287,7 @@ exports.stripeAcc =  function(req, res, next){
                 requested_capabilities: ['card_payments', 'transfers'],
               },function(err, account) {
                   if(account){
-                    User.updateMany({_id: foundUser.id}, { $set: {stripeAccountId: account.id, rentalOwner:true}}, () =>{
+                    User.updateMany({_id: foundUser.id}, { $set: {stripeAccountId: account.id}}, () =>{
                       next();
                   });
                   
@@ -283,60 +307,61 @@ exports.stripeAcc =  function(req, res, next){
       
 //update Account
 exports.StripeAccount = function(req,res, next) {
-      
         const personInfo =  req.body;
         const user =  res.locals.user;
-      
+      if(personInfo.data.settings.payments.statement_descriptor.length > 10  
+        && personInfo.data.settings.payments.statement_descriptor_prefix.length <=5){
+        return res.status(422).send({errors: [{title: 'Wrong Data!', detail: 'Descriptor has to be less than 10 and prefix greater than 5'}] }); 
+      }
+      if(!personInfo.token || personInfo.token && personInfo.token.created && personInfo.token.created <= personInfo.data.tosLastCreated){
+        console.log('token',personInfo.token);
+        console.log('data',personInfo.data);
+        return res.status(422).send({errors: [{title: 'Wrong Data!', detail: `Service agreement acceptance date is not valid. Dates are expected to be after ${personInfo.data.tosLastCreated} when the most recent update to tax ID number happened. For more information, see https://stripe.com/docs/connect/updating-accounts#tos-acceptance.`}] }); 
+      }
+    
   User.findById(user.id,function(err,foundUser){
     if(foundUser.activated !== true){
       return res.status(422).send({errors: [{title: 'Wrong Data!', detail: 'User is not activated!'}] }); 
     }
+    try{
       stripe.accounts.update(
         foundUser.stripeAccountId,
            {
             business_type: 'individual',
             email: foundUser.email,
-           
-
-            individual:{ 
-               //phone: personInfo.phone,
-                //email: personInfo.email,
-               // ssn_last_4:'',
-               // id_number: '',
-                //first_name: personInfo.firstName,
-                //last_name: personInfo.lastName,
-              //  dob:{
-                   // day:'',
-                   // month:'',
-                  //  year:''
-               // },
-              //  address:{
-                   // city:'',
-                   // state:'',
-                   // postal_code: '',
-                   // line1: ''
-              //  },
-            },
+            /*individual:{
+              verification: {
+                document:personInfo.data.individual.verification.document 
+              }
+            },*/
+            company:{
+              tax_id:personInfo.data.company.tax_id,
+              name:personInfo.data.company.name
+            },            
+            
             business_profile:{
-               //url: 'www.jmu3d.com',
-               mcc:'5734',
-               product_description: "I provide services in renting out  Real Estate to my clients"
-               
-           },
-           settings:{
-             payouts:{
-               schedule:{
-                interval: 'manual'
-               }
+              url: 'www.jmu3d.com', // can be added later
+              mcc:'5734',
+              product_description: "I provide services in renting out  Real Estate to my clients" // can be added later
+              
+          },
+          settings:{
+            payments:{
+              statement_descriptor:personInfo.data.settings.payments.statement_descriptor,
+              statement_descriptor_prefix:personInfo.data.settings.payments.statement_descriptor_prefix,
+              }
+          }
 
-             }
-            }
            
-
           });
+        }catch(err){
+          res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
           updateSAccount(req,res,foundUser.stripeAccountId);
-
-          next();
+          //if(!personInfo.tos_shown_and_accepted){
+            next();
+          //}
+          
         });
        
         //return res.json('done');
@@ -344,10 +369,9 @@ exports.StripeAccount = function(req,res, next) {
 
 
    async function updateSAccount(req,res, stripeacc){
-      
       const user =  res.locals.user;
-       const token = req.body; // Using Express
-   
+       const token = req.body.token; // Using Express
+       try{
        await stripe.accounts.update(
          //foundUser.stripeAccountId,
          stripeacc,
@@ -355,7 +379,10 @@ exports.StripeAccount = function(req,res, next) {
            function(err, person) {
                // asynchronously called
                
-           });  
+           });
+      }catch(err){
+        res.status(422).send({errors: normalizeErrors(err.errors)});
+      }  
     }
 
 
@@ -397,6 +424,7 @@ exports.StripeAccount = function(req,res, next) {
 
   const user =  res.locals.user;
   const card = req.body;
+  try{
   stripe.accounts.createExternalAccount(
     user.stripeAccountId, 
         {
@@ -417,7 +445,11 @@ exports.StripeAccount = function(req,res, next) {
         },function(err, card) {
           if(err) return res.status(422).send({errors: normalizeErrors(err.errors)});
           updateCard(req, res, card);    
-      });  
+      });
+      
+    }catch(err){
+      res.status(422).send({errors: normalizeErrors(err.errors)});
+    }
  }
  
  function updateCard(req, res, card){

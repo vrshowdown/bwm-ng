@@ -297,10 +297,18 @@
             <ng-container ngbNavItem [disabled]="!user.activated">
               <a ngbNavLink>Owner Settings</a>
               <ng-template ngbNavContent>
-         
+            <div *ngIf="user.stripeAccountId && stAccount && stAccount.requirements.currently_due.length > 0">
+              Requirements need to be filled
+              <div *ngFor="let req of stAccount.requirements.currently_due">
+                <h5 style="color:red">{{req}}</h5><br>
+              </div>
+            </div>
             <div *ngIf="stipeId && user.activated"  [@simpleFadeAnimation]="'in'" style="overflow: hidden;">
               <br>
-              <h2>Add Bank Account</h2>   
+              <h2>Add Bank Account</h2>
+              <div *ngIf="!user.stripeCid">
+                <h5 style="color:red">Credit Card required to activate the account</h5>
+              </div>   
               <bwm-create-bank (bankConfirmed)='onBankConfirmed($event)'></bwm-create-bank>
               <button [disabled]="!user.bankToken" type="button" class="btn btn-bwm" (click)="updateBank()">Confirm</button>
           

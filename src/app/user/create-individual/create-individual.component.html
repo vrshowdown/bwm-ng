@@ -105,14 +105,12 @@
                             
                         </div>
                 </div>
-                <div class="borders col-sm-4">
+                <div *ngIf="this.state || !this.formDatax.stripeAccountId" class="borders col-sm-4">
                         <div class="form-group">
                     
                                 <label for="state">State</label>
                               
                                 <select [(ngModel)]="formDatax.state"
-                
-                                        
                                         name ="state" 
                                         type="text" 
                                         class="form-control inp-individual-state " 
@@ -158,8 +156,8 @@
                             
                             </div>
                 </div>
-                <!-- Stripe Policy Change
-                <div class="borders col-sm-4">
+              
+                <div *ngIf="!formDatax.ssn_last_4_provided" class="borders col-sm-4">
                         <div class="form-group">
                     
                                 <label for="ssLast4">Last 4 Digits of SS Number</label>
@@ -174,8 +172,8 @@
                                         required>
                             
                             </div>
-                </div> -->
-                <div class="borders col-sm-4">
+                        </div>
+                <div *ngIf="!formDatax.id_number_provided || ssn" class="borders col-sm-4">
                         <div class="form-group">
                     
                                 <label for="id_number">SS Number</label>
@@ -187,11 +185,61 @@
                                         class="form-control inp-individual-id_number" 
                                         id="id_number"
                                       
+                                        >
+                            
+                            </div>
+                </div>
+             
+                <div *ngIf="taxId || !formDatax.stripeAccountId" class="borders col-sm-4">
+                        <div class="form-group">
+                    
+                                <label for="tax_id">Taxpayer Identification Number (TIN)</label>
+                                <input [(ngModel)]="formDatax.tax_id"
+                                        style="width:180px;"
+                                        maxlength="9"
+                                        name ="tax_id" 
+                                        type="password" 
+                                        class="form-control inp-individual-tax_id" 
+                                        id="tax_id"
+                                      
                                         required>
                             
                             </div>
                 </div>
                 <div class="borders col-sm-4">
+                        <div class="form-group">
+                    
+                                <label for="legal_name">Legal Name</label>
+                                <input [(ngModel)]="formDatax.name"
+                                        style="width:180px;"
+                                      
+                                        name ="legal_name" 
+                                        type="text" 
+                                        class="form-control inp-individual-legal_name" 
+                                        id="legal_name"
+                                        minlength="5"
+                                      
+                                        required>
+                            
+                            </div>
+                </div>
+                <div *ngIf="statement_descriptor_prefix || !this.formDatax.stripeAccountId" class="borders col-sm-4">
+                        <div class="form-group">
+                    
+                                <label for="statement_prefix">Statement Prefix</label>
+                                <input [(ngModel)]="formDatax.prefix"
+                                        style="width:180px;"
+                                        maxlength="10"
+                                        name ="statement_prefix" 
+                                        type="text" 
+                                        class="form-control inp-individual-statement_prefix" 
+                                        id="statement_prefix"
+                                      
+                                        required>
+                            
+                            </div>
+                </div>
+                <div *ngIf="personDocument || !this.formDatax.fileId">
                         <div class="form-group">
                                 <label for="file">Goverment ID</label>
                                 <div (change)="uploadFile($event)">

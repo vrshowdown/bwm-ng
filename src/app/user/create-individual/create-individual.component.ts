@@ -1,5 +1,6 @@
 
 import { Component, OnInit,ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import{ PAYMENT} from '../shared/payment.model';
 import{ PaymentService } from '../shared/payment.service';
@@ -10,6 +11,7 @@ import {UserP} from '../shared/user-detail.model';
 import {User} from '../shared/user.model';
 import {UserService} from '../shared/user.service';
 import {ConnectedAccount} from '../shared/stripeAccount.model';
+import { Location } from '@angular/common';
 @Component({
   selector: 'bwm-create-individual',
   templateUrl: './create-individual.component.html',
@@ -21,20 +23,40 @@ export class CreateIndividualComponent implements OnInit {
   elements: any;
   stripeId:any;
   states: any = [];
- 
+  birthDateSplit:any;
   @Input() formDatax:any| ConnectedAccount; //JMU
   @Input() isValidatingAccount: boolean = false;
   @Output() stipeIdEvent = new EventEmitter();
-
+  individual:any;
+  business_profile:any;
+  settings:any;
+  company:any;
+  ssn:any;
+  tos_shown_and_accepted:any;
+  statement_descriptor:any;
+  statement_descriptor_prefix:any;
+  
   constructor( private toastr: ToastrService,
                private paymentService: PaymentService,
                private auth: AuthService,
                private userService: UserService,
+               private router: Router,
                ){
                 
                 
                }
   ngOnInit(){
+    if(this.formDatax.requirements){
+      this.state=  this.formDatax.requirements.some((ele: string)=>{ return ele == ('individual.address.state' || 'company.address.state') });
+      this.personDocument = this.formDatax.requirements.some((ele: string)=>{return ele == 'person.document'});
+      this.tos = this.formDatax.requirements.some((ele: string)=>{return ele == 'tos_acceptance.date' || 'tos_acceptance.ip'});
+      this.taxId = this.formDatax.requirements.some((ele: string)=>{return ele == 'company.tax_id'});
+      this.statement_descriptor = this.formDatax.requirements.some((ele: string)=>{return ele == 'settings.payments.statement_descriptor'});
+      this.statement_descriptor_prefix = this.formDatax.requirements.some((ele: string)=>{return ele == 'settings.payments.statement_descriptor_prefix'});
+      this.ssn = this.formDatax.requirements.some((ele: string)=>{return ele == 'individual.id_number'});
+     // console.log('state',this.state);
+      }
+      //console.log('state',this.state);
                   this.states = [{abv:'AL',name:'Alabama'},
                                 {abv:'AK',name:'Alaska'},
                                 {abv:'AZ',name:'Arizona'},
@@ -86,7 +108,7 @@ export class CreateIndividualComponent implements OnInit {
                                 {abv:'WI',name:'Wisconsin'},
                                 {abv:'WY',name:'Wyoming'},
               ];
- 
+              
   }
 
 
@@ -101,52 +123,91 @@ export class CreateIndividualComponent implements OnInit {
 forPublic:any= UserP;
 user:any= User;
 userData:any;
+personDocument:any;
+tos:any;
+state:any;
+taxId:any;
  async submitforToken(formDatax:ConnectedAccount){
+//1
 
    formDatax = this.formDatax;
-  const birthDateSplit = formDatax.birthDate.split("-",); 
+  this.birthDateSplit = formDatax.birthDate.split("-",);
+  
+      this.individual=  {
+        first_name: this.formDatax.firstName,
+        last_name:this.formDatax.lastName,
+        email: this.formDatax.email,
+        phone: this.formDatax.phone,
+        ssn_last_4: this.formDatax.ssLast4,
+        id_number: this.formDatax.id_number,
+        dob:{
+          day: this.birthDateSplit[2],
+          month: this.birthDateSplit[1],
+          year: this.birthDateSplit[0]
+        },
+        address: {
+          line1: this.formDatax.address,
+          city: this.formDatax.city,
+          state: this.formDatax.state.abv,
+          postal_code: this.formDatax.zipCode.toString()
+      },/*
+        verification: {
+          document: {
+              front: this.fileData.id
+          },
+        },*/
+
+      
+      };
+      this.business_profile ={
+        url: 'http://www.jmu3d.com',//add later
+        product_description: "I provide services in renting out  Real Estate to my clients", //add later
+        mcc:'5734',
+    },
+    this.settings ={
+      payouts:{
+        schedule:{
+        interval: 'manual'
+        },
+      
+      },
+      
+      payments:{
+      statement_descriptor:this.formDatax.name,
+      statement_descriptor_prefix:this.formDatax.prefix,
+      }
+      
+    },
+    this.company ={
+      tax_id:this.formDatax.tax_id,
+      name:this.formDatax.name
+    },
    
+  //this.formDatax.name = `${this.formDatax.firstName} ${this.formDatax.lastName}`;
    this.isValidatingAccount = false;
     this.stripe= Stripe(environment.STRIPE_PK);
    this.isValidatingAccount = true;
+   if( !this.user.rentalOwner){
+    this.tos_shown_and_accepted= this.formDatax.tos; 
+    if(this.formDatax.requirements &&this.fileData &&this.fileData.id){
+    this.individual.verification = {document:{front:this.fileData.id}};
+    }
+    if(this.state){
+      this.individual.address.state = this.formDatax.state.abv
+    }
+  
+   }
    const accountResult =  await this.stripe.createToken('account', {
     
       //business_type:'individual',
        //email: this.formDatax.email,
-        individual: {
-          first_name: this.formDatax.firstName,
-          last_name:this.formDatax.lastName,
-          email: this.formDatax.email,
-          phone: this.formDatax.phone,
-          ssn_last_4: this.formDatax.ssLast4,
-          id_number: this.formDatax.id_number,
-          dob:{
-            day: birthDateSplit[2],
-            month: birthDateSplit[1],
-            year: birthDateSplit[0]
-          },
-          address: {
-            line1: this.formDatax.address,
-            city: this.formDatax.city,
-            state: this.formDatax.state.abv,
-            postal_code: this.formDatax.zipCode.toString()
-         },
-          verification: {
-            document: {
-                front: this.fileData.id
-            },
-          },
-     
         
-        },
-        business_profile:{
-          //url: 'http://localhost:4200/users/owner/',
-          
-          mcc:'5734'
-         
-      },
-      tos_shown_and_accepted: this.fileData.tos,
-       
+      
+       individual:this.individual,
+       business_profile:this.business_profile,
+       settings:this.settings,
+       company:this.company,
+       tos_shown_and_accepted:this.tos_shown_and_accepted       
       });
     
     
@@ -163,17 +224,38 @@ userData:any;
   
 
   updateSAccount(token:any){ //JMU
-
+//2
    /// this.userDatap = this.formDatax;
-    this.paymentService.userCreateCAccount(token).subscribe(
+   let datat;
+   delete this.individual.id_number; //after reciving token  remove SS number
+   datat = {
+    token,
+    data:{
+      individual:this.individual,
+       business_profile:this.business_profile,
+       settings:this.settings,
+       company:this.company,
+       tos_shown_and_accepted:this.tos_shown_and_accepted,
+       tosLastCreated:this.formDatax.tosCreated
+    }
+   }
+   console.log('Name', datat);
+  
+    this.paymentService.userCreateCAccount(datat).subscribe(
       (token)=>{ 
         this.token2 = token;
         this.isValidatingAccount = false;
         this.toastr.success('You have Successfully updated your account', 'Success!');
         this.getUser();
+        if(this.formDatax.stripeAccountId){
+          this.auth.logout();
+          this.router.navigate(['/login']);
+        }
+        
       },
       (errorResponse)=>{
         this.errors = errorResponse.error.errors;
+        this.isValidatingAccount = false;
       })      
   }
 
@@ -212,6 +294,7 @@ getUser(){
     if(this.stripeId){this.stipeIdEvent.emit(this.stripeId);}
       },
       (err)=>{
+        this.isValidatingAccount = false;
       });
   }
 

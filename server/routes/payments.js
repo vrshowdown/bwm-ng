@@ -18,12 +18,13 @@ router.post('/accountcard', UserCtrl.authMiddleware, PaymentCtrl.CreateCardAccou
 
 //Accept Tos Agreement
 router.post('/tosagreement', UserCtrl.authMiddleware, PaymentCtrl.StripeAgreement);
-router.post('/updateaccount', UserCtrl.authMiddleware,PaymentCtrl.StripeAccount);/*StripeAccount*//* updateSAccount */
+router.post('/updateaccount', UserCtrl.authMiddleware,PaymentCtrl.StripeAccount,PaymentCtrl.StripeAgreement);/*StripeAccount*//* updateSAccount */
 
 // transfer money to bank
 router.post('/payout', UserCtrl.authMiddleware, PaymentCtrl.MoneyWithdrawl);
 //router.get('/payouts',UserCtrl.authMiddleware,PaymentCtrl.Getpayouts);
 //router.post('/fileidupload', UserCtrl.authMiddleware, PaymentCtrl.uploadPhotoId);
 router.post('/deleteAcc', UserCtrl.authMiddleware, PaymentCtrl.deleteAccount);
+router.get('/:id/:stid', PaymentCtrl.getAccount);
 
 module.exports = router;

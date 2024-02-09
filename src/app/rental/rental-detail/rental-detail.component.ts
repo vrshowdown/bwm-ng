@@ -37,7 +37,7 @@ export class RentalDetailComponent implements OnInit {
 
     this.rentalService.getRentalById(rentalId).subscribe(
     (rental: Rental)=>{ //by rental object and type
-      debugger
+
       this.rental = rental;  //current  number in rentals array  is assigned to the current individual  item in rental  service  
       console.log(this.rental.anemities);
     });
