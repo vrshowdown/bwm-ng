@@ -28,5 +28,7 @@ export class PaymentService {
     public payoutToBankCard(userData: any): Observable<any>{
         return   this.http.post('/api/v1/payments/payout/', userData); 
     }
-
+    public getStripeAccountInfo(id:string,stid:string){
+        return   this.http.get(`/api/v1/payments/${id}/${stid}`); 
+    }
 }

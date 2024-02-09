@@ -19,7 +19,7 @@ styleUrls: ['./user-detail.component.scss'],
 animations: [
 
   trigger('simpleFadeAnimation', [
-    state('in', style({opacity: 1, height: 400,})),
+    state('in', style({opacity: 1, height: 500,})),
 
     transition(':enter', [
       style({opacity: 0, height:0}),animate(600 )
@@ -62,7 +62,7 @@ export class UserDetailComponent implements  OnInit {
   stipeId?: string;
   owner:any;
   varification:boolean|any;
- 
+  stAccount:any;
 
   constructor(private userService: UserService,
                    private toastr: ToastrService, 
@@ -124,7 +124,8 @@ export class UserDetailComponent implements  OnInit {
     (user:User|any)=>{
       
       this.user = user;
-      console.log(user);
+      console.log(user);  
+      this.formDatax.stripeAccountId = user.stripeAccountId;
       this.user.revenue = user.revenue;
       
       this.formData2.username = user.username;
@@ -136,9 +137,56 @@ export class UserDetailComponent implements  OnInit {
       this.stipeId = user.stripeAccountId;
 
       if(user.stripeAccountId && user.stripeCid){
-        this.varification = true;
+       // this.varification = false;
+        this.paymentService.getStripeAccountInfo(userId,this.user.stripeAccountId).subscribe((data:any)=>{
+        this.stAccount = data;
+        this.formDatax.tosCreated = this.stAccount.tos_acceptance.date;
+     
+        if(this.stAccount && this.user.stripeAccountId){
+          if(this.stAccount.individual){
+           
+          this.formDatax.id_number_provided = this.stAccount.individual.id_number_provided;
+          this.formDatax.ssn_last_4_provided =this.stAccount.individual.ssn_last_4_provided;
+          const year = this.stAccount.individual.dob.year.toString();
+          const month = this.stAccount.individual.dob.month.toString().padStart(2,'0');
+          const day = this.stAccount.individual.dob.day.toString().padStart(2,'0');
+          const dob = `${year}-${month}-${day}`;
+          this.formDatax.firstName = this.stAccount.individual.first_name;
+          this.formDatax.lastName = this.stAccount.individual.last_name;
+          this.formDatax.email = this.stAccount.individual.email;
+          this.formDatax.phone = this.stAccount.individual.phone;
+          this.formDatax.ssLast4 = this.stAccount.individual.ssn_last_4;
+          this.formDatax.id_number = this.stAccount.individual.id_number;
+          this.formDatax.birthDate = dob;
+          this.formDatax.address =  this.stAccount.individual.address.line1;
+          this.formDatax.city =  this.stAccount.individual.address.city;
+          this.formDatax.state =  this.stAccount.individual.address.state;
+          this.formDatax.zipCode =  this.stAccount.individual.address.postal_code;
+          this.formDatax.ssLast4 = this.stAccount.individual.ssn_last_4;
+          this.formDatax.name = `${this.formDatax.firstName} ${this.formDatax.lastName}`;
+          this.formDatax.fileId = this.stAccount.individual.verification.document.front;
+          }
+          if(this.stAccount.tos_shown_and_accepted){this.formDatax.tos_shown_and_accepted = this.stAccount.tos_shown_and_accepted;}
+          if(this.stAccount.settings){this.formDatax.prefix = this.stAccount.settings.payments.statement_descriptor_prefix;}
+          
+        }
+        console.log(this.stAccount);
+        console.log(this.stAccount.requirements.currently_due);
+        if(!this.user.rentalOwner || !this.user.stripeAccountId || this.stAccount.requirements.currently_due.length > 0){
+          this.formDatax.requirements = this.stAccount.requirements.currently_due;
+          this.varification = false;
+          this.rentalowner.enableOwner(this.varification);
+        }else{
+          this.varification = true;
+          this.rentalowner.enableOwner(this.varification);
+        }
+        },(err)=>{
+          console.log(err);
+        });
+       
        }else{
-         this.varification = false;
+      
+        
        }
     },
     (err)=>{

@@ -57,7 +57,7 @@ addAnemities(entry:string,checkmark:any){
     this.anemities.splice(index,1);
     console.log(this.anemities);
   }
-  debugger
+
   if(this.newRental){
     this.newRental.anemities =this.anemities;
   }

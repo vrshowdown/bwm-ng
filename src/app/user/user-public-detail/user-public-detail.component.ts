@@ -35,10 +35,10 @@ export class UserPublicDetailComponent implements OnInit {
   
     // assign rental to a variable for individual item in array
   getUserP(userpId: string){
-    debugger
+
     this.userService.getUserpById(userpId).subscribe(
     (userp: UserP)=>{
-      debugger
+
       this.userp = userp;
       this.rentals = this.userp.user.rentals;
       let rentid = this.userp.user.rentals[0]._id

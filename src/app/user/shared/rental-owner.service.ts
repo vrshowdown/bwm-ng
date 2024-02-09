@@ -33,7 +33,7 @@ export class RentalOwnerService {
         const token = this.auth.getAuthToken();
         console.log(token);
         if(token != undefined){
-            let rentowner:any = this.auth.getRentalowner();
+            let rentowner:any = this.auth.getRentalowner(); //Gets Token with rentwoner
             console.log(rentowner);
             if(rentowner == true){ // if from token meta data  is true 
                 this.enableOwner(true);

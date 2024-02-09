@@ -66,7 +66,7 @@ this.transformLocation = this.transformLocation.bind(this);
         console.log('updated..'+ this.rentalCopy.anemities);
       }
     }
-    debugger
+
     this.updateRental(rentalId, this.rentalCopy);
   }
 transformLocation(location: string): string {
@@ -84,7 +84,7 @@ return this.upperPipe.transform(location);
     });
   }
   updateRental(rentalId: string|any, rentalData: any){
-  debugger
+
     this.rentalService.updateRental(rentalId, rentalData).subscribe(
     (updatedRental: Rental)=>{
       this.rental = updatedRental;
