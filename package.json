@@ -31,7 +31,7 @@
     "@aws-sdk/client-s3": "^3.514.0",
     "@ng-bootstrap/ng-bootstrap": "^14.0.0",
     "@popperjs/core": "^2.11.6",
-    "@sendgrid/mail": "^7.7.0",
+    "@sendgrid/mail": "^8.1.1",
     "@types/aws-sdk": "^2.7.0",
     "@types/jquery": "^3.5.14",
     "@types/stripe-v3": "^3.1.27",
