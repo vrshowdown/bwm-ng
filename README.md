@@ -25,3 +25,27 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+Copyright © {2025} {Jibreel Utley} – All rights reserved.
+
+Licensed use of this software is permitted **only** after obtaining
+prior written authorization from the copyright holder.
+
+Without explicit, written permission, you may **not**:
+
+1. copy, modify, merge, publish, distribute, sublicense, or sell any part
+   of the Software or its derivative works;
+2. use the Software in a commercial or non‑commercial product, service,
+   or research project;
+3. remove or obscure this copyright and permission notice.
+
+A grant of permission, when given, is non‑exclusive and may be revoked
+at any time if the licensee breaches any term of the agreement.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
